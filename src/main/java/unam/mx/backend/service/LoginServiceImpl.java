@@ -74,6 +74,7 @@ public class LoginServiceImpl implements LoginService{
         loginResponse.setMail(validUser.getMail());
         String jwt = JWTUtil.getInstance().createToken(usuario.getMail(), 27, encryptKey);
         loginResponse.setJwt(jwt);
+        loginResponse.setRoles(usuarioMapper.getRoles(validUser.getMail()));
         return loginResponse;
     }
     

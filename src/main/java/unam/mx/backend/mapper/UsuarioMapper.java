@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.exceptions.PersistenceException;
 
 import unam.mx.backend.model.Usuario;
+import unam.mx.backend.model.Rol;
 
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
+import java.util.List;
 
 @Mapper
 public interface UsuarioMapper {
@@ -38,4 +40,13 @@ public interface UsuarioMapper {
             + "instanteUltimoAcceso = #{instanteUltimoAcceso} "
             + "WHERE id = #{id}; ")
     int update(Usuario usr) throws PersistenceException;
+
+    @Results(id="UsuarioRolesMap", value = {
+        @Result(property = "id",   column = "id"),
+        @Result(property = "nombre",   column = "nombre"),
+        @Result(property = "activo",   column = "activo")
+    })
+    @Select("SELECT id,nombre,activo FROM mailRoles WHERE mail = #{mail};")
+    List<Rol> getRoles(String mail) throws PersistenceException;
+
 }
