@@ -1,3 +1,15 @@
+/*
+ *
+ * Paquete:     unam.mx.backend.model
+ * Proyecto:    licenciatura-backend
+ * Tipo:        Class
+ * Nombre:      LoginServiceImpl
+ * Autor:       Luis Martinez 
+ * Versión:     1.0-SNAPSHOT
+ *
+ * Historia:
+ *              Creación: 02 Mar 2022
+ */
 package unam.mx.backend.service;
 
 import unam.mx.backend.exceptions.ControllerException;
@@ -13,6 +25,17 @@ import org.springframework.stereotype.Service;
 
 import unam.mx.backend.mapper.UsuarioMapper;
 
+/**
+ * <p>Implementación de la interfaz {@link unam.mx.backend.service.LoginService}.
+ *
+ * <p>Todos los métodos de esta clase disparan {@link unam.mx.backend.exceptions.ServiceException}
+ *
+ * @author  garellano, mentesniker
+ * @see     unam.mx.backend.domain.Usuario
+ * @see     unam.mx.backend.service.LoginService
+ * @version 1.0-SNAPSHOT
+ * @since   1.0-SNAPSHOT
+ */
 @Service
 public class LoginServiceImpl implements LoginService{
 
@@ -22,6 +45,7 @@ public class LoginServiceImpl implements LoginService{
         this.usuarioMapper = usuarioMapper;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Login login(CredencialesRequest usuario) throws ControllerException {
 
