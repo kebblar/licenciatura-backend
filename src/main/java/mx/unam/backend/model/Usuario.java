@@ -47,8 +47,10 @@ public class Usuario {
      * @param accesoNegadoContador a int.
      * @param instanteBloqueo a long.
      * @param instanteUltimoAcceso a long.
+     * @param instanteUltimoCambioClave a long.
+     * @param regeneraClaveToken a {@link java.lang.String} object.
+     * @param regeneraClaveInstante a long.
      */
-
     public Usuario(int id, String mail, String clave, long creado, 
     boolean activo, int accesoNegadoContador, long instanteBloqueo, 
     long instanteUltimoAcceso, long instanteUltimoCambioClave, 
@@ -66,31 +68,60 @@ public class Usuario {
         this.regeneraClaveInstante = regeneraClaveInstante;
     }
 
-
+    /**
+     * <p>Getter for the field <code>instanteUltimoCambioClave</code>.</p>
+     *
+     * @return a long.
+     */
     public long getInstanteUltimoCambioClave() {
         return this.instanteUltimoCambioClave;
     }
 
+
+    /**
+     * <p>Setter for the field <code>instanteUltimoCambioClave</code>.</p>
+     *
+     * @param instanteUltimoCambioClave a long.
+     */
     public void setInstanteUltimoCambioClave(long instanteUltimoCambioClave) {
         this.instanteUltimoCambioClave = instanteUltimoCambioClave;
     }
 
+    /**
+     * <p>Getter for the field <code>regeneraClaveToken</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getRegeneraClaveToken() {
         return this.regeneraClaveToken;
     }
 
+    /**
+     * <p>Setter for the field <code>regeneraClaveToken</code>.</p>
+     *
+     * @param regeneraClaveToken a {@link java.lang.String} object.
+     */
     public void setRegeneraClaveToken(String regeneraClaveToken) {
         this.regeneraClaveToken = regeneraClaveToken;
     }
 
+    /**
+     * <p>Getter for the field <code>regeneraClaveInstante</code>.</p>
+     *
+     * @return a long.
+     */
     public long getRegeneraClaveInstante() {
         return this.regeneraClaveInstante;
     }
 
+    /**
+     * <p>Setter for the field <code>regeneraClaveInstante</code>.</p>
+     *
+     * @param regeneraClaveInstante a long.
+     */
     public void setRegeneraClaveInstante(long regeneraClaveInstante) {
         this.regeneraClaveInstante = regeneraClaveInstante;
     }
-
 
     /**
      * <p>Getter for the field <code>mail</code>.</p>
