@@ -23,6 +23,7 @@ import mx.unam.backend.exceptions.ServiceException;
 import mx.unam.backend.mapper.UsuarioMapper;
 import mx.unam.backend.model.CredencialesRequest;
 import mx.unam.backend.model.Login;
+import mx.unam.backend.model.RecuperacionTokenRequest;
 import mx.unam.backend.model.Usuario;
 import mx.unam.backend.utils.DigestEncoder;
 import mx.unam.backend.utils.EnumMessage;
@@ -125,16 +126,17 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     /** {@inheritDoc} */
     @Override
-    public Usuario confirmaRegeneraClave(String token, String clave) throws ServiceException {
-        validate(clave);
+    public Usuario confirmaRegeneraClave(RecuperacionTokenRequest tokenRequest) throws ServiceException {
+        validate(tokenRequest.getClaveNueva());
         long unaHora = 1000*60*60L;
-        Usuario usuario = usuarioMapper.getByToken(token);
+        Usuario usuario = usuarioMapper.getByMail(tokenRequest.getMail());
         if(usuario==null) throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
+        if(!tokenRequest.getToken().equals(usuario.getRegeneraClaveToken())) throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
         long remaining = System.currentTimeMillis()-usuario.getRegeneraClaveInstante();
         if(remaining<unaHora) {
-            String claveHash = DigestEncoder.digest(clave, usuario.getMail());
+            String claveHash = DigestEncoder.digest(tokenRequest.getClaveNueva(), usuario.getMail());
             usuario.setClave(claveHash);
-            usuario.setRegeneraClaveToken(token);
+            usuario.setRegeneraClaveToken(tokenRequest.getToken());
             usuarioMapper.update(usuario);
             return usuario;
         } else {
@@ -147,32 +149,32 @@ public class UsuarioServiceImpl implements UsuarioService{
         this.mailSenderService.sendHtmlMail(correo, titulo, body);
     }
 
-    private void validate(String clave) throws ServiceException{
+    private void validate(String clave) throws CustomException{
         //8 and 16 characters
         if(clave.length()< 8 || clave.length() > 16){
-            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR);
+            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Introducir una clave de 8 hasta 16 caracteres.");
         }
         //Rule 2: No whitespace allowed
         if(clave.contains(" ")){
-            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR);
+            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Remover espacios en blanco.");
         }
         //Rule 3: At least one Upper-case character
         if(!clave.matches("^(?=.*[A-Z]).+$")){
-            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR);
+            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Agregar una mayuscula a la clave.");
         }
         //Rule 4: At least one Lower-case character
         if(!clave.matches("^(?=.*[a-z]).+$")){
-            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR);
+            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Agregar una minuscula a la clave.");
         }
         //Rule 5: At least one digit
         if(!clave.matches("^(?=.*\\d).+$")){
-            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR);
+            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Agregar un numero a la clave.");
         }
         Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
         Matcher hasSpecial = special.matcher(clave);
         //Rule 5: At least one special character
         if(!hasSpecial.find()){
-            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR);
+            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Agregar un caracter especial a la clave.");
         }
     }
     

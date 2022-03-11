@@ -16,6 +16,7 @@ import mx.unam.backend.exceptions.ControllerException;
 import mx.unam.backend.exceptions.ServiceException;
 import mx.unam.backend.model.CredencialesRequest;
 import mx.unam.backend.model.Login;
+import mx.unam.backend.model.RecuperacionTokenRequest;
 import mx.unam.backend.model.Usuario;
 
 
@@ -59,11 +60,10 @@ public interface UsuarioService {
     /**
      * Confirma la regeneración de una nueva clave a un usuario
      *
-     * @param token String asociado a un usuario
-     * @param clave Nueva clave
+     * @param tokenRequest objeto de la clase {@link RecuperacionTokenRequest}
      *
-     * @return Usuario asignado
+     * @return Usuario con clave actualizada
      * @throws ServiceException if any
      */
-    Usuario confirmaRegeneraClave(String token, String clave) throws ServiceException;
+    Usuario confirmaRegeneraClave(RecuperacionTokenRequest tokenRequest) throws ServiceException;
 }

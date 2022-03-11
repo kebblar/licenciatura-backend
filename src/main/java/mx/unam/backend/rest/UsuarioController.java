@@ -92,7 +92,7 @@ public class UsuarioController {
     public Usuario confirmaRegeneraClave(@ApiParam(
         name = "clave nueva y Token",
         value = "Representa a un usuario (mail, password)")
-        @RequestBody RecuperacionTokenRequest tokenClave) throws ControllerException{
-        return usuarioService.confirmaRegeneraClave(tokenClave.getToken(), tokenClave.getClaveNueva()); 
+        @RequestBody RecuperacionTokenRequest tokenRequest) throws ControllerException{
+        return usuarioService.confirmaRegeneraClave(tokenRequest); 
     }
 }
