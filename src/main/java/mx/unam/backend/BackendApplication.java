@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@MapperScan("unam.mx.backend.mapper")
+@MapperScan("mx.unam.backend.mapper")
 @SpringBootApplication
 @EnableSwagger2
 public class BackendApplication {

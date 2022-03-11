@@ -8,20 +8,23 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import mx.unam.backend.exceptions.ControllerException;
 import mx.unam.backend.mapper.UsuarioMapper;
 import mx.unam.backend.model.CredencialesRequest;
 import mx.unam.backend.model.Usuario;
-import mx.unam.backend.service.LoginService;
-import mx.unam.backend.service.LoginServiceImpl;
+import mx.unam.backend.service.MailSenderService;
+import mx.unam.backend.service.UsuarioService;
+import mx.unam.backend.service.UsuarioServiceImpl;
 import mx.unam.backend.utils.EnumMessage;
 
+@MapperScan("mx.unam.backend.mapper")
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class TestLoginService {
-    private LoginService loginService;
+    private UsuarioService loginService;
 
     private boolean checa(ControllerException e, EnumMessage m) {
     	return m.toString().equals(e.getLocalExceptionKey());    	
@@ -30,13 +33,16 @@ public class TestLoginService {
     @Mock
     private UsuarioMapper usuarioMapper;
 
+    @Mock 
+    private MailSenderService mailSenderService;
+
     @Test
     public void loginTest() {
         Usuario usuario = new Usuario(1, "goose@mail.com", "42a83c6132a2f3801191edec975f7f0f802fdfb373f9c3378043c93dbab70fd4",
-        0, false, 0, 0, 0);
+        0, false, 0, 0, 0, 0, null, 0);
         usuario.setActivo(true);
-        this.loginService = new LoginServiceImpl(usuarioMapper);
-        when(usuarioMapper.getbyMail("goose@mail.com")).thenReturn(usuario);
+        this.loginService = new UsuarioServiceImpl(usuarioMapper,mailSenderService);
+        when(usuarioMapper.getByMail("goose@mail.com")).thenReturn(usuario);
         CredencialesRequest credenciales = new CredencialesRequest();
         
         // successful login

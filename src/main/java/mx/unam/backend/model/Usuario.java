@@ -32,6 +32,9 @@ public class Usuario {
     private int accesoNegadoContador;
     private long instanteBloqueo;
     private long instanteUltimoAcceso;
+    private long instanteUltimoCambioClave;
+    private String regeneraClaveToken;
+    private long regeneraClaveInstante;
 
     /**
      * Constructor basado en los atributos de la clase.
@@ -45,18 +48,49 @@ public class Usuario {
      * @param instanteBloqueo a long.
      * @param instanteUltimoAcceso a long.
      */
-    public Usuario(int id,String mail, String clave, long creado, 
-    boolean activo, int accesoNegadoContador, 
-    long instanteBloqueo, long instanteUltimoAcceso) {
+
+    public Usuario(int id, String mail, String clave, long creado, 
+    boolean activo, int accesoNegadoContador, long instanteBloqueo, 
+    long instanteUltimoAcceso, long instanteUltimoCambioClave, 
+    String regeneraClaveToken, long regeneraClaveInstante) {
+        this.id = id;
         this.mail = mail;
         this.clave = clave;
-        this.id = id;
         this.creado = creado;
         this.activo = activo;
         this.accesoNegadoContador = accesoNegadoContador;
         this.instanteBloqueo = instanteBloqueo;
         this.instanteUltimoAcceso = instanteUltimoAcceso;
+        this.instanteUltimoCambioClave = instanteUltimoCambioClave;
+        this.regeneraClaveToken = regeneraClaveToken;
+        this.regeneraClaveInstante = regeneraClaveInstante;
     }
+
+
+    public long getInstanteUltimoCambioClave() {
+        return this.instanteUltimoCambioClave;
+    }
+
+    public void setInstanteUltimoCambioClave(long instanteUltimoCambioClave) {
+        this.instanteUltimoCambioClave = instanteUltimoCambioClave;
+    }
+
+    public String getRegeneraClaveToken() {
+        return this.regeneraClaveToken;
+    }
+
+    public void setRegeneraClaveToken(String regeneraClaveToken) {
+        this.regeneraClaveToken = regeneraClaveToken;
+    }
+
+    public long getRegeneraClaveInstante() {
+        return this.regeneraClaveInstante;
+    }
+
+    public void setRegeneraClaveInstante(long regeneraClaveInstante) {
+        this.regeneraClaveInstante = regeneraClaveInstante;
+    }
+
 
     /**
      * <p>Getter for the field <code>mail</code>.</p>

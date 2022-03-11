@@ -13,8 +13,10 @@
 package mx.unam.backend.service;
 
 import mx.unam.backend.exceptions.ControllerException;
+import mx.unam.backend.exceptions.ServiceException;
 import mx.unam.backend.model.CredencialesRequest;
 import mx.unam.backend.model.Login;
+import mx.unam.backend.model.Usuario;
 
 
 /**
@@ -25,7 +27,7 @@ import mx.unam.backend.model.Login;
  * @version 1.0-SNAPSHOT
  * @since   1.0-SNAPSHOT
  */
-public interface LoginService {
+public interface UsuarioService {
 
     /**
      * Valida si las credencials proporcionadas son correctas o no.
@@ -44,4 +46,24 @@ public interface LoginService {
      * @throws ControllerException
      */
     public Login login(CredencialesRequest usuario) throws ControllerException;
+
+    /**
+     * Solicita la regeneración de una clave perdida u olvidada
+     *
+     * @param correo String asociado a la clave olvidada
+     * @return objeto de la clase {@link Usuario}
+     * @throws ServiceException if any
+     */
+    String solicitaRegeneracionClave(String correo) throws ServiceException;
+
+    /**
+     * Confirma la regeneración de una nueva clave a un usuario
+     *
+     * @param token String asociado a un usuario
+     * @param clave Nueva clave
+     *
+     * @return Usuario asignado
+     * @throws ServiceException if any
+     */
+    Usuario confirmaRegeneraClave(String token, String clave) throws ServiceException;
 }
