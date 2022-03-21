@@ -38,6 +38,7 @@ import mx.unam.backend.service.UsuarioService;
  *
  * @author  mentesniker
  * @see     mx.unam.backend.model.CredencialesRequest
+ * @see     mx.unam.backend.model.RecuperacionTokenRequest
  * @see     mx.unam.backend.service.UsuarioService
  * @version 1.0-SNAPSHOT
  * @since   1.0-SNAPSHOT
@@ -76,11 +77,11 @@ public class UsuarioController {
     @PostMapping(
         path = "/recupera-clave",
         produces = "application/json; charset=utf-8")
-    public String recuperarClave(@ApiParam(
-        name = "usuario",
-        value = "Representa a un usuario (mail, password)")
-        @RequestBody CredencialesRequest usuario) throws ControllerException{
-        return usuarioService.solicitaRegeneracionClave(usuario.getMail()); 
+    public Usuario recuperarClave(@ApiParam(
+        name = "mail",
+        value = "Contiene el correo del usuario")
+        @RequestBody String mail) throws ControllerException{
+        return usuarioService.solicitaRegeneracionClave(mail); 
     }
 
     @ApiOperation(
@@ -91,7 +92,7 @@ public class UsuarioController {
         produces = "application/json; charset=utf-8")
     public Usuario confirmaRegeneraClave(@ApiParam(
         name = "clave nueva y Token",
-        value = "Representa a un usuario (mail, password)")
+        value = "Representa a una confirmacion de regeneracion (mail, nueva clave y token)")
         @RequestBody RecuperacionTokenRequest tokenRequest) throws ControllerException{
         return usuarioService.confirmaRegeneraClave(tokenRequest); 
     }

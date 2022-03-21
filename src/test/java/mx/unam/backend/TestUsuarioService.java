@@ -28,7 +28,7 @@ import mx.unam.backend.utils.EnumMessage;
 @MapperScan("mx.unam.backend.mapper")
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
-public class TestLoginService {
+public class TestUsuarioService {
 
     @Mock
     private UsuarioMapper usuarioMapper;
@@ -54,8 +54,11 @@ public class TestLoginService {
 
     @Test
     public void testSolicitaRegeneracionClave() throws ServiceException {
+        when(usuarioMapper.getByMail(Mockito.any(String.class))).thenReturn(null);
+        assertEquals("", usuarioService.solicitaRegeneracionClave("correo@correo.com").getMail());
+        
         when(usuarioMapper.getByMail(Mockito.any(String.class))).thenReturn(usuario);
-        assertEquals("{'Mensaje': 'enviado'}", usuarioService.solicitaRegeneracionClave("correo@correo.com"));
+        assertEquals("goose@mail.com", usuarioService.solicitaRegeneracionClave("goose@mail.com").getMail());
     }
 
     @Test

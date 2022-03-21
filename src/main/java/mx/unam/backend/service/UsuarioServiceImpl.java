@@ -46,7 +46,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     private UsuarioMapper usuarioMapper;
     private final MailSenderService mailSenderService;
-    private static final String REGENERACIONCALVE = "{'Mensaje': 'enviado'}";
 
     public UsuarioServiceImpl(UsuarioMapper usuarioMapper, MailSenderService mailSenderService) {
         this.usuarioMapper = usuarioMapper;
@@ -112,7 +111,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     /** {@inheritDoc} */
     @Override
-    public String solicitaRegeneracionClave(String correo) throws ServiceException {
+    public Usuario solicitaRegeneracionClave(String correo) throws ServiceException {
         String token = StringUtils.getRandomString(6);
         Usuario usuario = usuarioMapper.getByMail(correo);
         if(usuario!=null){
@@ -120,8 +119,9 @@ public class UsuarioServiceImpl implements UsuarioService{
             usuario.setRegeneraClaveToken(token);
             usuarioMapper.update(usuario);
             sendMail("Estimado Usuario", correo, token, "Clave de recuperación");
+            return usuario;
         }
-        return REGENERACIONCALVE;
+        return new Usuario(0, "", "", 0, false, 0, 0, 0, 0, "", 0);
     }
 
     /** {@inheritDoc} */

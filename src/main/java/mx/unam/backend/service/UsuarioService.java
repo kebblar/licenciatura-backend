@@ -41,25 +41,33 @@ public interface UsuarioService {
      *     - Si el usuario no existe, sólo pide que intente de nuevo
      *     - Si el usuaro existe y la clave es errónea, le indicará que le quedan menos intentos
      *     - Si el usuario está bloqueado (con o sin clave correcta) le indicará que debe esperar cierto tiempo
-     * @param usuario cadena que contiene el usuario
-     * @param clave  cadena que contiene la contraseña
+     * @param usuario objeto de tipo {@link CredencialesRequest}
      * @return Objeto {@link Login}
      * @throws ControllerException
      */
     public Login login(CredencialesRequest usuario) throws ControllerException;
 
     /**
-     * Solicita la regeneración de una clave perdida u olvidada
+     * Solicita la regeneración de una clave perdida u olvidada.
+     * En caso de no encontrar el correo solicitado
+     * el metodo regresa una instancia de {@link Usuario} que
+     * tiene todos sus valores por defecto.
      *
      * @param correo String asociado a la clave olvidada
      * @return objeto de la clase {@link Usuario}
      * @throws ServiceException if any
      */
-    String solicitaRegeneracionClave(String correo) throws ServiceException;
+    Usuario solicitaRegeneracionClave(String correo) throws ServiceException;
 
     /**
-     * Confirma la regeneración de una nueva clave a un usuario
-     *
+     * Confirma la regeneración de una nueva clave a un usuario.
+     * El metodo realiza una verificacion de la nueva clave que tiene que
+     * cumplir con las siguientes reglas:
+     *     - No admite clave con espacios
+     *     - No admite claves con solo minusculas
+     *     - No admite claves con solo mayusuculas
+     *     - No admite claves sin caracteres especiales
+     *     - No admite claves con menos de 8 y mas de 16 caracteres
      * @param tokenRequest objeto de la clase {@link RecuperacionTokenRequest}
      *
      * @return Usuario con clave actualizada
