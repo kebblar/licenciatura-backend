@@ -20,10 +20,10 @@ import mx.unam.backend.mapper.UsuarioMapper;
 import mx.unam.backend.model.CredencialesRequest;
 import mx.unam.backend.model.RecuperacionTokenRequest;
 import mx.unam.backend.model.Usuario;
-import mx.unam.backend.service.MailSenderService;
 import mx.unam.backend.service.UsuarioService;
 import mx.unam.backend.service.UsuarioServiceImpl;
 import mx.unam.backend.utils.EnumMessage;
+import mx.unam.backend.utils.MailSenderService;
 
 @MapperScan("mx.unam.backend.mapper")
 @SpringBootTest
