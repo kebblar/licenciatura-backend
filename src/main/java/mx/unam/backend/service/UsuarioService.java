@@ -16,6 +16,7 @@ import mx.unam.backend.exceptions.ControllerException;
 import mx.unam.backend.exceptions.ServiceException;
 import mx.unam.backend.model.CredencialesRequest;
 import mx.unam.backend.model.Login;
+import mx.unam.backend.model.Preregistro;
 import mx.unam.backend.model.RecuperacionTokenRequest;
 import mx.unam.backend.model.Usuario;
 
@@ -74,4 +75,23 @@ public interface UsuarioService {
      * @throws ServiceException if any
      */
     Usuario confirmaRegeneraClave(RecuperacionTokenRequest tokenRequest) throws ServiceException;
+
+    /**
+     * Realiza el preregistro de un potencial usuario al sistema
+     *
+     * @param preRegistroRequest
+     * @return Preregistro mismo objeto recibido
+     * @throws BusinessException
+     */
+    Preregistro preRegistro(Preregistro preRegistroRequest) throws ServiceException;
+
+
+     /**
+     * Confirma el registro de un usuario al sistema
+     *
+     * @param token Cadena con la clave de confirmación del registro
+     * @return entero con el id del usuario recién confirmado (debe ser mayor a cero)
+     * @throws BusinessException
+     */
+    Usuario confirmaPreregistro(String token) throws ServiceException;
 }

@@ -10,16 +10,24 @@ import org.mockito.Mockito;
 
 import static org.mockito.Mockito.when;
 
+import java.sql.SQLException;
+import java.util.Date;
+
+import org.apache.ibatis.transaction.TransactionException;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import mx.unam.backend.exceptions.ControllerException;
 import mx.unam.backend.exceptions.ServiceException;
+import mx.unam.backend.mapper.RegistroMapper;
+import mx.unam.backend.mapper.UsuarioDetalleMapper;
 import mx.unam.backend.mapper.UsuarioMapper;
 import mx.unam.backend.model.CredencialesRequest;
+import mx.unam.backend.model.Preregistro;
 import mx.unam.backend.model.RecuperacionTokenRequest;
 import mx.unam.backend.model.Usuario;
+import mx.unam.backend.model.UsuarioDetalle;
 import mx.unam.backend.service.UsuarioService;
 import mx.unam.backend.service.UsuarioServiceImpl;
 import mx.unam.backend.utils.EnumMessage;
@@ -36,9 +44,18 @@ public class TestUsuarioService {
     @Mock 
     private MailSenderService mailSenderService;
 
+    @Mock 
+    private UsuarioDetalleMapper usuarioDetalleMapper;
+
+    @Mock 
+    private RegistroMapper registroMapper;
+
+
     private UsuarioService usuarioService;
 
     private Usuario usuario;
+
+    private Preregistro preregistro;
 
     private boolean checa(ControllerException e, EnumMessage m) {
     	return m.toString().equals(e.getLocalExceptionKey());    	
@@ -49,7 +66,9 @@ public class TestUsuarioService {
         this.usuario = new Usuario(1, "goose@mail.com", "42a83c6132a2f3801191edec975f7f0f802fdfb373f9c3378043c93dbab70fd4",
         0, false, 0, 0, 0, 0, "aaa", 0);
         usuario.setActivo(true);
-        this.usuarioService = new UsuarioServiceImpl(usuarioMapper,mailSenderService);
+        this.usuarioService = new UsuarioServiceImpl(usuarioMapper,mailSenderService,
+         registroMapper, usuarioDetalleMapper);
+        this.preregistro = new Preregistro(10, "nick", "abc@gmail.com", "Hola1234#", "5540170234", new Date(2010, 1, 3), "xxx", 0);
     }
 
     @Test
@@ -218,5 +237,85 @@ public class TestUsuarioService {
             assertTrue(checa(e, EnumMessage.DISABLED_USER));
         }        
         
+    }
+
+    @Test
+    public void testPreregistro () throws ServiceException{
+        when(usuarioMapper.getByMail("abc@gmail.com")).thenReturn(usuario);
+        
+        try {
+            usuarioService.preRegistro(preregistro);
+        } catch (ControllerException e) {
+            assertTrue(checa(e, EnumMessage.USER_ALREADY_EXISTS));
+        }
+        when(usuarioMapper.getByMail("abc@gmail.com")).thenReturn(null);
+
+        try{
+            when(registroMapper.getByMail("abc@gmail.com")).thenReturn(null);
+            usuarioService.preRegistro(preregistro);
+            assertTrue(true);
+        }catch(SQLException e){
+            assertFalse(true);            
+        }
+
+        try{
+            preregistro.setClaveHash("Hola1234#");
+            when(registroMapper.getByMail("abc@gmail.com")).thenReturn(preregistro);
+            usuarioService.preRegistro(preregistro);
+            assertTrue(true);
+        }catch(SQLException e){
+            assertFalse(true);            
+        }
+    }
+
+    @Test
+    public void confirmacionTest() throws Exception {
+        try {
+            when(registroMapper.getByRandomString("xxx")).thenReturn(null);
+            usuarioService.confirmaPreregistro("xxx");
+        }catch (ControllerException c) {
+            assertTrue(checa(c, EnumMessage.TOKEN_NOT_EXIST));
+
+
+        } try {
+            when(registroMapper.getByRandomString("454")).thenThrow(SQLException.class);
+            usuarioService.confirmaPreregistro("454");
+        } catch (ServiceException c) {
+            assertTrue(true);
+        } 
+        
+        try {
+            when(registroMapper.getByRandomString("xxx")).thenReturn(this.preregistro);
+            this.preregistro.setInstanteRegistro(800);
+            usuarioService.confirmaPreregistro("xxx");
+        } catch (ControllerException c) {
+            assertTrue(checa(c, EnumMessage.TOKEN_EXPIRED));
+        } 
+        
+        try {
+            when(registroMapper.getByRandomString("xx")).thenReturn(this.preregistro);
+            this.preregistro.setInstanteRegistro(System.currentTimeMillis()-60000);
+            usuarioService.confirmaPreregistro("xx");
+        } catch (ControllerException c) {
+            assertTrue(checa(c, EnumMessage.TOKEN_NOT_EXIST));
+        } 
+        
+        try {
+            when(registroMapper.getByRandomString("xxx")).thenReturn(this.preregistro);
+            when(usuarioMapper.insert(Mockito.any(Usuario.class))).thenThrow(SQLException.class);
+            usuarioService.confirmaPreregistro("xxx");
+            assertFalse(true);
+        } catch (TransactionException t) {
+            assertTrue(true);
+        } try {
+            when(usuarioMapper.insert(Mockito.any(Usuario.class))).thenReturn(1);
+            when(usuarioDetalleMapper.insert(Mockito.any(UsuarioDetalle.class))).thenReturn(1);
+            when(usuarioMapper.insertUserRol(0,2)).thenReturn(1);
+            when(registroMapper.deleteByRandomString("xxx")).thenReturn(1);
+            usuarioService.confirmaPreregistro("xxx");
+            assertTrue(true);
+        } catch (TransactionException t) {
+            assertFalse(true);
+        }
     }
 }

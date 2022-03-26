@@ -12,22 +12,32 @@
  */
 package mx.unam.backend.service;
 
+import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.ibatis.transaction.TransactionException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import mx.unam.backend.exceptions.ControllerException;
 import mx.unam.backend.exceptions.CustomException;
 import mx.unam.backend.exceptions.ServiceException;
+import mx.unam.backend.mapper.RegistroMapper;
+import mx.unam.backend.mapper.UsuarioDetalleMapper;
 import mx.unam.backend.mapper.UsuarioMapper;
 import mx.unam.backend.model.CredencialesRequest;
 import mx.unam.backend.model.Login;
+import mx.unam.backend.model.Preregistro;
 import mx.unam.backend.model.RecuperacionTokenRequest;
 import mx.unam.backend.model.Usuario;
+import mx.unam.backend.model.UsuarioDetalle;
 import mx.unam.backend.utils.DigestEncoder;
 import mx.unam.backend.utils.EnumMessage;
+import mx.unam.backend.utils.HttpStatus;
 import mx.unam.backend.utils.JWTUtil;
 import mx.unam.backend.utils.MailSenderService;
 import mx.unam.backend.utils.StringUtils;
@@ -47,14 +57,20 @@ import mx.unam.backend.utils.StringUtils;
 public class UsuarioServiceImpl implements UsuarioService{
 
     private UsuarioMapper usuarioMapper;
+    private UsuarioDetalleMapper usuarioDetalleMapper;
+    private RegistroMapper registroMapper;
     private final MailSenderService mailSenderService;
     @Value("${jwt.encryptor.password}")
     private String encryptKey;
+    private static final int RANDOM_STRING_LEN = 6;
     
 
-    public UsuarioServiceImpl(UsuarioMapper usuarioMapper, MailSenderService mailSenderService) {
+    public UsuarioServiceImpl(UsuarioMapper usuarioMapper, MailSenderService mailSenderService,
+     RegistroMapper registroMapper, UsuarioDetalleMapper usuarioDetalleMapper) {
         this.usuarioMapper = usuarioMapper;
         this.mailSenderService = mailSenderService;
+        this.registroMapper = registroMapper;
+        this.usuarioDetalleMapper = usuarioDetalleMapper;
     }
 
     /** {@inheritDoc} */
@@ -146,6 +162,146 @@ public class UsuarioServiceImpl implements UsuarioService{
         } else {
             throw new CustomException(EnumMessage.TOKEN_EXPIRED);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Preregistro preRegistro(Preregistro preRegistroRequest) throws ServiceException {
+        try {
+            return preRegistroHelper(preRegistroRequest);
+        } catch (SQLException e) {
+            throw new ServiceException("Clave con error", "error al registrar al usuario", 2001, "intentelo de nuevo", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Transactional(
+            propagation = Propagation.REQUIRED,
+            isolation = Isolation.DEFAULT,
+            timeout = 36000,
+            rollbackFor = TransactionException.class)
+    public Usuario confirmaPreregistro(String token) throws ServiceException {
+        // El token sirve sólo 10 minutes:
+        long delta = 1000*60*10L;
+
+        // Obtén la túpla asociada al token de confirmación
+        Preregistro preregistro = null;
+        try {
+            preregistro = this.registroMapper.getByRandomString(token);
+        } catch (SQLException e1) {
+            throw new ServiceException("Clave con error", "error al buscar un usuario con el token", 2000, "intentelo de nuevo", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        // Si no hay un registro asociado a tal token, notifica el error:
+        if(preregistro==null) throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
+
+        // Si ya expiró el token, notifica el error:
+        long age = System.currentTimeMillis()-preregistro.getInstanteRegistro();
+        if(age>delta) { // token expirado
+            throw new CustomException(EnumMessage.TOKEN_EXPIRED);
+        }
+
+        // Si la clave no es la misma, notifica el error:
+        if(!token.equals(preregistro.getRandomString())) {
+            throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
+        }
+
+        // Si todito lo anterior salió bien, actualiza los
+        // datos, guárdalos y elimina el preregistro auxiliar:
+        try {
+            return doTransaction(preregistro, token);
+        } catch (SQLException e) {
+            throw new TransactionException("Registro fallido. Haciendo rollback a la transaccion");
+        }
+    }
+
+    private Usuario doTransaction(Preregistro preregistro, String randomString) throws SQLException {
+        // Crea un usuario e insertalo en la base:
+        Usuario usuario = new Usuario(
+            0, //id (que va a ser autogenerado)
+            preregistro.getCorreo(),       // correo
+            preregistro.getClaveHash(),    // clave
+            System.currentTimeMillis(), // creado
+            true, // activo
+            0,  // accesoNegadoContador
+            0,  // instanteBloqueo
+            0,  // instanteUltimoAcceso
+            System.currentTimeMillis(),  // instanteUltimoCambioClave
+            "", // regeneraClaveToken
+            0   // regeneraClaveTokenInstante
+        );
+        usuarioMapper.insert(usuario);
+
+
+        // Obtén el id autogenerado del usuario recién creado:
+        int idUsuario = usuario.getId();
+
+
+        // Crea un objeto 'usuarioDetalles' (con el ID autogenerado) e insértalo en la DB:
+        UsuarioDetalle usuarioDetalle = new UsuarioDetalle(
+            idUsuario,
+            "",     // nombre
+            "",     // apellidoPaterno
+            "",     // apellidoMaterno
+            preregistro.getNick(),     // nickName
+            preregistro.getFechaNacimiento(),   // fechaNacimiento
+            preregistro.getTelefono()    // telefonoCelular
+        );
+        this.usuarioDetalleMapper.insert(usuarioDetalle);
+
+        // asociar el usuario recién creado con el rol 2:
+        this.usuarioMapper.insertUserRol(idUsuario, 2);
+
+        // Borra lo que tengas en la tabla registro
+        this.registroMapper.deleteByRandomString(randomString);
+
+        return usuario;
+    }
+
+    private Preregistro preRegistroHelper(Preregistro preRegistroRequest) throws CustomException, SQLException{
+        // Quitale los caracteres raros al teléfono.
+        String nuevoCel = StringUtils.limpia(preRegistroRequest.getTelefono());
+        preRegistroRequest.setTelefono(nuevoCel);
+
+        // Valida si la clave proporcionada es compatible con el
+        // patrón de seguridad de claves solicitado por el sistema:
+        validate(preRegistroRequest.getClaveHash());
+
+        // Busca al usuario por su correo en la tabla de 'usuario'
+        Usuario usuario = this.usuarioMapper.getByMail(preRegistroRequest.getCorreo());
+
+        // Si el usuario ya está en la tabla 'usuario', avisa error:
+        if(usuario!=null) throw new CustomException(EnumMessage.USER_ALREADY_EXISTS, "el usuario ya esta registrado");
+
+        // Busca el registro por mail en la tabla de 'registro':
+        Preregistro registro = this.registroMapper.getByMail(preRegistroRequest.getCorreo());
+
+        // Genera una cadena aleatoria de caracteres y crea un objeto de tipo 'PreRegistro':
+        String randomString = StringUtils.getRandomString(RANDOM_STRING_LEN);
+
+        // Calcula el Hash de la clave con un salt del correo:
+        String claveHasheada = DigestEncoder.digest(preRegistroRequest.getClaveHash(), preRegistroRequest.getCorreo());
+
+        // Asigna valores:
+        preRegistroRequest.setRandomString(randomString);
+        preRegistroRequest.setInstanteRegistro(System.currentTimeMillis());
+        preRegistroRequest.setClaveHash(claveHasheada);
+
+        // Si el usuario NO está en la tabla de 'registro', insertar info:
+        if(registro==null) {
+            this.registroMapper.insertRegistro(preRegistroRequest);
+        } else { // Si el usuario SI está: actualizar info:
+            this.registroMapper.update(preRegistroRequest);
+        }
+
+        // Envia correo de notificación:
+        sendMail(
+                preRegistroRequest.getNick(),
+                preRegistroRequest.getCorreo(),
+                randomString,
+                "Clave de confirmación de registro");
+        return preRegistroRequest;
     }
 
     private void sendMail(String nick, String correo, String randomString, String titulo) {
