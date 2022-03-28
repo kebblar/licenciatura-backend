@@ -18,6 +18,9 @@ import mx.unam.backend.service.LoginService;
 import mx.unam.backend.service.LoginServiceImpl;
 import mx.unam.backend.utils.EnumMessage;
 
+/**
+* Clase para probar el microservicio de login.
+**/
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
 public class TestLoginService {
@@ -29,7 +32,10 @@ public class TestLoginService {
 
     @Mock
     private UsuarioMapper usuarioMapper;
-
+    
+    /**
+    * Metodo que prueba el servicio de login.
+    **/
     @Test
     public void loginTest() {
         Usuario usuario = new Usuario(1, "goose@mail.com", "42a83c6132a2f3801191edec975f7f0f802fdfb373f9c3378043c93dbab70fd4",
