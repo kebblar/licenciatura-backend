@@ -30,6 +30,11 @@ import java.security.SecureRandom;
  */
 public class StringUtils {
 
+
+    private StringUtils() {
+        throw new IllegalStateException("Clase de utilidades");
+      }
+
     /**
      * <p>limpia.</p>
      *
