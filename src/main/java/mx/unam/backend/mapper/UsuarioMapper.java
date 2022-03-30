@@ -21,6 +21,7 @@ import mx.unam.backend.model.Rol;
 import mx.unam.backend.model.Usuario;
 
 import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import java.util.List;
 
@@ -34,6 +35,7 @@ import java.util.List;
  * @version 1.0-SNAPSHOT
  * @since   1.0-SNAPSHOT
  */
+
 @Mapper
 public interface UsuarioMapper {
 
@@ -53,9 +55,24 @@ public interface UsuarioMapper {
         @Result(property = "accesoNegadoContador",   column = "accesoNegadoContador"),
         @Result(property = "instanteBloqueo",   column = "instanteBloqueo"),
         @Result(property = "instanteUltimoAcceso",   column = "instanteUltimoAcceso"),
+        @Result(property = "instanteUltimoCambioClave",   column = "instanteUltimoCambioClave"),
+        @Result(property = "regeneraClaveToken",   column = "regeneraClaveToken"),
+        @Result(property = "regeneraClaveInstante",   column = "regeneraClaveInstante"),
     })
     @Select("SELECT * FROM usuario WHERE mail = #{mail};")
-    Usuario getbyMail(String mail) throws PersistenceException;
+    Usuario getByMail(String mail) throws PersistenceException;
+
+
+    /**
+     * Busca un objeto de tipo '{@link mx.unam.backend.model.Usuario} ' contenido en la base de datos usando su token.
+     *
+     * @param token el token del usuario a buscar.
+     * @return un objeto de tipo '{@link mx.unam.backend.model.Usuario} '.
+     * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un error en esta operación desde la base de datos.
+     */
+    @ResultMap("UsuarioMap")
+    @Select("SELECT * FROM usuario WHERE regeneraClaveToken = #{token};")
+    Usuario getByToken(String token) throws PersistenceException;
 
     /**
      * Actualiza un objeto de tipo '{@link mx.unam.backend.model.Usuario} ' con base en la infrmación dada por el objeto de tipo 'usuario'.
@@ -66,7 +83,8 @@ public interface UsuarioMapper {
      */
     @Update("UPDATE usuario SET mail = #{mail}, clave = #{clave}, creado = #{creado}, activo = #{activo}, "
             + "accesoNegadoContador = #{accesoNegadoContador}, instanteBloqueo = #{instanteBloqueo}, "
-            + "instanteUltimoAcceso = #{instanteUltimoAcceso} "
+            + "instanteUltimoAcceso = #{instanteUltimoAcceso} , instanteUltimoCambioClave = #{instanteUltimoCambioClave}, "
+            + "regeneraClaveToken = #{regeneraClaveToken}, regeneraClaveInstante = #{regeneraClaveInstante} "
             + "WHERE id = #{id}; ")
     int update(Usuario usr) throws PersistenceException;
 

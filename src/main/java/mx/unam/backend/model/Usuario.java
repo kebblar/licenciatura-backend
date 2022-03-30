@@ -32,6 +32,9 @@ public class Usuario {
     private int accesoNegadoContador;
     private long instanteBloqueo;
     private long instanteUltimoAcceso;
+    private long instanteUltimoCambioClave;
+    private String regeneraClaveToken;
+    private long regeneraClaveInstante;
 
     /**
      * Constructor basado en los atributos de la clase.
@@ -44,18 +47,80 @@ public class Usuario {
      * @param accesoNegadoContador a int.
      * @param instanteBloqueo a long.
      * @param instanteUltimoAcceso a long.
+     * @param instanteUltimoCambioClave a long.
+     * @param regeneraClaveToken a {@link java.lang.String} object.
+     * @param regeneraClaveInstante a long.
      */
-    public Usuario(int id,String mail, String clave, long creado, 
-    boolean activo, int accesoNegadoContador, 
-    long instanteBloqueo, long instanteUltimoAcceso) {
+    public Usuario(int id, String mail, String clave, long creado, 
+    boolean activo, int accesoNegadoContador, long instanteBloqueo, 
+    long instanteUltimoAcceso, long instanteUltimoCambioClave, 
+    String regeneraClaveToken, long regeneraClaveInstante) {
+        this.id = id;
         this.mail = mail;
         this.clave = clave;
-        this.id = id;
         this.creado = creado;
         this.activo = activo;
         this.accesoNegadoContador = accesoNegadoContador;
         this.instanteBloqueo = instanteBloqueo;
         this.instanteUltimoAcceso = instanteUltimoAcceso;
+        this.instanteUltimoCambioClave = instanteUltimoCambioClave;
+        this.regeneraClaveToken = regeneraClaveToken;
+        this.regeneraClaveInstante = regeneraClaveInstante;
+    }
+
+    /**
+     * <p>Getter for the field <code>instanteUltimoCambioClave</code>.</p>
+     *
+     * @return a long.
+     */
+    public long getInstanteUltimoCambioClave() {
+        return this.instanteUltimoCambioClave;
+    }
+
+
+    /**
+     * <p>Setter for the field <code>instanteUltimoCambioClave</code>.</p>
+     *
+     * @param instanteUltimoCambioClave a long.
+     */
+    public void setInstanteUltimoCambioClave(long instanteUltimoCambioClave) {
+        this.instanteUltimoCambioClave = instanteUltimoCambioClave;
+    }
+
+    /**
+     * <p>Getter for the field <code>regeneraClaveToken</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
+    public String getRegeneraClaveToken() {
+        return this.regeneraClaveToken;
+    }
+
+    /**
+     * <p>Setter for the field <code>regeneraClaveToken</code>.</p>
+     *
+     * @param regeneraClaveToken a {@link java.lang.String} object.
+     */
+    public void setRegeneraClaveToken(String regeneraClaveToken) {
+        this.regeneraClaveToken = regeneraClaveToken;
+    }
+
+    /**
+     * <p>Getter for the field <code>regeneraClaveInstante</code>.</p>
+     *
+     * @return a long.
+     */
+    public long getRegeneraClaveInstante() {
+        return this.regeneraClaveInstante;
+    }
+
+    /**
+     * <p>Setter for the field <code>regeneraClaveInstante</code>.</p>
+     *
+     * @param regeneraClaveInstante a long.
+     */
+    public void setRegeneraClaveInstante(long regeneraClaveInstante) {
+        this.regeneraClaveInstante = regeneraClaveInstante;
     }
 
     /**
