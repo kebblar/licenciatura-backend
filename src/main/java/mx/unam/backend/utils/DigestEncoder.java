@@ -7,8 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Clase de soporte para generar el hash (SHA-256) de otra cadena pero con un 'salt' dado.
@@ -17,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * @version 1.0
  */
 public class DigestEncoder  {
-    private static final Logger logger = LoggerFactory.getLogger(DigestEncoder.class);
 
     private DigestEncoder() {
     }
@@ -57,7 +54,6 @@ public class DigestEncoder  {
         try {
             return toHexString(getSHA256(source, salt));
         } catch (NoSuchAlgorithmException e) {
-            logger.error("This Wouldn't ocurr never ever... "+ e.getMessage());
             return null;
         }
     }
