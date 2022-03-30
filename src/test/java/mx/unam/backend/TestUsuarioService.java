@@ -134,7 +134,6 @@ public class TestUsuarioService {
 
         //todo ok
         try {
-            when(usuarioMapper.getByMail("aaa")).thenReturn(usuario);
             usuario.setRegeneraClaveInstante(System.currentTimeMillis()-60000);
             assertEquals(usuario, usuarioService.confirmaRegeneraClave(recuperacionToken));
         } catch (ControllerException e) {
