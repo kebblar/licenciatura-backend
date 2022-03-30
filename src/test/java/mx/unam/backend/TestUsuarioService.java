@@ -63,7 +63,7 @@ public class TestUsuarioService {
 
     @Test
     public void testConfirmaRegeneraClave() throws ServiceException{
-        RecuperacionTokenRequest recuperacionToken = new RecuperacionTokenRequest("xxx", "hola", "correo@correo.com");
+        RecuperacionTokenRequest recuperacionToken = new RecuperacionTokenRequest("xxx", "hola");
 
         //Menos de 8 caracteres
         try {
@@ -112,19 +112,11 @@ public class TestUsuarioService {
             assertTrue(checa(e, EnumMessage.STRENGTH_PASSWORD_VALIDATOR));
         } 
         
-        //correo equivocado
-        try {
-            recuperacionToken.setClaveNueva("Hola1234#");
-            when(usuarioMapper.getByMail("correo@correo.com")).thenReturn(null);
-            usuarioService.confirmaRegeneraClave(recuperacionToken);
-        } catch (ControllerException e) {
-            assertTrue(checa(e, EnumMessage.TOKEN_NOT_EXIST));
-        }
-        
         //token no existente
         try {
-            recuperacionToken.setMail("goose@mail.com");
-            when(usuarioMapper.getByMail("goose@mail.com")).thenReturn(usuario);
+            recuperacionToken.setClaveNueva("Hola1234#");
+            recuperacionToken.setToken("aaa");
+            when(usuarioMapper.getByToken("aaa")).thenReturn(null);
             usuarioService.confirmaRegeneraClave(recuperacionToken);
         } catch (ControllerException e) {
             assertTrue(checa(e, EnumMessage.TOKEN_NOT_EXIST));
@@ -132,9 +124,8 @@ public class TestUsuarioService {
         
         //token expirado
         try {
-            recuperacionToken.setMail("goose@mail.com");
             recuperacionToken.setToken("aaa");
-            when(usuarioMapper.getByMail("goose@mail.com")).thenReturn(usuario);
+            when(usuarioMapper.getByToken("aaa")).thenReturn(usuario);
             usuario.setRegeneraClaveInstante(System.currentTimeMillis() - (60000 * 80L));
             usuarioService.confirmaRegeneraClave(recuperacionToken);
         } catch (ControllerException e) {
@@ -143,8 +134,7 @@ public class TestUsuarioService {
 
         //todo ok
         try {
-            
-            when(usuarioMapper.getByMail("goose@mail.com")).thenReturn(usuario);
+            when(usuarioMapper.getByMail("aaa")).thenReturn(usuario);
             usuario.setRegeneraClaveInstante(System.currentTimeMillis()-60000);
             assertEquals(usuario, usuarioService.confirmaRegeneraClave(recuperacionToken));
         } catch (ControllerException e) {

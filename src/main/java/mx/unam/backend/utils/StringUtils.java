@@ -29,14 +29,6 @@ import java.security.SecureRandom;
  * @version $Id: $Id
  */
 public class StringUtils {
-    /**
-     * <p>main.</p>
-     *
-     * @param s a {@link java.lang.String} object.
-     */
-    public static void main(String...s) {
-        System.out.println(limpia("+82 (54) 16@91-3070#"));
-    }
 
     /**
      * <p>limpia.</p>
@@ -45,12 +37,12 @@ public class StringUtils {
      * @return a {@link java.lang.String} object.
      */
     public static String limpia(String s) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         int len = s.length();
         for(int i=0; i<len; i++) {
-            result = result + separa(s.charAt(i));
+            result.append(separa(s.charAt(i)));
         }
-        return result.replaceAll("@", "");
+        return result.toString().replace("@", "");
     }
 
     private static char separa(char s) {

@@ -129,7 +129,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     public Usuario confirmaRegeneraClave(RecuperacionTokenRequest tokenRequest) throws ServiceException {
         validate(tokenRequest.getClaveNueva());
         long unaHora = 1000*60*60L;
-        Usuario usuario = usuarioMapper.getByMail(tokenRequest.getMail());
+        Usuario usuario = usuarioMapper.getByToken(tokenRequest.getToken());
         if(usuario==null) throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
         if(!tokenRequest.getToken().equals(usuario.getRegeneraClaveToken())) throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
         long remaining = System.currentTimeMillis()-usuario.getRegeneraClaveInstante();

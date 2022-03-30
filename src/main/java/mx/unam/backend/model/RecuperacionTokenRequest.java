@@ -26,7 +26,6 @@ public class RecuperacionTokenRequest {
      */
     private String token;
     private String claveNueva;
-    private String mail;
 
     /**
      * Constructor basado en los atributos de la clase.
@@ -35,29 +34,11 @@ public class RecuperacionTokenRequest {
      * @param claveNueva a {@link java.lang.String} object.
      * @param mail a {@link java.lang.String} object.
      */
-    public RecuperacionTokenRequest(String token, String claveNueva, String mail) {
+    public RecuperacionTokenRequest(String token, String claveNueva) {
         this.token = token;
         this.claveNueva = claveNueva;
-        this.mail = mail;
     }
 
-    /**
-     * <p>Getter for the field <code>mail</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getMail() {
-        return this.mail;
-    }
-
-    /**
-     * <p>Setter for the field <code>mail</code>.</p>
-     *
-     * @param mail a {@link java.lang.String} object.
-     */
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
 
     /**
      * <p>Getter for the field <code>token</code>.</p>
