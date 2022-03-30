@@ -23,7 +23,7 @@ import mx.unam.backend.exceptions.*;
  */
 public class JWTUtil {
     private static JWTUtil instance = null;
-    private final String contacto = "contacta a tu administrador";
+    private static final String contacto = "contacta a tu administrador";
 
     private JWTUtil() {
     }
@@ -69,7 +69,7 @@ public class JWTUtil {
     /**
      * Checa si un token dado (con estructira correcta) ha sido firmado adecuadamente.
      * En caso de que sea un token con una estructira inválida o no esté firmado de una
-     * manera adecuada, dispara una excepción. Si todo esta bien, retorna "true".
+     * manera adecuada, dispara una excepción. Si esta bien, retorna "true".
      * <p> Es interesante mencionar que si a cadena jwt es verificada exitosamente, entonces
      * es posible parsear (hacer decode) al jwt de manera simple y confiar en la decodificación.
      * Ver decodeJwt para un decode en forma de cadena json.
@@ -105,23 +105,21 @@ public class JWTUtil {
         }
     }
     
-    public String decodeJwt(String jwt) {
+    public String decodeJwt(String jwt) throws ServiceException {
         String[] chunks = jwt.split("\\.");
-        if(chunks.length<3) throw new RuntimeException("Bad jwt");
+        if(chunks.length<3) throw new CustomException(EnumMessage.TOKEN_INVALID_STRUCTURE);
         Base64.Decoder decoder = Base64.getDecoder();
 
         try {
-            String payload = new String(decoder.decode(chunks[1]));
-
-
-            return payload;
+            return new String(decoder.decode(chunks[1]));
         } catch(IllegalArgumentException e) {
-            throw new RuntimeException("Bad jwt");
+            throw new ServiceException(e, "el token tiene una estructura invalida", e.getMessage() ,
+             10000, contacto, HttpStatus.BAD_REQUEST);
         }
     }
     
     private String getValueFromDecodedJwtString(String decodedJwt, String field) {
-        String[] partes = decodedJwt.substring(1, decodedJwt.length()-1).replaceAll("\"", "").split(",");
+        String[] partes = decodedJwt.substring(1, decodedJwt.length()-1).replace("\"", "").split(",");
         Map<String, String> mapa = new HashMap<>();
         for(String parte : partes) {
             String[] d = parte.split(":");
