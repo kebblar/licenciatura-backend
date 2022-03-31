@@ -134,6 +134,9 @@ public class JWTUtil {
     }
     
     public String getCorreoFromJwt(String jwt, String encryptKey) throws ServiceException{
+        if(encryptKey == null){
+            encryptKey = "secreto";
+        }
         String decodedJwt = revisaToken( jwt, encryptKey);
         return getValueFromDecodedJwtString(decodedJwt, "jti");
     }
