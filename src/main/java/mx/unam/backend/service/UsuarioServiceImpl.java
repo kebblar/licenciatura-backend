@@ -15,6 +15,7 @@ package mx.unam.backend.service;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import mx.unam.backend.exceptions.ControllerException;
@@ -28,6 +29,7 @@ import mx.unam.backend.model.Usuario;
 import mx.unam.backend.utils.DigestEncoder;
 import mx.unam.backend.utils.EnumMessage;
 import mx.unam.backend.utils.JWTUtil;
+import mx.unam.backend.utils.MailSenderService;
 import mx.unam.backend.utils.StringUtils;
 
 /**
@@ -46,6 +48,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     private UsuarioMapper usuarioMapper;
     private final MailSenderService mailSenderService;
+    @Value("${jwt.encryptor.password}")
+    private String encryptKey;
+    
 
     public UsuarioServiceImpl(UsuarioMapper usuarioMapper, MailSenderService mailSenderService) {
         this.usuarioMapper = usuarioMapper;
@@ -101,9 +106,8 @@ public class UsuarioServiceImpl implements UsuarioService{
         usuarioMapper.update(validUser);
 
         Login loginResponse = new Login();
-        String encryptKey = "secreto";
         loginResponse.setMail(validUser.getMail());
-        String jwt = JWTUtil.getInstance().createToken(usuario.getMail(), 27, encryptKey);
+        String jwt = JWTUtil.getInstance().createToken(usuario.getMail(), 27, this.encryptKey);
         loginResponse.setJwt(jwt);
         loginResponse.setRoles(usuarioMapper.getRoles(validUser.getMail()));
         return loginResponse;
@@ -177,5 +181,7 @@ public class UsuarioServiceImpl implements UsuarioService{
             throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Agregar un caracter especial a la clave.");
         }
     }
+
+
     
 }

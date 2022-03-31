@@ -18,7 +18,7 @@
  * Historia:
  *              Creación: 5 Sep 2021 @ 08:30:56
  */
-package mx.unam.backend.service;
+package mx.unam.backend.utils;
 
 
 import org.springframework.beans.factory.annotation.Value;

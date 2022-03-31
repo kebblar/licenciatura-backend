@@ -49,6 +49,9 @@ public class JWTUtil {
      * @return a {@link java.lang.String} object.
      */
     public String createToken(final String username, int securityTokenLasts, String encryptKey) {
+        if(encryptKey == null){
+            encryptKey = "secreto";
+        }
         byte[] key = encryptKey.getBytes();
 
         Calendar calendar = Calendar.getInstance();
@@ -129,6 +132,9 @@ public class JWTUtil {
     }
     
     public String getCorreoFromJwt(String jwt, String encryptKey) throws ServiceException{
+        if(encryptKey == null){
+            encryptKey = "secreto";
+        }
         String decodedJwt = revisaToken( jwt, encryptKey);
         return getValueFromDecodedJwtString(decodedJwt, "jti");
     }
