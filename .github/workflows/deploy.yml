@@ -40,8 +40,11 @@ jobs:
           SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
 
-      - name: Stop the server
-        run: ssh staging 'cd /home/ubuntu/licenciatura && echo "Hello world!!!!!" > prueba.txt'
+      - name: Bring changes
+        run: ssh staging 'cd /home/ubuntu/licenciatura/licenciatura-backend && git pull'
+        
+      - name: Create Artifact
+        run: ssh staging 'cd /home/ubuntu/licenciatura/licenciatura-backend && mvn package -Dmaven.test.skip'
 
   
   
