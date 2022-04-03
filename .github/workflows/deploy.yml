@@ -17,75 +17,6 @@ jobs:
       - name: Maven Package
         run: mvn test
 
-  static:
-    name: send to sonnar cloud
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=kebblar_licenciatura-backend
-
-  artifact:
-    name: Create the mvn artifact
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-            java-version: 1.11
-      - name: Build Maven project
-        run: |
-          mvn package -Dmaven.test.skip
-          mkdir staging && cp target/*.jar staging
-      - name: Set up a cache for Maven
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Persist workflow data as artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: github-actions-artifact
-          path: staging
-  publish:
-    name: Deploy to github packages
-    needs: artifact
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-            java-version: 1.11
-      - name: deploy package
-        run: mvn --batch-mode deploy -Dmaven.test.skip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
     name: "Deploy to EC2 instance"
     runs-on: ubuntu-latest
@@ -110,7 +41,7 @@ jobs:
           SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
 
       - name: Stop the server
-        run: ssh staging 'echo "Hello world!!!!!"'
+        run: ssh staging 'cd /home/ubuntu/licenciatura && echo "Hello world!!!!!" > prueba.txt'
 
   
   
