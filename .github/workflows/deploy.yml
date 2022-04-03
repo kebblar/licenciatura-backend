@@ -91,7 +91,7 @@ jobs:
     name: "Deploy to EC2 instance"
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    needs: test
+    needs: publish
     steps:
       - name: Configure SSH
         run: |
