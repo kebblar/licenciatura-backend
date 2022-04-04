@@ -119,7 +119,7 @@ public class UsuarioController {
         produces = "application/json; charset=utf-8")
     public Usuario confirmaPreregistro(@ApiParam(
         name = "token",
-        value = "Contiene el token de recuperacion.")
+        value = "Contiene el token de confirmacion.")
         @RequestBody String token) throws ControllerException{
         return usuarioService.confirmaPreregistro(token); 
     }
