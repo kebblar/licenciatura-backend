@@ -24,18 +24,6 @@ package mx.unam.backend.model;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
-import java.util.Objects;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * <p>Preregistro class.</p>
  *
@@ -43,13 +31,10 @@ import lombok.Setter;
  * @version $Id: $Id
  */
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter 
-@Setter
 public class Preregistro {
+    
     private int id;
+
     private String nick;
 
     @ApiModelProperty(example = "example@hotmail.com")
@@ -66,5 +51,115 @@ public class Preregistro {
     private String randomString;
 
     private long instanteRegistro;
+
+    private String nombre;
+
+    private String segundoApellido;
+
+    private String primerApellido;
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNick() {
+        return this.nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public String getCorreo() {
+        return this.correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getClaveHash() {
+        return this.claveHash;
+    }
+
+    public void setClaveHash(String claveHash) {
+        this.claveHash = claveHash;
+    }
+
+    public String getTelefono() {
+        return this.telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public Date getFechaNacimiento() {
+        return this.fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getRandomString() {
+        return this.randomString;
+    }
+
+    public void setRandomString(String randomString) {
+        this.randomString = randomString;
+    }
+
+    public long getInstanteRegistro() {
+        return this.instanteRegistro;
+    }
+
+    public void setInstanteRegistro(long instanteRegistro) {
+        this.instanteRegistro = instanteRegistro;
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getSegundoApellido() {
+        return this.segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
+
+    public String getPrimerApellido() {
+        return this.primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+
+    public Preregistro(int id, String nick, String correo, String claveHash, String telefono, Date fechaNacimiento, String randomString, long instanteRegistro, String nombre, String segundoApellido, String primerApellido) {
+        this.id = id;
+        this.nick = nick;
+        this.correo = correo;
+        this.claveHash = claveHash;
+        this.telefono = telefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.randomString = randomString;
+        this.instanteRegistro = instanteRegistro;
+        this.nombre = nombre;
+        this.segundoApellido = segundoApellido;
+        this.primerApellido = primerApellido;
+    }
+
 
 }

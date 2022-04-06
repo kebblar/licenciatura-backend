@@ -68,7 +68,9 @@ public class TestUsuarioService {
         usuario.setActivo(true);
         this.usuarioService = new UsuarioServiceImpl(usuarioMapper,mailSenderService,
          registroMapper, usuarioDetalleMapper);
-        this.preregistro = new Preregistro(10, "nick", "abc@gmail.com", "Hola1234#", "5540170234", new Date(2010, 1, 3), "xxx", 0);
+        this.preregistro = new Preregistro(10, "nick", "abc@gmail.com", "Hola1234#", "5540170234", 
+        new Date(2010, 1, 3), "xxx", 0, null, null, null);
+        
     }
 
     @Test

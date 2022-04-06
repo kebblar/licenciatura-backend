@@ -27,8 +27,6 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-
-import mx.unam.backend.model.UsuarioDetalle;
 import mx.unam.backend.model.Preregistro;
 
 import java.sql.SQLException;
@@ -44,7 +42,7 @@ public interface RegistroMapper {
 
     /** Constant <code>CAMPOS_REG=" idUsuario, nick, correo, claveHash, telefono"{trunked}</code> */
     String CAMPOS_REG = " idUsuario, nick, correo, claveHash, telefono, fechaNacimiento, randomString, " +
-            "instanteRegistro ";
+            "instanteRegistro, nombre, primerApellido, segundoApellido ";
 
     /**
      * Recupera un elemento del preregistro utilizando el correo electrónico que ingresó.
@@ -61,7 +59,10 @@ public interface RegistroMapper {
             @Result(property = "telefono",  column = "telefono"),
             @Result(property = "fechaNacimiento",  column = "fechaNacimiento"),
             @Result(property = "randomString",     column = "randomString"),
-            @Result(property = "instanteRegistro", column = "instanteRegistro")
+            @Result(property = "instanteRegistro", column = "instanteRegistro"),
+            @Result(property = "nombre",  column = "nombre"),
+            @Result(property = "primerApellido",     column = "primerApellido"),
+            @Result(property = "segundoApellido", column = "segundoApellido"),
           })
     @Select("SELECT " + CAMPOS_REG + " FROM preregistro WHERE correo = #{correo} ")
     Preregistro getByMail(String correo) throws SQLException;
@@ -77,8 +78,6 @@ public interface RegistroMapper {
     @Select("SELECT " + CAMPOS_REG + " FROM preregistro WHERE randomString = #{randomString} ")
     Preregistro getByRandomString(String randomString) throws SQLException;
 
-
-
     /**
      * Genera un usuario en la base de datos con los datos ya completos del preregistro.
      *
@@ -86,7 +85,10 @@ public interface RegistroMapper {
      * @return Entero que indica que la consulta tuvo éxito
      * @throws java.sql.SQLException Se dispara en caso de que se dispare un error en esta operación desde la base de datos.
      */
-    @Insert("INSERT INTO preregistro(nick, claveHash, correo, telefono, fechaNacimiento, randomString, instanteRegistro) VALUES(#{nick}, #{claveHash}, #{correo}, #{telefono}, #{fechaNacimiento}, #{randomString}, #{instanteRegistro} ) ON DUPLICATE KEY UPDATE nick=#{nick}, telefono=#{telefono}, fechaNacimiento=#{fechaNacimiento}, claveHash=#{claveHash}, randomString=#{randomString}, instanteRegistro=#{instanteRegistro}")
+    @Insert("INSERT INTO preregistro(nick, claveHash, correo, telefono, fechaNacimiento, randomString, instanteRegistro, nombre, primerApellido, segundoApellido) " +
+    "VALUES(#{nick}, #{claveHash}, #{correo}, #{telefono}, #{fechaNacimiento}, #{randomString}, #{instanteRegistro}, #{nombre}, #{primerApellido}, #{segundoApellido} )" +
+    " ON DUPLICATE KEY UPDATE nick=#{nick}, telefono=#{telefono}, fechaNacimiento=#{fechaNacimiento},"+ 
+    "claveHash=#{claveHash}, randomString=#{randomString}, instanteRegistro=#{instanteRegistro}, nombre=#{nombre}, primerApellido=#{primerApellido}, segundoApellido=#{segundoApellido}")
     @Options(useGeneratedKeys=true, keyProperty="id", keyColumn = "id")
     Integer insertRegistro(Preregistro preregistro) throws SQLException;
 
@@ -97,7 +99,8 @@ public interface RegistroMapper {
      * @return Entro que indica que se tuvo éxito en la modificación
      * @throws java.sql.SQLException Se dispara en caso de que se dispare un error en esta operación desde la base de datos
      */
-    @Update("UPDATE preregistro SET nick = #{nick}, telefono = #{telefono}, fechaNacimiento = #{fechaNacimiento}, claveHash = #{claveHash}, randomString = #{randomString}, instanteRegistro = #{instanteRegistro} WHERE correo = #{correo} ")
+    @Update("UPDATE preregistro SET nick = #{nick}, telefono = #{telefono}, fechaNacimiento = #{fechaNacimiento}, claveHash = #{claveHash}, randomString = #{randomString},"+ 
+    "instanteRegistro = #{instanteRegistro}, nombre=#{nombre}, primerApellido=#{primerApellido}, segundoApellido=#{segundoApellido} WHERE correo = #{correo} ")
     Integer update(Preregistro registro) throws SQLException;
 
     /**

@@ -202,11 +202,6 @@ public class UsuarioServiceImpl implements UsuarioService{
             throw new CustomException(EnumMessage.TOKEN_EXPIRED);
         }
 
-        // Si la clave no es la misma, notifica el error:
-        if(!token.equals(preregistro.getRandomString())) {
-            throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
-        }
-
         // Si todito lo anterior salió bien, actualiza los
         // datos, guárdalos y elimina el preregistro auxiliar:
         try {
@@ -241,9 +236,9 @@ public class UsuarioServiceImpl implements UsuarioService{
         // Crea un objeto 'usuarioDetalles' (con el ID autogenerado) e insértalo en la DB:
         UsuarioDetalle usuarioDetalle = new UsuarioDetalle(
             idUsuario,
-            "",     // nombre
-            "",     // apellidoPaterno
-            "",     // apellidoMaterno
+            preregistro.getNombre(),     // nombre
+            preregistro.getPrimerApellido(),     // apellidoPaterno
+            preregistro.getSegundoApellido(),     // apellidoMaterno
             preregistro.getNick(),     // nickName
             preregistro.getFechaNacimiento(),   // fechaNacimiento
             preregistro.getTelefono()    // telefonoCelular

@@ -13,7 +13,8 @@ CREATE TABLE usuarioDetalle(idUsuario BIGINT UNSIGNED primary key, nombre VARCHA
 
 CREATE TABLE preregistro(idUsuario SERIAL, nick VARCHAR(50), 
 correo VARCHAR(50), claveHash VARCHAR(256), randomString VARCHAR(20),
-instanteRegistro BIGINT, fechaNacimiento DATE, telefono VARCHAR(12));
+instanteRegistro BIGINT, fechaNacimiento DATE, telefono VARCHAR(12), nombre VARCHAR(50), primerApellido VARCHAR(50), 
+segundoApellido VARCHAR(50));
 
 INSERT INTO usuario VALUES(1,"goose@mail.com", "42a83c6132a2f3801191edec975f7f0f802fdfb373f9c3378043c93dbab70fd4", 0, 1, 0, 0,0,0,"",0); 
 
