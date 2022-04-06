@@ -12,7 +12,9 @@
  */
 package mx.unam.backend.mapper;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.exceptions.PersistenceException;
@@ -23,6 +25,8 @@ import mx.unam.backend.model.Usuario;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
+
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -102,5 +106,30 @@ public interface UsuarioMapper {
     })
     @Select("SELECT id,nombre,activo FROM mailRoles WHERE mail = #{mail};")
     List<Rol> getRoles(String mail) throws PersistenceException;
+
+    /**
+     * Inserta un usuario y su rol en una tabla que relaciona ambas características.
+     *
+     * @param idUsuario id del usuario
+     * @param idRol id del rol asociado al usuario
+     * @return Entero que indica que la operación salió bien
+     * @throws java.sql.SQLException Se dispara en caso de que ocurra un error en esta operación desde la base de datos
+     */
+    @Insert("INSERT INTO rolUsuario VALUES(#{idUsuario}, #{idRol})")
+    int insertUserRol(int idUsuario, int idRol) throws SQLException;
+
+    /**
+     * Inserta un objeto de tipo 'usuario' con base en la información dada por el objeto de tipo 'usuario'.
+     *
+     * @param usr a ser insertado.
+     * @return el auto incremental asociado a esa inserción.
+     * @throws java.sql.SQLException Se dispara en caso de que se dispare un error en esta operación desde la base de datos.
+     */
+    @Insert("INSERT INTO usuario(mail, clave, creado, activo, accesoNegadoContador, instanteBloqueo, "
+            + "instanteUltimoAcceso, instanteUltimoCambioClave, regeneraClaveToken, regeneraClaveInstante) "
+            + "VALUES(#{mail}, #{clave}, #{creado}, #{activo}, #{accesoNegadoContador}, #{instanteBloqueo}, "
+            + "#{instanteUltimoAcceso}, #{instanteUltimoCambioClave}, #{regeneraClaveToken}, #{regeneraClaveInstante} )")
+    @Options(useGeneratedKeys=true, keyProperty="id", keyColumn = "id")
+    int insert(Usuario usr) throws SQLException;
 
 }

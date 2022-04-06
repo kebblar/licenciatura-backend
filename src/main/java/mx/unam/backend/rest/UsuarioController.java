@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiParam;
 import mx.unam.backend.exceptions.ControllerException;
 import mx.unam.backend.model.CredencialesRequest;
 import mx.unam.backend.model.Login;
+import mx.unam.backend.model.Preregistro;
 import mx.unam.backend.model.RecuperacionTokenRequest;
 import mx.unam.backend.model.Usuario;
 import mx.unam.backend.service.UsuarioService;
@@ -95,5 +96,31 @@ public class UsuarioController {
         value = "Representa a una confirmacion de regeneracion (mail, nueva clave y token)")
         @RequestBody RecuperacionTokenRequest tokenRequest) throws ControllerException{
         return usuarioService.confirmaRegeneraClave(tokenRequest); 
+    }
+
+    @ApiOperation(
+            value = "UsuarioController::preRegistro",
+            notes = "Recibe la informacion del usuario necesaria para su registro")
+    @PostMapping(
+        path = "/preregistro",
+        produces = "application/json; charset=utf-8")
+    public Preregistro preRegistro(@ApiParam(
+        name = "preregistro",
+        value = "Contiene la informacion que un usuario necesita para hacer un preregistro.")
+        @RequestBody Preregistro preregistro) throws ControllerException{
+        return usuarioService.preRegistro(preregistro); 
+    }
+
+    @ApiOperation(
+            value = "UsuarioController::preRegistro",
+            notes = "Recibe el token enviado al correo electronico del usuario")
+    @PostMapping(
+        path = "/confirma-registro",
+        produces = "application/json; charset=utf-8")
+    public Usuario confirmaPreregistro(@ApiParam(
+        name = "token",
+        value = "Contiene el token de confirmacion.")
+        @RequestBody String token) throws ControllerException{
+        return usuarioService.confirmaPreregistro(token); 
     }
 }
