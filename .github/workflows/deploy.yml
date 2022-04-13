@@ -1,8 +1,10 @@
 name: Build Maven project
 on:
+  repository_dispatch:
   push:
     branches:
       - develop
+      
 jobs:  
   test:
     name: Unit Test
