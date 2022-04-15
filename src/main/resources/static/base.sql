@@ -5,6 +5,14 @@ CREATE TABLE usuario(id SERIAL, mail VARCHAR(250), clave VARCHAR(256),
     instanteUltimoAcceso BIGINT, instanteUltimoCambioClave BIGINT,
     regeneraClaveToken VARCHAR(6), regeneraClaveInstante BIGINT,
     primary key(id));
+
+CREATE TABLE usuario(id SERIAL, 
+    titulo VARCHAR(256), 
+    propietario_mail VARCHAR(256), 
+    texto_plano VARCHAR(256), 
+    comentarios VARCHAR(256),
+    n_me_gusta BIGINT);
+
 CREATE TABLE rol(id INT, nombre VARCHAR(30), activo BOOL, primary key(id));
 CREATE TABLE rolUsuario(idUsuario BIGINT UNSIGNED, idRol INT, primary key(idUsuario,idRol), foreign key(idUsuario) references usuario(id), foreign key(idRol) references rol(id));
 
