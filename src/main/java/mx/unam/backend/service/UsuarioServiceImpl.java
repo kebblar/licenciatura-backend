@@ -237,10 +237,10 @@ public class UsuarioServiceImpl implements UsuarioService{
         UsuarioDetalle usuarioDetalle = new UsuarioDetalle(
             idUsuario,
             preregistro.getNombre(),     // nombre
-            preregistro.getPrimerApellido(),     // apellidoPaterno
             preregistro.getSegundoApellido(),     // apellidoMaterno
-            preregistro.getNick(),     // nickName
+            preregistro.getPrimerApellido(),     // apellidoPaterno
             preregistro.getFechaNacimiento(),   // fechaNacimiento
+            preregistro.getNick(),     // nickName
             preregistro.getTelefono()    // telefonoCelular
         );
         this.usuarioDetalleMapper.insert(usuarioDetalle);
@@ -300,7 +300,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     }
 
     private void sendMail(String nick, String correo, String randomString, String titulo) {
-        String body= String.format("<h1>Hola %s. Tu clave de acceso es %s y tiene una validez de %d minutos. (body auxiliar) </h1>", nick, randomString, 10);
+        String body= String.format("<h1>Hola %s. Tu token es %s y tiene una validez de %d minutos. </h1>", nick, randomString, 10);
         this.mailSenderService.sendHtmlMail(correo, titulo, body);
     }
 

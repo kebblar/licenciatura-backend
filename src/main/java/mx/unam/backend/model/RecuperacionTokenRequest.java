@@ -11,6 +11,9 @@
  *              Creación: 11 Mar 2022
  */
 package mx.unam.backend.model;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Implementacion del POJO de la entidad de 'RecuperacionTokenRequest'.
@@ -19,6 +22,9 @@ package mx.unam.backend.model;
  * @version 1.0-SNAPSHOT
  * @since   1.0-SNAPSHOT
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RecuperacionTokenRequest {
 
     /*
@@ -26,54 +32,4 @@ public class RecuperacionTokenRequest {
      */
     private String token;
     private String claveNueva;
-
-    /**
-     * Constructor basado en los atributos de la clase.
-     *
-     * @param token a {@link java.lang.String} object.
-     * @param claveNueva a {@link java.lang.String} object.
-     * @param mail a {@link java.lang.String} object.
-     */
-    public RecuperacionTokenRequest(String token, String claveNueva) {
-        this.token = token;
-        this.claveNueva = claveNueva;
-    }
-
-
-    /**
-     * <p>Getter for the field <code>token</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getToken() {
-        return this.token;
-    }
-
-    /**
-     * <p>Setter for the field <code>token</code>.</p>
-     *
-     * @param token a {@link java.lang.String} object.
-     */
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    /**
-     * <p>Getter for the field <code>claveNueva</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getClaveNueva() {
-        return this.claveNueva;
-    }
-
-    /**
-     * <p>Setter for the field <code>claveNueva</code>.</p>
-     *
-     * @param claveNueva a {@link java.lang.String} object.
-     */
-    public void setClaveNueva(String claveNueva) {
-        this.claveNueva = claveNueva;
-    }
-
 }

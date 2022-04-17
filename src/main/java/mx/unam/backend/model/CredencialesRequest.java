@@ -12,6 +12,12 @@
  */
 package mx.unam.backend.model;
 
+import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * <p>Descripción:</p>
  * POJO asociado a la entidad 'usuario'.
@@ -20,62 +26,15 @@ package mx.unam.backend.model;
  * @version 1.0-SNAPSHOT
  * @since 1.0-SNAPSHOT
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CredencialesRequest {
 
+    @NotNull
     private String mail;
-    private String password;
 
-    /**
-     * Constructor basado en todos los atributos de la clase.
-     *
-     * @param mail un objeto de tipo {@link java.lang.String}.
-     * @param password un objeto de tipo {@link java.lang.String}.
-     */
-    public CredencialesRequest(String mail, String password) {
-        this.mail = mail;
-        this.password = password;
-    }
-
-    /**
-     * Constructor por default (sin parámetros).
-     */
-    public CredencialesRequest() {
-    }
-
-    /**
-     * <p>Getter para el atributo <code>mail</code>.</p>
-     *
-     * @return un objeto de tipo {@link java.lang.String}.
-     */
-    public String getMail() {
-        return this.mail;
-    }
-
-    /**
-     * <p>Setter para el atributo <code>mail</code>.</p>
-     *
-     * @param mail un objeto de tipo {@link java.lang.String}.
-     */
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    /**
-     * <p>Getter para el atributo <code>clave</code>.</p>
-     *
-     * @return un objeto de tipo {@link java.lang.String}.
-     */
-    public String getClave() {
-        return this.password;
-    }
-
-    /**
-     * <p>Setter para el atributo <code>clave</code>.</p>
-     *
-     * @param password un objeto de tipo {@link java.lang.String}.
-     */
-    public void setClave(String password) {
-        this.password = password;
-    }
+    @NotNull
+    private String clave;
 
 }
