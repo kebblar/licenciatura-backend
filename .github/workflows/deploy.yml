@@ -92,7 +92,6 @@ jobs:
   deploy:
     name: "Deploy to EC2 instance"
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     needs: publish
     steps:
       - name: Configure SSH
