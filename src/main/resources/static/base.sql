@@ -38,17 +38,35 @@ AS
     JOIN rol ON aux.idRol = rol.id WHERE activo = 1;
 
 CREATE TABLE publicacion(
-    publicacion_id VARCHAR(50),
-    propietario_id VARCHAR(50),
+    publicacion_id VARCHAR(50) NOT NULL,
+    usuario_creador_id VARCHAR(50) NOT NULL,
     texto_publicacion VARCHAR(1000),
-    fecha_creacion DATE,
-    es_publica BOOLEAN
-)
+    fecha_creacion TIMESTAMP NOT NULL,
+    es_publica BOOLEAN NOT NULL DEFAULT FALSE
+);
 
 CREATE TABLE comentario(
-    comentario_id VARCHAR(50),
-    publicacion_id VARCHAR(50),
-    propietario_id VARCHAR(50,
-    texto_comentario VARCHAR(1000),
-    fecha_creacion DATE
-)
+    comentario_id VARCHAR(50) NOT NULL,
+    publicacion_id VARCHAR(50) NOT NULL,
+    usuario_creador_id VARCHAR(50) NOT NULL,
+    comentario VARCHAR(1000) NOT NULL,
+    fecha_creacion TIMESTAMP NOT NULL
+);
+
+CREATE TABLE imagen(
+    imagen_id VARCHAR(50) NOT NULL,
+    publicacion_id VARCHAR(50) NOT NULL,
+    imagen BYTEA NOT NULL
+);
+
+CREATE TABLE video(
+    video_id VARCHAR(50) NOT NULL,
+    publicacion_id VARCHAR(50) NOT NULL,
+    video VARCHAR NOT NULL
+);
+
+CREATE TABLE gif(
+    gif_id VARCHAR(50) NOT NULL,
+    publicacion_id VARCHAR(50) NOT NULL,
+    gif VARCHAR NOT NULL
+);
