@@ -12,7 +12,7 @@
  */
 package mx.unam.backend.model;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * Implementacion del POJO de la entidad de 'Publicacion'.
@@ -23,106 +23,89 @@ import java.util.List;
  */
 public class Publicacion {
 
-    private int id;
-    private String textoPlano;
-    private String titulo;
-    private Usuario propietario;
-    private List<String> comentarios;
-    private long nMeGusta;
+    private String publicacionId;
+    private String propietarioId;
+    private String textoPublicacion;
+    private Date fechaCreacion;
+    private boolean esPublica;
 
     /**
      * Constructor de la clase Publicacion.
-     * @param id identificador de la publicación.
-     * @param titulo de la publicación
-     * @param propietario usuario que creó la publicación
-     * @param textoPlano texto que se escribió dentro de la publicación.
-     * @param comentarios comentarios de la publicación
+     * @param publicacionId identificador de la publicación.
+     * @param propietarioId usuario que creó la publicación
+     * @param textoPublicacion texto que se escribió dentro de la publicación.
      * @param nMeGusta número de me gustas que tiene la publicación.
      */
-    public Publicacion(int id, String titulo, Usuario propietario, String textoPlano, List<String> comentarios, long nMeGusta){
-        this.id=id;
-        this.titulo = titulo;
-        this.propietario = propietario;
-        this.textoPlano = textoPlano;
-        this.comentarios = comentarios;
-        this.nMeGusta = nMeGusta;
+    public Publicacion(String publicacionId, String propietarioId, Date fechaCreacion, String textoPublicacion, boolean esPublica){
+        this.publicacionId=publicacionId;
+        this.propietarioId = propietarioId;
+        this.textoPublicacion = textoPublicacion;
+        this.fechaCreacion = fechaCreacion;
+        this.esPublica = esPublica;
     }
 
     /**
-     * <p>Getter para el campo <code>id</code>.</p>
+     * <p>Getter para el campo <code>publicacionId</code>.</p>
      *
      * @return un int.
      */
-    public int getId() {
-        return this.id;
+    public String getId() {
+        return this.publicacionId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String publicacionId) {
+        this.publicacionId = publicacionId;
     }
 
     /**
-     * <p>Getter para el campo <code>textoPlano</code>.</p>
+     * <p>Getter para el campo <code>textoPublicacion</code>.</p>
      *
      * @return un String.
      */
     public String getTextoPlano() {
-        return this.textoPlano;
+        return this.textoPublicacion;
     }
 
-    public void setTextoPlano(String textoPlano) {
-        this.textoPlano = textoPlano;
+    public void setTextoPlano(String textoPublicacion) {
+        this.textoPublicacion = textoPublicacion;
     }
 
     /**
-     * <p>Getter para el campo <code>titulo</code>.</p>
+     * <p>Getter para el campo <code>fechaCreacion</code>.</p>
+     *
+     * @return un Date.
+     */
+    public Date getFechaCreacion() {
+        return this.fechaCreacion;
+    }
+
+    public void setTitulo(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    /**
+     * <p>Getter para el campo <code>propietarioId</code>.</p>
      *
      * @return un String.
      */
-    public String getTitulo() {
-        return this.titulo;
+    public String getPropietarioId() {
+        return this.propietarioId;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    /**
-     * <p>Getter para el campo <code>propietario</code>.</p>
-     *
-     * @return un Usuario.
-     */
-    public Usuario getPropietario() {
-        return this.propietario;
-    }
-
-    public void setPropietario(Usuario propietario) {
-        this.propietario = propietario;
+    public void setPropietarioId(String propietarioId) {
+        this.propietarioId = propietarioId;
     }
 
     /**
-     * <p>Getter para el campo <code>comentarios</code>.</p>
+     * <p>Getter para el campo <code>esPublica</code>.</p>
      *
-     * @return una List.
+     * @return un booleano.
      */
-    public List<String> getComentarios() {
-        return this.comentarios;
+    public boolean getEsPublica() {
+        return this.esPublica;
     }
 
-    public void setComentarios(List<String> comentarios) {
-        this.comentarios = comentarios;
-    }
-
-    /**
-     * <p>Getter para el campo <code>nMeGusta</code>.</p>
-     *
-     * @return un long.
-     */
-    public long getNMeGusta() {
-        return this.nMeGusta;
-    }
-
-    public void setNMeGusta(long nMeGusta) {
-        this.nMeGusta = nMeGusta;
+    public void setComentarios(boolean esPublica) {
+        this.esPublica = esPublica;
     }
 }
