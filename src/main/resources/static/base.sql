@@ -36,3 +36,19 @@ AS
     SELECT id,nombre,activo,mail FROM 
         (SELECT mail,idRol FROM usuario JOIN rolUsuario ON usuario.id = rolUsuario.idUsuario) as aux
     JOIN rol ON aux.idRol = rol.id WHERE activo = 1;
+
+CREATE TABLE publicacion(
+    publicacion_id VARCHAR(50),
+    propietario_id VARCHAR(50),
+    texto_publicacion VARCHAR(1000),
+    fecha_creacion DATE,
+    es_publica BOOLEAN
+)
+
+CREATE TABLE comentario(
+    comentario_id VARCHAR(50),
+    publicacion_id VARCHAR(50),
+    propietario_id VARCHAR(50,
+    texto_comentario VARCHAR(1000),
+    fecha_creacion DATE
+)
