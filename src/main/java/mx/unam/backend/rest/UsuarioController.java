@@ -45,7 +45,7 @@ import mx.unam.backend.service.UsuarioService;
  * @since   1.0-SNAPSHOT
  */
 @RestController
-@RequestMapping(value = "/api/")
+@RequestMapping(value = "/api/usuario")
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
@@ -63,7 +63,7 @@ public class UsuarioController {
             value = "UsuarioController::login",
             notes = "Recibe el usuario con el que queremos iniciar sesion.")
     @PostMapping(
-        path = "usuario/login",
+        path = "/login",
         produces = "application/json; charset=utf-8")
     public Login login(@ApiParam(
         name = "usuario",
@@ -76,7 +76,7 @@ public class UsuarioController {
             value = "UsuarioController::recuperarClave",
             notes = "Recibe el mail del usuario del que queremos recuperar su contrasena.")
     @PostMapping(
-        path = "usuario/recupera-clave",
+        path = "/recupera-clave",
         produces = "application/json; charset=utf-8")
     public Usuario recuperarClave(@ApiParam(
         name = "mail",
@@ -89,7 +89,7 @@ public class UsuarioController {
             value = "UsuarioController::confirmaRegeneracionClave",
             notes = "Recibe la nueva clave y el token del usuario del que queremos recuperar su contrasena.")
     @PostMapping(
-        path = "usuario/confirma-token",
+        path = "/confirma-token",
         produces = "application/json; charset=utf-8")
     public Usuario confirmaRegeneraClave(@ApiParam(
         name = "clave nueva y Token",
@@ -102,7 +102,7 @@ public class UsuarioController {
             value = "UsuarioController::preRegistro",
             notes = "Recibe la informacion del usuario necesaria para su registro")
     @PostMapping(
-        path = "usuario/preregistro",
+        path = "/preregistro",
         produces = "application/json; charset=utf-8")
     public Preregistro preRegistro(@ApiParam(
         name = "preregistro",
@@ -115,7 +115,7 @@ public class UsuarioController {
             value = "UsuarioController::preRegistro",
             notes = "Recibe el token enviado al correo electronico del usuario")
     @PostMapping(
-        path = "usuario/confirma-registro",
+        path = "/confirma-registro",
         produces = "application/json; charset=utf-8")
     public Usuario confirmaPreregistro(@ApiParam(
         name = "token",
