@@ -42,7 +42,8 @@ CREATE TABLE publicacion(
     usuario_creador_id VARCHAR(50) NOT NULL,
     texto_publicacion VARCHAR(1000),
     fecha_creacion TIMESTAMP NOT NULL,
-    es_publica BOOLEAN NOT NULL DEFAULT FALSE
+    es_publica BOOLEAN NOT NULL DEFAULT FALSE,
+    primary key(publicion_id)
 );
 
 CREATE TABLE comentario(
@@ -50,23 +51,31 @@ CREATE TABLE comentario(
     publicacion_id VARCHAR(50) NOT NULL,
     usuario_creador_id VARCHAR(50) NOT NULL,
     comentario VARCHAR(1000) NOT NULL,
-    fecha_creacion TIMESTAMP NOT NULL
+    fecha_creacion TIMESTAMP NOT NULL,
+    primary key(comentario_id),
+    foreign key(comentario_id) references publicaion(publicacion_id)
 );
 
 CREATE TABLE imagen(
     imagen_id VARCHAR(50) NOT NULL,
     publicacion_id VARCHAR(50) NOT NULL,
-    imagen BYTEA NOT NULL
+    imagen BYTEA NOT NULL,
+    primary key(imagen_id),
+    foreign key(imagen_id) references publicaion(publicacion_id)
 );
 
 CREATE TABLE video(
     video_id VARCHAR(50) NOT NULL,
     publicacion_id VARCHAR(50) NOT NULL,
-    video VARCHAR NOT NULL
+    video VARCHAR NOT NULL,
+    primary key(video_id),
+    foreign key(video_id) references publicaion(publicacion_id)
 );
 
 CREATE TABLE gif(
     gif_id VARCHAR(50) NOT NULL,
     publicacion_id VARCHAR(50) NOT NULL,
-    gif VARCHAR NOT NULL
+    gif VARCHAR NOT NULL,
+    primary key(gif_id),
+    foreign key(gif_id) references publicaion(publicacion_id)
 );
