@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import mx.unam.backend.model.Publicacion;
+import mx.unam.backend.model.Gif;
 
 /**
- * Implementacion del Controller de la entidad de 'Publicacion'.
+ * Implementacion del Controller de la entidad de 'Gif'.
  *
  * @author  Gerardo García
  * @version 1.0-SNAPSHOT
@@ -16,12 +16,12 @@ import mx.unam.backend.model.Publicacion;
 
 @RestController
 @RequestMapping(value = "/feed")
-public class PublicacionController {
+public class GifController {
 
-	private PublicacionService publicacion;
+	private GifService gif;
 
-	public PublicacionController(PublicacionService publicacion){
-		this.publicacion=publicacion;
+	public GifController(GifService gif){
+		this.gif=gif;
 	}
 
 	// @GetMapping(
@@ -32,25 +32,25 @@ public class PublicacionController {
  //    }
 
     @PostMapping(
-        	path = "/publicar",
+        	path = "/gif",
         	produces = "application/json; charset=utf-8")
-    public Publicacion actualizaPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.actualiza(p);
+    public Gif actualizaGif(@RequestBody GifService p){
+    	return gif.actualiza(p);
     }
 
     @PutMapping(
-        	path = "/publicar",
+        	path = "/gif",
         	produces = "application/json; charset=utf-8")
-    public Publicacion creaPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.inserta(p);
+    public Gif creaGif(@RequestBody GifService p){
+    	return gif.inserta(p);
     }
 
 
     @DeleteMapping(
-        	path = "/publicar",
+        	path = "/gif",
         	produces = "application/json; charset=utf-8")
-    public Publicacion borraPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.borra(p);
+    public Gif borraGif(@RequestBody GifService p){
+    	return gif.borra(p);
     }
 
     

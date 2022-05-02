@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import mx.unam.backend.model.Publicacion;
+import mx.unam.backend.model.Video;
 
 /**
- * Implementacion del Controller de la entidad de 'Publicacion'.
+ * Implementacion del Controller de la entidad de 'Video'.
  *
  * @author  Gerardo García
  * @version 1.0-SNAPSHOT
@@ -16,12 +16,12 @@ import mx.unam.backend.model.Publicacion;
 
 @RestController
 @RequestMapping(value = "/feed")
-public class PublicacionController {
+public class VideoController {
 
-	private PublicacionService publicacion;
+	private VideoService video;
 
-	public PublicacionController(PublicacionService publicacion){
-		this.publicacion=publicacion;
+	public VideoController(VideoService video){
+		this.video=video;
 	}
 
 	// @GetMapping(
@@ -32,25 +32,25 @@ public class PublicacionController {
  //    }
 
     @PostMapping(
-        	path = "/publicar",
+        	path = "/video",
         	produces = "application/json; charset=utf-8")
-    public Publicacion actualizaPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.actualiza(p);
+    public Video actualizaVideo(@RequestBody VideoService p){
+    	return video.actualiza(p);
     }
 
     @PutMapping(
-        	path = "/publicar",
+        	path = "/video",
         	produces = "application/json; charset=utf-8")
-    public Publicacion creaPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.inserta(p);
+    public Video creaVideo(@RequestBody VideoService p){
+    	return video.inserta(p);
     }
 
 
     @DeleteMapping(
-        	path = "/publicar",
+        	path = "/video",
         	produces = "application/json; charset=utf-8")
-    public Publicacion borraPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.borra(p);
+    public Video borraVideo(@RequestBody VideoService p){
+    	return video.borra(p);
     }
 
     

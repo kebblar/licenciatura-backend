@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import mx.unam.backend.model.Publicacion;
+import mx.unam.backend.model.Imagen;
 
 /**
- * Implementacion del Controller de la entidad de 'Publicacion'.
+ * Implementacion del Controller de la entidad de 'Imagen'.
  *
  * @author  Gerardo García
  * @version 1.0-SNAPSHOT
@@ -16,12 +16,12 @@ import mx.unam.backend.model.Publicacion;
 
 @RestController
 @RequestMapping(value = "/feed")
-public class PublicacionController {
+public class ImagenController {
 
-	private PublicacionService publicacion;
+	private ImagenService imagen;
 
-	public PublicacionController(PublicacionService publicacion){
-		this.publicacion=publicacion;
+	public ImagenController(ImagenService imagen){
+		this.imagen=imagen;
 	}
 
 	// @GetMapping(
@@ -32,25 +32,25 @@ public class PublicacionController {
  //    }
 
     @PostMapping(
-        	path = "/publicar",
+        	path = "/imagen",
         	produces = "application/json; charset=utf-8")
-    public Publicacion actualizaPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.actualiza(p);
+    public Imagen actualizaImagen(@RequestBody ImagenService p){
+    	return imagen.actualiza(p);
     }
 
     @PutMapping(
-        	path = "/publicar",
+        	path = "/imagen",
         	produces = "application/json; charset=utf-8")
-    public Publicacion creaPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.inserta(p);
+    public Imagen creaImagen(@RequestBody ImagenService p){
+    	return imagen.inserta(p);
     }
 
 
     @DeleteMapping(
-        	path = "/publicar",
+        	path = "/imagen",
         	produces = "application/json; charset=utf-8")
-    public Publicacion borraPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.borra(p);
+    public Imagen borraImagen(@RequestBody ImagenService p){
+    	return imagen.borra(p);
     }
 
     

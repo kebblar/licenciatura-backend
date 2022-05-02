@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import mx.unam.backend.model.Publicacion;
+import mx.unam.backend.model.Comentario;
 
 /**
- * Implementacion del Controller de la entidad de 'Publicacion'.
+ * Implementacion del Controller de la entidad de 'Comentario'.
  *
  * @author  Gerardo García
  * @version 1.0-SNAPSHOT
@@ -16,12 +16,12 @@ import mx.unam.backend.model.Publicacion;
 
 @RestController
 @RequestMapping(value = "/feed")
-public class PublicacionController {
+public class ComentarioController {
 
-	private PublicacionService publicacion;
+	private ComentarioService comentario;
 
-	public PublicacionController(PublicacionService publicacion){
-		this.publicacion=publicacion;
+	public ComentarioController(ComentarioService comentario){
+		this.comentario=comentario;
 	}
 
 	// @GetMapping(
@@ -32,25 +32,25 @@ public class PublicacionController {
  //    }
 
     @PostMapping(
-        	path = "/publicar",
+        	path = "/comentario",
         	produces = "application/json; charset=utf-8")
-    public Publicacion actualizaPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.actualiza(p);
+    public Comentario actualizaComentario(@RequestBody ComentarioService p){
+    	return comentario.actualiza(p);
     }
 
     @PutMapping(
-        	path = "/publicar",
+        	path = "/comentario",
         	produces = "application/json; charset=utf-8")
-    public Publicacion creaPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.inserta(p);
+    public Comentario creaComentario(@RequestBody ComentarioService p){
+    	return comentario.inserta(p);
     }
 
 
     @DeleteMapping(
-        	path = "/publicar",
+        	path = "/comentario",
         	produces = "application/json; charset=utf-8")
-    public Publicacion borraPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.borra(p);
+    public Comentario borraComentario(@RequestBody ComentarioService p){
+    	return comentario.borra(p);
     }
 
     
