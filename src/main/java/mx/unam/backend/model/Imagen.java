@@ -24,26 +24,56 @@ public class Imagen {
     private String publicacionId;
     private String imagen;
 
+    /**
+     * <p>Getter para el campo <code>imagenId</code>.</p>
+     *
+     * @return un String.
+     */
     public String getImagenId() {
         return this.imagenId;
     }
 
+    /**
+     * <p>Setter para el campo <code>imagenId</code>.</p>
+     * 
+     * @param imagenId
+     */
     public void setImagenId(String imagenId) {
         this.imagenId = imagenId;
     }
-
+    
+    /**
+     * <p>Getter para el campo <code>publicacionId</code>.</p>
+     *
+     * @return un String.
+     */
     public String getPublicacionId() {
         return this.publicacionId;
     }
 
+    /**
+     * <p>Setter para el campo <code>publicacionId</code>.</p>
+     * 
+     * @param publicacionId
+     */
     public void setPublicacionId(String publicacionId) {
         this.publicacionId = publicacionId;
     }
 
+    /**
+     * <p>Getter para el campo <code>imagen</code>.</p>
+     *
+     * @return un String.
+     */
     public String getImagen() {
         return this.imagen;
     }
 
+    /**
+     * <p>Setter para el campo <code>imagen</code>.</p>
+     * 
+     * @param imagen
+     */
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }

@@ -24,26 +24,56 @@ public class Video {
     private String publicacionId;
     private String video;
 
+    /**
+     * <p>Getter para el campo <code>videoId</code>.</p>
+     *
+     * @return un String.
+     */
     public String getVideoId() {
         return this.videoId;
     }
 
+    /**
+     * <p>Setter para el campo <code>videoId</code>.</p>
+     * 
+     * @param videoId
+     */
     public void setVideoId(String videoId) {
         this.videoId = videoId;
     }
 
+    /**
+     * <p>Getter para el campo <code>publicacionId</code>.</p>
+     *
+     * @return un String.
+     */
     public String getPublicacionId() {
         return this.publicacionId;
     }
 
+    /**
+     * <p>Setter para el campo <code>publicacionId</code>.</p>
+     * 
+     * @param publicacionId
+     */
     public void setPublicacionId(String publicacionId) {
         this.publicacionId = publicacionId;
     }
 
+    /**
+     * <p>Getter para el campo <code>video</code>.</p>
+     *
+     * @return un String.
+     */
     public String getVideo() {
         return this.video;
     }
 
+    /**
+     * <p>Setter para el campo <code>video</code>.</p>
+     * 
+     * @param video
+     */
     public void setVideo(String video) {
         this.video = video;
     }
