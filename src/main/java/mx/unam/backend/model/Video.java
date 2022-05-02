@@ -48,6 +48,12 @@ public class Video {
         this.video = video;
     }
 
+    /**
+     * Constructor de la clase Video.
+     * @param videoId Identificador del video en la base de datos.
+     * @param publicacionId identificador de la publicación a la que pertenece el video.
+     * @param video url en el que se encuentra el video en el servidor.
+     */
     public Video(String videoId, String publicacionId, String video){
         this.videoId = videoId;
         this.publicacionId = publicacionId;

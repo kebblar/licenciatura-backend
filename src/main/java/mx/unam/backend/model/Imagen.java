@@ -52,7 +52,7 @@ public class Imagen {
      * Constructor de la clase Imagen.
      * @param imagenId Identificador de la imagen en la base de datos.
      * @param publicacionId identificador de la publicación a la que pertenece la imagen.
-     * @param imagen imagen códificada.
+     * @param imagen url en el que se encuentra la imagen en el servidor.
      */
     public Imagen(String imagenId, String publicacionId, String imagen){
         this.imagenId = imagenId;

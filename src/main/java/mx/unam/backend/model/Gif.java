@@ -52,7 +52,7 @@ public class Gif {
      * Constructor de la clase Gif
      * @param gifId identificador del gif.
      * @param publicacionId identificador de la publicación a la que pertenece el gif.
-     * @param gif ruta donde se encuentra el gof.
+     * @param gif ruta donde se encuentra el gif.
      */
     public Gif(String gifId, String publicacionId, String gif){
         this.gifId=gifId;
