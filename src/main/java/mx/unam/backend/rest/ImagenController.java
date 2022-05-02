@@ -1,6 +1,8 @@
 package mx.unam.backend.rest;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +20,9 @@ import mx.unam.backend.model.Imagen;
 @RequestMapping(value = "/feed")
 public class ImagenController {
 
-	private ImagenService imagen;
+	private Imagen imagen;
 
-	public ImagenController(ImagenService imagen){
+	public ImagenController(Imagen imagen){
 		this.imagen=imagen;
 	}
 
@@ -34,14 +36,14 @@ public class ImagenController {
     @PostMapping(
         	path = "/imagen",
         	produces = "application/json; charset=utf-8")
-    public Imagen actualizaImagen(@RequestBody ImagenService p){
+    public Imagen actualizaImagen(@RequestBody Imagen p){
     	return imagen.actualiza(p);
     }
 
     @PutMapping(
         	path = "/imagen",
         	produces = "application/json; charset=utf-8")
-    public Imagen creaImagen(@RequestBody ImagenService p){
+    public Imagen creaImagen(@RequestBody Imagen p){
     	return imagen.inserta(p);
     }
 
@@ -49,7 +51,7 @@ public class ImagenController {
     @DeleteMapping(
         	path = "/imagen",
         	produces = "application/json; charset=utf-8")
-    public Imagen borraImagen(@RequestBody ImagenService p){
+    public Imagen borraImagen(@RequestBody Imagen p){
     	return imagen.borra(p);
     }
 

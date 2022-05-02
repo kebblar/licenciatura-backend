@@ -53,6 +53,11 @@ public class Publicacion {
         return this.publicacionId;
     }
 
+    /**
+     * <p>Setter para el campo <code>publicacionId</code>.</p>
+     * 
+     * @param publicacionId
+     */
     public void setId(String publicacionId) {
         this.publicacionId = publicacionId;
     }
@@ -66,6 +71,11 @@ public class Publicacion {
         return this.textoPublicacion;
     }
 
+    /**
+     * <p>Setter para el campo <code>textoPublicacion</code>.</p>
+     * 
+     * @param textoPublicacion
+     */
     public void setTextoPlano(String textoPublicacion) {
         this.textoPublicacion = textoPublicacion;
     }
@@ -79,6 +89,11 @@ public class Publicacion {
         return this.fechaCreacion;
     }
 
+    /**
+     * <p>Setter para el campo <code>fechaCreacion</code>.</p>
+     * 
+     * @param fechaCreacion
+     */
     public void setTitulo(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
@@ -92,6 +107,11 @@ public class Publicacion {
         return this.propietarioId;
     }
 
+    /**
+     * <p>Setter para el campo <code>propietarioId</code>.</p>
+     * 
+     * @param propietarioId
+     */
     public void setPropietarioId(String propietarioId) {
         this.propietarioId = propietarioId;
     }
@@ -105,6 +125,11 @@ public class Publicacion {
         return this.esPublica;
     }
 
+    /**
+     * <p>Setter para el campo <code>esPublica</code>.</p>
+     * 
+     * @param esPublica
+     */
     public void setComentarios(boolean esPublica) {
         this.esPublica = esPublica;
     }

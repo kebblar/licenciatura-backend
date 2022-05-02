@@ -1,10 +1,14 @@
 package mx.unam.backend.rest;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import mx.unam.backend.exceptions.ServiceException;
 import mx.unam.backend.model.Publicacion;
+import mx.unam.backend.service.PublicacionService;
 
 /**
  * Implementacion del Controller de la entidad de 'Publicacion'.
@@ -34,22 +38,22 @@ public class PublicacionController {
     @PostMapping(
         	path = "/publicar",
         	produces = "application/json; charset=utf-8")
-    public Publicacion actualizaPublicacion(@RequestBody PublicacionService p){
+    public int actualizaPublicacion(@RequestBody Publicacion p) throws ServiceException{
     	return publicacion.actualiza(p);
     }
 
-    @PutMapping(
-        	path = "/publicar",
-        	produces = "application/json; charset=utf-8")
-    public Publicacion creaPublicacion(@RequestBody PublicacionService p){
-    	return publicacion.inserta(p);
-    }
+    // @PutMapping(
+    //     	path = "/publicar",
+    //     	produces = "application/json; charset=utf-8")
+    // public Publicacion creaPublicacion(@RequestBody PublicacionService p){
+    // 	return publicacion.inserta(p);
+    // }
 
 
     @DeleteMapping(
         	path = "/publicar",
         	produces = "application/json; charset=utf-8")
-    public Publicacion borraPublicacion(@RequestBody PublicacionService p){
+    public int borraPublicacion(@RequestBody int p) throws ServiceException{
     	return publicacion.borra(p);
     }
 

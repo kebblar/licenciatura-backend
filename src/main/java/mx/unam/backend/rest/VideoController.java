@@ -1,6 +1,8 @@
 package mx.unam.backend.rest;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +20,9 @@ import mx.unam.backend.model.Video;
 @RequestMapping(value = "/feed")
 public class VideoController {
 
-	private VideoService video;
+	private Video video;
 
-	public VideoController(VideoService video){
+	public VideoController(Video video){
 		this.video=video;
 	}
 
@@ -34,14 +36,14 @@ public class VideoController {
     @PostMapping(
         	path = "/video",
         	produces = "application/json; charset=utf-8")
-    public Video actualizaVideo(@RequestBody VideoService p){
+    public Video actualizaVideo(@RequestBody Video p){
     	return video.actualiza(p);
     }
 
     @PutMapping(
         	path = "/video",
         	produces = "application/json; charset=utf-8")
-    public Video creaVideo(@RequestBody VideoService p){
+    public Video creaVideo(@RequestBody Video p){
     	return video.inserta(p);
     }
 
@@ -49,7 +51,7 @@ public class VideoController {
     @DeleteMapping(
         	path = "/video",
         	produces = "application/json; charset=utf-8")
-    public Video borraVideo(@RequestBody VideoService p){
+    public Video borraVideo(@RequestBody Video p){
     	return video.borra(p);
     }
 

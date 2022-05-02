@@ -1,6 +1,8 @@
 package mx.unam.backend.rest;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +20,9 @@ import mx.unam.backend.model.Comentario;
 @RequestMapping(value = "/feed")
 public class ComentarioController {
 
-	private ComentarioService comentario;
+	private Comentario comentario;
 
-	public ComentarioController(ComentarioService comentario){
+	public ComentarioController(Comentario comentario){
 		this.comentario=comentario;
 	}
 
@@ -34,14 +36,14 @@ public class ComentarioController {
     @PostMapping(
         	path = "/comentario",
         	produces = "application/json; charset=utf-8")
-    public Comentario actualizaComentario(@RequestBody ComentarioService p){
+    public Comentario actualizaComentario(@RequestBody Comentario p){
     	return comentario.actualiza(p);
     }
 
     @PutMapping(
         	path = "/comentario",
         	produces = "application/json; charset=utf-8")
-    public Comentario creaComentario(@RequestBody ComentarioService p){
+    public Comentario creaComentario(@RequestBody Comentario p){
     	return comentario.inserta(p);
     }
 
@@ -49,7 +51,7 @@ public class ComentarioController {
     @DeleteMapping(
         	path = "/comentario",
         	produces = "application/json; charset=utf-8")
-    public Comentario borraComentario(@RequestBody ComentarioService p){
+    public Comentario borraComentario(@RequestBody Comentario p){
     	return comentario.borra(p);
     }
 

@@ -1,6 +1,8 @@
 package mx.unam.backend.rest;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +20,9 @@ import mx.unam.backend.model.Gif;
 @RequestMapping(value = "/feed")
 public class GifController {
 
-	private GifService gif;
+	private Gif gif;
 
-	public GifController(GifService gif){
+	public GifController(Gif gif){
 		this.gif=gif;
 	}
 
@@ -34,14 +36,14 @@ public class GifController {
     @PostMapping(
         	path = "/gif",
         	produces = "application/json; charset=utf-8")
-    public Gif actualizaGif(@RequestBody GifService p){
+    public Gif actualizaGif(@RequestBody Gif p){
     	return gif.actualiza(p);
     }
 
     @PutMapping(
         	path = "/gif",
         	produces = "application/json; charset=utf-8")
-    public Gif creaGif(@RequestBody GifService p){
+    public Gif creaGif(@RequestBody Gif p){
     	return gif.inserta(p);
     }
 
@@ -49,7 +51,7 @@ public class GifController {
     @DeleteMapping(
         	path = "/gif",
         	produces = "application/json; charset=utf-8")
-    public Gif borraGif(@RequestBody GifService p){
+    public Gif borraGif(@RequestBody Gif p){
     	return gif.borra(p);
     }
 

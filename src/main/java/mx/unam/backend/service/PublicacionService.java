@@ -31,10 +31,10 @@ import mx.unam.backend.model.Publicacion;
  */
 public interface PublicacionService {
 
-    Publicacion getPublicacion(int id);
-    List<Publicacion> getPublicaciones(int usuarioId);
-    int inserta(Publicacion p);
-    int actualiza(Publicacion p);
-    int borra(Publicacion p);
+    // Publicacion getPublicacion(int id);
+    // List<Publicacion> getPublicaciones(int usuarioId);
+    // int inserta(Publicacion p) throws ServiceException;
+    int actualiza(Publicacion p) throws ServiceException;
+    int borra(int p) throws ServiceException;
 
     }

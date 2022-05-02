@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.transaction.TransactionException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -57,37 +58,35 @@ public class PublicacionServiceImpl implements PublicacionService{
     }
 
     /** {@inheritDoc} */
-    @Override
-    public int inserta(Publicacion publicacion) throws ControllerException {
-        try {
-            return 1;
-        } catch (SQLException e1) {
-            return 0;
-            throw new ServiceException("Clave con error", "error al buscar un publicacion con el token", 2000, "intentelo de nuevo", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    // @Override
+    // public int inserta(Publicacion publicacion) throws ServiceException {
+    //     try {
+    //         return 1;
+    //     } catch (PersistenceException e1) {
+    //         return 0;
+    //         throw new ServiceException("Clave con error", "error al buscar un publicacion con el token", 2000, "intentelo de nuevo", HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 
     /** {@inheritDoc} */
     @Override
-    public int actualiza(Publicacion publicacion) throws ControllerException { 
+    public int actualiza(Publicacion publicacion) throws ServiceException { 
        try {
             this.publicacionMapper.updatePublicacion(publicacion);
             return 1;
-        } catch (SQLException e1) {
+        } catch (PersistenceException e1) {
             throw new ServiceException("Error en actualizado", "error al actualizar", 2000, "intentelo de nuevo", HttpStatus.INTERNAL_SERVER_ERROR);
-            return 0;
         } 
     }
 
      /** {@inheritDoc} */
     @Override
-    public int borra(Publicacion publicacion) throws ControllerException { 
+    public int borra(int publicacionId) throws ServiceException { 
        try {
-            this.publicacionMapper.deletePublicacion(publicacion);
+            this.publicacionMapper.deletePublicacion(publicacionId);
             return 1;
-        } catch (SQLException e1) {
+        } catch (PersistenceException e1) {
             throw new ServiceException("Error en borrado", "error al borrar", 2000, "intentelo de nuevo", HttpStatus.INTERNAL_SERVER_ERROR);
-            return 0;
         } 
     }
 
