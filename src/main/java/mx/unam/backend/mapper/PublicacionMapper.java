@@ -1,6 +1,7 @@
 package mx.unam.backend.mapper;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.unam.backend.model.Publicacion;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -37,11 +39,26 @@ public interface PublicacionMapper {
          *                                       de datos.
          */
         @Results(id = "PublicacionesMap", value = {
-                        @Result(property = "id", column = "publicacion_id"),
-                        @Result(property = "nombre", column = "nombre"),
-                        @Result(property = "activo", column = "activo") })
+                        @Result(property = "publicacionId", column = "publicacion_id"),
+                        @Result(property = "usuarioId", column = "usuario_id"),
+                        @Result(property = "fechaCreacion", column = "fecha_creacion"),
+                        @Result(property = "esPublica", column = "es_publica") })
         @Select("SELECT * FROM publicacion WHERE usuario_id = #{usuario_id};")
         List<Publicacion> getPublicaciones(@Param("usuario_id") Integer usuario_id) throws PersistenceException;
+
+        /**
+         * Inserta una publicacion en la tabla
+         *
+         * @param pub la publicacion a insertar
+         * @return Entero que indica que la operación salió bien
+         * @throws java.sql.SQLException Se dispara en caso de que ocurra un error en
+         *                               esta operación desde la base de datos
+         */
+        @Insert("INSERT INTO publicacion VALUES(#{textoPublicacion},"
+                        + " #{fechaCreacion}, "
+                        + " #{esPublica}, "
+                        + " #{publicacionId})")
+        int insertUserRol(Publicacion pub) throws SQLException;
 
         /**
          * Actualiza un objeto de tipo '{@link mx.unam.backend.model.Publicacion} ' con
@@ -55,10 +72,10 @@ public interface PublicacionMapper {
          *                                       de datos.
          */
         @Update(value = "UPDATE publicacion "
-                        + "SET texto_publicacion = #{texto_publicacion}, "
-                        + "fecha_creacion = #{fecha_creacion}, "
-                        + "es_publica = #{es_publica} "
-                        + "WHERE publicacion_id = #{publicacion_id};")
+                        + "SET texto_publicacion = #{textoPublicacion}, "
+                        + "fecha_creacion = #{fechaCreacion}, "
+                        + "es_publica = #{esPublica} "
+                        + "WHERE publicacion_id = #{publicacionId};")
         Integer updatePublicacion(Publicacion pub) throws PersistenceException;
 
         /**

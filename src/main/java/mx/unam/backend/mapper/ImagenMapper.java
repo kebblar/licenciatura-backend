@@ -72,7 +72,7 @@ public interface ImagenMapper {
          */
         @Update(value = "UPDATE imagen "
                         + "SET imagen = #{imagen}, "
-                        + "WHERE imagen_id = #{imagen_id};")
+                        + "WHERE imagen_id = #{imagenId};")
         Integer updateImagen(Imagen img) throws PersistenceException;
 
         /**

@@ -1,6 +1,7 @@
 package mx.unam.backend.mapper;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.unam.backend.model.Comentario;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -46,6 +48,21 @@ public interface ComentarioMapper {
         List<Comentario> getComentarios(@Param("publicacion_id") Integer publicacion_id) throws PersistenceException;
 
         /**
+         * Inserta un comentario en la tabla
+         *
+         * @param cmt el comentario a insertar
+         * @return Entero que indica que la operación salió bien
+         * @throws java.sql.SQLException Se dispara en caso de que ocurra un error en
+         *                               esta operación desde la base de datos
+         */
+        @Insert("INSERT INTO comentario VALUES(#{comentarioId},"
+                        + " #{publicacionId}, "
+                        + " #{usuarioCreadorId}, "
+                        + " #{comentario}, "
+                        + " #{fechaCreacion})")
+        int insertUserRol(Comentario cmt) throws SQLException;
+
+        /**
          * Actualiza un objeto de tipo '{@link mx.unam.backend.model.Comentario} ' con
          * base en la informacion dada por el objeto de tipo 'comentario'.
          *
@@ -58,8 +75,8 @@ public interface ComentarioMapper {
          */
         @Update(value = "UPDATE comentario "
                         + "SET comentario = #{comentario}, "
-                        + "fecha_creacion = #{fecha_creacion}, "
-                        + "WHERE comentario_id = #{comentario_id};")
+                        + "fecha_creacion = #{fechaCreacion}, "
+                        + "WHERE comentario_id = #{comentarioId};")
         Integer updateComnentario(Comentario cmt) throws PersistenceException;
 
         /**

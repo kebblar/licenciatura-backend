@@ -53,7 +53,7 @@ public interface VideoMapper {
          *                                       de datos.
          */
         @Results(id = "VideosMapUsuario", value = {
-                        @Result(property = "id", column = "video_id"),
+                        @Result(property = "videoId", column = "video_id"),
                         @Result(property = "video", column = "video") })
         @Select("SELECT * FROM video WHERE usuario_id = #{usuario_id};")
         List<Video> getVideosUsuario(@Param("usuario_id") Integer usuario_id) throws PersistenceException;
@@ -71,7 +71,7 @@ public interface VideoMapper {
          */
         @Update(value = "UPDATE video "
                         + "SET video = #{video}, "
-                        + "WHERE video_id = #{video_id};")
+                        + "WHERE video_id = #{videoId};")
         Integer updateVideo(Video img) throws PersistenceException;
 
         /**
