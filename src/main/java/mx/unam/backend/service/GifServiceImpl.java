@@ -12,7 +12,7 @@ import mx.unam.backend.model.Gif;
 @Service
 public class GifServiceImpl implements GifService {
 
-    @Value("${app.destination.folder}")
+    // @Value("${app.destination.folder}")
     private String path;
 
     private GifMapper img;

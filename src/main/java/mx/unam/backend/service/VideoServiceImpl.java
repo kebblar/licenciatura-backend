@@ -12,7 +12,7 @@ import mx.unam.backend.model.Video;
 @Service
 public class VideoServiceImpl implements VideoService {
 
-    @Value("${app.destination.folder}")
+    // @Value("${app.destination.folder}")
     private String path;
 
     private VideoMapper img;

@@ -38,7 +38,7 @@ import mx.unam.backend.model.Imagen;
 @Service
 public class ImagenServiceImpl implements ImagenService {
 
-    @Value("${app.destination.folder}")
+    // @Value("${app.destination.folder}")
     private String path;
 
     private ImagenMapper img;
