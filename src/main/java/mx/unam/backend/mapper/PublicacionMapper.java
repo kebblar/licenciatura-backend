@@ -31,20 +31,20 @@ public interface PublicacionMapper {
         /**
          * Regresa una lista con todas las publicaciones de un usuario dado
          *
-         * @param usuario_id el id del usuario a buscar
+         * @param publicacion_id el id del usuario a buscar
          * @return una lista de objetos de tipo
          *         '{@link mx.unam.backend.model.Publicacion} '.
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
-        @Results(id = "PublicacionesMap", value = {
+        @Results(id = "PublicacionMap", value = {
                         @Result(property = "publicacionId", column = "publicacion_id"),
                         @Result(property = "usuarioId", column = "usuario_id"),
                         @Result(property = "fechaCreacion", column = "fecha_creacion"),
                         @Result(property = "esPublica", column = "es_publica") })
         @Select("SELECT * FROM publicacion WHERE usuario_id = #{usuario_id};")
-        List<Publicacion> getPublicaciones(@Param("usuario_id") Integer usuario_id) throws PersistenceException;
+        List<Publicacion> getPublicaciones(@Param("usuario_id") String publicacion_id) throws PersistenceException;
 
         /**
          * Inserta una publicacion en la tabla
@@ -58,7 +58,7 @@ public interface PublicacionMapper {
                         + " #{fechaCreacion}, "
                         + " #{esPublica}, "
                         + " #{publicacionId})")
-        int insertUserRol(Publicacion pub) throws SQLException;
+        int insertPublicacion(Publicacion pub) throws SQLException;
 
         /**
          * Actualiza un objeto de tipo '{@link mx.unam.backend.model.Publicacion} ' con
@@ -81,20 +81,20 @@ public interface PublicacionMapper {
         /**
          * Elimina una publicacion a partir de su id
          *
-         * @param publicacion_id el id de la publicacion a buscar.
+         * @param cmtId el id de la publicacion a buscar.
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
         @Delete("DELETE FROM publicacion WHERE publicacion_id = #{publicacion_id};")
-        void deletePublicacion(@Param("publicacion_id") Integer publicacion_id) throws PersistenceException;;
+        void deletePublicacion(@Param("publicacion_id") String cmtId) throws PersistenceException;;
 
         /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Publicacion} '
          * contenido en
          * la base de datos usando su id.
          *
-         * @param publicacion_id el id de la publicacion a buscar.
+         * @param publicacionId el id de la publicacion a buscar.
          * @return un objeto de tipo '{@link mx.unam.backend.model.Publicacion} '.
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
@@ -102,5 +102,5 @@ public interface PublicacionMapper {
          */
         @ResultMap("PublicacionMap")
         @Select("SELECT FROM publicacion WHERE publicacion_id = #{publicacion_id};")
-        Publicacion getByPublicacionId(@Param("publicacion_id") Integer publicacion_id) throws PersistenceException;
+        Publicacion getByPublicacionId(@Param("publicacion_id") String publicacionId) throws PersistenceException;
 }

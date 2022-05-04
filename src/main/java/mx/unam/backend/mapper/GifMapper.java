@@ -36,11 +36,11 @@ public interface GifMapper {
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
-        @Results(id = "GifsMapPublicacion", value = {
+        @Results(id = "GifMap", value = {
                         @Result(property = "id", column = "gif_id"),
                         @Result(property = "gif", column = "gif") })
         @Select("SELECT * FROM gif WHERE publicacion_id = #{publicacion_id};")
-        List<Gif> getGifsPublicacion(@Param("publicacion_id") Integer publicacion_id) throws PersistenceException;
+        List<Gif> getGifsPublicacion(@Param("publicacion_id") String publicacion_id) throws PersistenceException;
 
         /**
          * Regresa una lista con todas las gifes de un usuario dado
@@ -52,7 +52,7 @@ public interface GifMapper {
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
-        @Results(id = "GifsMapUsuario", value = {
+        @Results(id = "GifMapUsuario", value = {
                         @Result(property = "gifId", column = "gif_id"),
                         @Result(property = "gif", column = "gif") })
         @Select("SELECT * FROM gif WHERE usuario_id = #{usuario_id};")
@@ -77,19 +77,19 @@ public interface GifMapper {
         /**
          * Elimina una gif a aprtir de su id
          *
-         * @param gif_id el id de la gif a eliminar
+         * @param cmtId el id de la gif a eliminar
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
         @Delete("DELETE FROM gif WHERE gif_id = #{gif_id};")
-        void deleteGif(@Param("gif_id") Integer gif_id) throws PersistenceException;
+        void deleteGif(@Param("gif_id") String cmtId) throws PersistenceException;
 
         /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Gif} '
          * contenido en la base de datos usando su id.
          *
-         * @param gif_id el id del comentario a buscar
+         * @param imagenId el id del comentario a buscar
          * @return un objeto de tipo '{@link mx.unam.backend.model.Gif} '.
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
@@ -97,5 +97,5 @@ public interface GifMapper {
          */
         @ResultMap("GifMap")
         @Select("SELECT FROM gif WHERE gif_id = #{gif_id};")
-        Gif getByGifId(@Param("gif_id") Integer gif_id) throws PersistenceException;
+        Gif getByGifId(@Param("gif_id") String imagenId) throws PersistenceException;
 }

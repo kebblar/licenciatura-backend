@@ -36,11 +36,11 @@ public interface VideoMapper {
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
-        @Results(id = "VideosMapPublicacion", value = {
+        @Results(id = "VideoMap", value = {
                         @Result(property = "id", column = "video_id"),
                         @Result(property = "video", column = "video") })
         @Select("SELECT * FROM video WHERE publicacion_id = #{publicacion_id};")
-        List<Video> getVideosPublicacion(@Param("publicacion_id") Integer publicacion_id) throws PersistenceException;
+        List<Video> getVideosPublicacion(@Param("publicacion_id") String publicacion_id) throws PersistenceException;
 
         /**
          * Regresa una lista con todas las videoes de un usuario dado
@@ -77,19 +77,19 @@ public interface VideoMapper {
         /**
          * Elimina una video a partir de su id
          *
-         * @param video_id el id de la video a eliminar
+         * @param cmtId el id de la video a eliminar
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
         @Delete("DELETE FROM video WHERE video_id = #{video_id};")
-        void deleteVideo(@Param("video_id") Integer video_id) throws PersistenceException;
+        void deleteVideo(@Param("video_id") String cmtId) throws PersistenceException;
 
         /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Video} '
          * contenido en la base de datos usando su id.
          *
-         * @param video_id el id del comentario a buscar
+         * @param imagenId el id del comentario a buscar
          * @return un objeto de tipo '{@link mx.unam.backend.model.Video} '.
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
@@ -97,5 +97,5 @@ public interface VideoMapper {
          */
         @ResultMap("VideoMap")
         @Select("SELECT FROM video WHERE video_id = #{video_id};")
-        Video getByVideoId(@Param("video_id") Integer video_id) throws PersistenceException;
+        Video getByVideoId(@Param("video_id") String imagenId) throws PersistenceException;
 }

@@ -12,24 +12,24 @@
  */
 package mx.unam.backend.model;
 
-import java.util.Date;
-
 /**
  * Implementacion del POJO de la entidad de 'Comentario'.
  *
- * @author  Miguel Liera
+ * @author Miguel Liera
  * @version 1.0-SNAPSHOT
- * @since   1.0-SNAPSHOT
+ * @since 1.0-SNAPSHOT
  */
 public class Comentario {
     private String comentarioId;
     private String publicacionId;
     private String usuarioCreadorId;
     private String comentario;
-    private Date fechaCreacion;
+    private String fechaCreacion;
 
     /**
-     * <p>Getter para el campo <code>comentarioId</code>.</p>
+     * <p>
+     * Getter para el campo <code>comentarioId</code>.
+     * </p>
      *
      * @return un String.
      */
@@ -38,7 +38,9 @@ public class Comentario {
     }
 
     /**
-     * <p>Setter para el campo <code>comentarioId</code>.</p>
+     * <p>
+     * Setter para el campo <code>comentarioId</code>.
+     * </p>
      * 
      * @param comentarioId
      */
@@ -47,7 +49,9 @@ public class Comentario {
     }
 
     /**
-     * <p>Getter para el campo <code>publicacionId</code>.</p>
+     * <p>
+     * Getter para el campo <code>publicacionId</code>.
+     * </p>
      *
      * @return un String.
      */
@@ -56,7 +60,9 @@ public class Comentario {
     }
 
     /**
-     * <p>Setter para el campo <code>publicacionId</code>.</p>
+     * <p>
+     * Setter para el campo <code>publicacionId</code>.
+     * </p>
      * 
      * @param publicacionId
      */
@@ -65,7 +71,9 @@ public class Comentario {
     }
 
     /**
-     * <p>Getter para el campo <code>usuarioCreadorId</code>.</p>
+     * <p>
+     * Getter para el campo <code>usuarioCreadorId</code>.
+     * </p>
      *
      * @return un String.
      */
@@ -74,7 +82,9 @@ public class Comentario {
     }
 
     /**
-     * <p>Setter para el campo <code>usuarioCreadorId</code>.</p>
+     * <p>
+     * Setter para el campo <code>usuarioCreadorId</code>.
+     * </p>
      * 
      * @param usuarioCreadorId
      */
@@ -83,7 +93,9 @@ public class Comentario {
     }
 
     /**
-     * <p>Getter para el campo <code>comentario</code>.</p>
+     * <p>
+     * Getter para el campo <code>comentario</code>.
+     * </p>
      *
      * @return un String.
      */
@@ -92,7 +104,9 @@ public class Comentario {
     }
 
     /**
-     * <p>Setter para el campo <code>comentario</code>.</p>
+     * <p>
+     * Setter para el campo <code>comentario</code>.
+     * </p>
      * 
      * @param comentario
      */
@@ -101,32 +115,42 @@ public class Comentario {
     }
 
     /**
-     * <p>Getter para el campo <code>fechaCreacion</code>.</p>
+     * <p>
+     * Getter para el campo <code>fechaCreacion</code>.
+     * </p>
      *
      * @return un Date.
      */
-    public Date getFechaCreacion() {
+    public String getFechaCreacion() {
         return this.fechaCreacion;
     }
 
     /**
-     * <p>Setter para el campo <code>fechaCreacion</code>.</p>
+     * <p>
+     * Setter para el campo <code>fechaCreacion</code>.
+     * </p>
      * 
      * @param fechaCreacion
      */
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
     /**
      * Constructor de la clase comentario.
-     * @param comentarioId es un String. Es el identificador del comentario en la base de datos.
-     * @param publicacionId es un String. Es el identificador de la publicación a la que pertenece elcomentario.
-     * @param usuarioCreadorId es un String. Es una referencia al identificador del usuario que creó la publicación.
-     * @param comentario es el contenido del comentario.
-     * @param fechaCreacion es la fecha de creación del comentario. Es de tipo date.
+     * 
+     * @param comentarioId     es un String. Es el identificador del comentario en
+     *                         la base de datos.
+     * @param publicacionId    es un String. Es el identificador de la publicación a
+     *                         la que pertenece elcomentario.
+     * @param usuarioCreadorId es un String. Es una referencia al identificador del
+     *                         usuario que creó la publicación.
+     * @param comentario       es el contenido del comentario.
+     * @param fechaCreacion    es la fecha de creación del comentario. Es de tipo
+     *                         date.
      */
-    public Comentario(String comentarioId, String publicacionId, String usuarioCreadorId, String comentario, Date fechaCreacion){
+    public Comentario(String comentarioId, String publicacionId, String usuarioCreadorId, String comentario,
+            String fechaCreacion) {
         this.comentarioId = comentarioId;
         this.publicacionId = publicacionId;
         this.usuarioCreadorId = usuarioCreadorId;
@@ -134,5 +158,4 @@ public class Comentario {
         this.fechaCreacion = fechaCreacion;
     }
 
-    
 }

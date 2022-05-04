@@ -12,29 +12,41 @@
  */
 package mx.unam.backend.service;
 
-import mx.unam.backend.exceptions.ControllerException;
+import java.sql.SQLException;
+import java.util.List;
+
 import mx.unam.backend.exceptions.ServiceException;
-import mx.unam.backend.model.CredencialesRequest;
-import mx.unam.backend.model.Login;
-import mx.unam.backend.model.Preregistro;
-import mx.unam.backend.model.RecuperacionTokenRequest;
 import mx.unam.backend.model.Publicacion;
 
-
 /**
- * <p>Definición de la interfaz de servicios para 'Login'.
+ * <p>
+ * Definición de la interfaz de servicios para 'Login'.
  *
- * @author  Gerardo García
- * @see     mx.unam.backend.model.Publicacion
+ * @author Gerardo García
+ * @see mx.unam.backend.model.Publicacion
  * @version 1.0-SNAPSHOT
- * @since   1.0-SNAPSHOT
+ * @since 1.0-SNAPSHOT
  */
 public interface PublicacionService {
 
-    // Publicacion getPublicacion(int id);
-    // List<Publicacion> getPublicaciones(int usuarioId);
-    // int inserta(Publicacion p) throws ServiceException;
-    int actualiza(Publicacion p) throws ServiceException;
-    int borra(int p) throws ServiceException;
+    /**
+     * Solicita la generacion de un publicacion.
+     * el metodo regresa una instancia de {@link Publicacion} que
+     * tiene todos sus valores por defecto.
+     *
+     * @param in String asociado al publicacion asociado
+     * @return objeto de la clase {@link Publicacion}
+     * @throws ServiceException if any
+     * @throws SQLException
+     */
+    Integer inserta(Publicacion in) throws ServiceException, SQLException;
 
-    }
+    Publicacion solicitarPublicacion(String comentId) throws ServiceException;
+
+    Integer actualizaPublicacion(Publicacion cmt);
+
+    List<Publicacion> solicitaPublicacions(String publicacion_id) throws ServiceException;
+
+    void borraPublicacion(String cmtId);
+
+}

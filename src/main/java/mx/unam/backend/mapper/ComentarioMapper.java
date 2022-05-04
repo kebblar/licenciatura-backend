@@ -2,6 +2,7 @@ package mx.unam.backend.mapper;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
@@ -9,7 +10,6 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.exceptions.PersistenceException;
-import org.springframework.stereotype.Repository;
 
 import mx.unam.backend.model.Comentario;
 
@@ -25,7 +25,7 @@ import java.util.List;
  * @author Santiago Arroyo
  * @version 0.1.1-SNAPSHOT
  */
-@Repository
+@Mapper
 public interface ComentarioMapper {
 
         /**
@@ -38,14 +38,14 @@ public interface ComentarioMapper {
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
-        @Results(id = "ComentariosMap", value = {
-                        @Result(property = "id", column = "comentario_id"),
-                        @Result(property = "usuario_id", column = "usuario_id"),
-                        @Result(property = "publicacion_id", column = "publicacion_id"),
+        @Results(id = "ComentarioMap", value = {
+                        @Result(property = "comentarioId", column = "comentario_id"),
+                        @Result(property = "usuarioCreadorId", column = "usuario_id"),
+                        @Result(property = "publicacionId", column = "publicacion_id"),
                         @Result(property = "comentario", column = "comentario"),
-                        @Result(property = "fecha_creacion", column = "fecha_creacion") })
+                        @Result(property = "fechaCreacion", column = "fecha_creacion") })
         @Select("SELECT * FROM comentario WHERE publicacion_id = #{publicacion_id};")
-        List<Comentario> getComentarios(@Param("publicacion_id") Integer publicacion_id) throws PersistenceException;
+        List<Comentario> getComentarios(@Param("publicacion_id") String publicacion_id) throws PersistenceException;
 
         /**
          * Inserta un comentario en la tabla
@@ -60,7 +60,7 @@ public interface ComentarioMapper {
                         + " #{usuarioCreadorId}, "
                         + " #{comentario}, "
                         + " #{fechaCreacion})")
-        int insertUserRol(Comentario cmt) throws SQLException;
+        int insertComentario(Comentario cmt) throws SQLException;
 
         /**
          * Actualiza un objeto de tipo '{@link mx.unam.backend.model.Comentario} ' con
@@ -77,24 +77,24 @@ public interface ComentarioMapper {
                         + "SET comentario = #{comentario}, "
                         + "fecha_creacion = #{fechaCreacion}, "
                         + "WHERE comentario_id = #{comentarioId};")
-        Integer updateComnentario(Comentario cmt) throws PersistenceException;
+        Integer updateComentario(Comentario cmt) throws PersistenceException;
 
         /**
          * Elimina un comentario a partir de su id
          *
-         * @param comentario_id el id del comentario a eliminar
+         * @param cmtId el id del comentario a eliminar
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
         @Delete("DELETE FROM comentario WHERE comentario_id = #{comentario_id};")
-        void deleteComentario(@Param("comentario_id") Integer comentario_id) throws PersistenceException;
+        void deleteComentario(@Param("comentario_id") String cmtId) throws PersistenceException;
 
         /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Comentario} '
          * contenido en la base de datos usando su id.
          *
-         * @param comentario_id el id del comentario a buscar
+         * @param publicacionId el id del comentario a buscar
          * @return un objeto de tipo '{@link mx.unam.backend.model.Comentario} '.
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
@@ -102,5 +102,5 @@ public interface ComentarioMapper {
          */
         @ResultMap("ComentarioMap")
         @Select("SELECT FROM comentario WHERE comentario_id = #{comentario_id};")
-        Comentario getByComentarioId(@Param("comentario_id") Integer comentario_id) throws PersistenceException;
+        Comentario getByComentarioId(@Param("comentario_id") String publicacionId) throws PersistenceException;
 }
