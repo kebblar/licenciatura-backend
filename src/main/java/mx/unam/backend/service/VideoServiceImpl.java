@@ -3,10 +3,13 @@ package mx.unam.backend.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import mx.unam.backend.exceptions.ServiceException;
 import mx.unam.backend.mapper.VideoMapper;
 import mx.unam.backend.model.Video;
 
+@Service
 public class VideoServiceImpl implements VideoService {
 
     @Value("${app.destination.folder}")
