@@ -41,12 +41,12 @@ public interface PublicacionService {
      */
     Integer inserta(Publicacion in) throws ServiceException, SQLException;
 
-    Publicacion solicitarPublicacion(String comentId) throws ServiceException;
+    Publicacion solicitarPublicacion(int comentId) throws ServiceException;
 
-    Integer actualizaPublicacion(Publicacion cmt);
+    Integer actualizaPublicacion(Publicacion in);
 
-    List<Publicacion> solicitaPublicacions(String publicacion_id) throws ServiceException;
+    List<Publicacion> solicitaPublicacions(int publicacion_id) throws ServiceException;
 
-    void borraPublicacion(String cmtId);
+    void borraPublicacion(int cmtId);
 
 }

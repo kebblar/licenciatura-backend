@@ -12,58 +12,64 @@
  */
 package mx.unam.backend.model;
 
-import java.util.Date;
-
 /**
  * Implementacion del POJO de la entidad de 'Publicacion'.
  *
- * @author  Miguel Liera
+ * @author Miguel Liera
  * @version 1.0-SNAPSHOT
- * @since   1.0-SNAPSHOT
+ * @since 1.0-SNAPSHOT
  */
 public class Publicacion {
 
-    private String publicacionId;
-    private String propietarioId;
+    private int publicacionId;
+    private int usuarioId;
     private String textoPublicacion;
-    private Date fechaCreacion;
+    private String fechaCreacion;
     private boolean esPublica;
 
     /**
      * Constructor de la clase Publicacion.
-     * @param publicacionId identificador de la publicación.
-     * @param propietarioId usuario que creó la publicación
+     * 
+     * @param publicacionId    identificador de la publicación.
+     * @param usuarioId        usuario que creó la publicación
      * @param textoPublicacion texto que se escribió dentro de la publicación.
-     * @param nMeGusta número de me gustas que tiene la publicación.
+     * @param nMeGusta         número de me gustas que tiene la publicación.
      */
-    public Publicacion(String publicacionId, String propietarioId, Date fechaCreacion, String textoPublicacion, boolean esPublica){
-        this.publicacionId=publicacionId;
-        this.propietarioId = propietarioId;
+    public Publicacion(int publicacionId, int usuarioId, String fechaCreacion, String textoPublicacion,
+            boolean esPublica) {
+        this.publicacionId = publicacionId;
+        this.usuarioId = usuarioId;
         this.textoPublicacion = textoPublicacion;
         this.fechaCreacion = fechaCreacion;
         this.esPublica = esPublica;
     }
 
     /**
-     * <p>Getter para el campo <code>publicacionId</code>.</p>
+     * <p>
+     * Getter para el campo <code>publicacionId</code>.
+     * </p>
      *
      * @return un int.
      */
-    public String getId() {
+    public int getId() {
         return this.publicacionId;
     }
 
     /**
-     * <p>Setter para el campo <code>publicacionId</code>.</p>
+     * <p>
+     * Setter para el campo <code>publicacionId</code>.
+     * </p>
      * 
      * @param publicacionId
      */
-    public void setId(String publicacionId) {
+    public void setId(int publicacionId) {
         this.publicacionId = publicacionId;
     }
 
     /**
-     * <p>Getter para el campo <code>textoPublicacion</code>.</p>
+     * <p>
+     * Getter para el campo <code>textoPublicacion</code>.
+     * </p>
      *
      * @return un String.
      */
@@ -72,7 +78,9 @@ public class Publicacion {
     }
 
     /**
-     * <p>Setter para el campo <code>textoPublicacion</code>.</p>
+     * <p>
+     * Setter para el campo <code>textoPublicacion</code>.
+     * </p>
      * 
      * @param textoPublicacion
      */
@@ -81,43 +89,53 @@ public class Publicacion {
     }
 
     /**
-     * <p>Getter para el campo <code>fechaCreacion</code>.</p>
+     * <p>
+     * Getter para el campo <code>fechaCreacion</code>.
+     * </p>
      *
      * @return un Date.
      */
-    public Date getFechaCreacion() {
+    public String getFechaCreacion() {
         return this.fechaCreacion;
     }
 
     /**
-     * <p>Setter para el campo <code>fechaCreacion</code>.</p>
+     * <p>
+     * Setter para el campo <code>fechaCreacion</code>.
+     * </p>
      * 
      * @param fechaCreacion
      */
-    public void setTitulo(Date fechaCreacion) {
+    public void setTitulo(String fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 
     /**
-     * <p>Getter para el campo <code>propietarioId</code>.</p>
+     * <p>
+     * Getter para el campo <code>usuarioId</code>.
+     * </p>
      *
      * @return un String.
      */
-    public String getPropietarioId() {
-        return this.propietarioId;
+    public int getUsuarioId() {
+        return this.usuarioId;
     }
 
     /**
-     * <p>Setter para el campo <code>propietarioId</code>.</p>
+     * <p>
+     * Setter para el campo <code>usuarioId</code>.
+     * </p>
      * 
-     * @param propietarioId
+     * @param usuarioId
      */
-    public void setPropietarioId(String propietarioId) {
-        this.propietarioId = propietarioId;
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     /**
-     * <p>Getter para el campo <code>esPublica</code>.</p>
+     * <p>
+     * Getter para el campo <code>esPublica</code>.
+     * </p>
      *
      * @return un booleano.
      */
@@ -126,7 +144,9 @@ public class Publicacion {
     }
 
     /**
-     * <p>Setter para el campo <code>esPublica</code>.</p>
+     * <p>
+     * Setter para el campo <code>esPublica</code>.
+     * </p>
      * 
      * @param esPublica
      */

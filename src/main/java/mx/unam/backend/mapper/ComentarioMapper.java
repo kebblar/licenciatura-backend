@@ -45,7 +45,7 @@ public interface ComentarioMapper {
                         @Result(property = "comentario", column = "comentario"),
                         @Result(property = "fechaCreacion", column = "fecha_creacion") })
         @Select("SELECT * FROM comentario WHERE publicacion_id = #{publicacion_id};")
-        List<Comentario> getComentarios(@Param("publicacion_id") String publicacion_id) throws PersistenceException;
+        List<Comentario> getComentarios(@Param("publicacion_id") int publicacion_id) throws PersistenceException;
 
         /**
          * Inserta un comentario en la tabla
@@ -88,7 +88,7 @@ public interface ComentarioMapper {
          *                                       de datos.
          */
         @Delete("DELETE FROM comentario WHERE comentario_id = #{comentario_id};")
-        void deleteComentario(@Param("comentario_id") String cmtId) throws PersistenceException;
+        void deleteComentario(@Param("comentario_id") int cmtId) throws PersistenceException;
 
         /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Comentario} '
@@ -102,5 +102,5 @@ public interface ComentarioMapper {
          */
         @ResultMap("ComentarioMap")
         @Select("SELECT FROM comentario WHERE comentario_id = #{comentario_id};")
-        Comentario getByComentarioId(@Param("comentario_id") String publicacionId) throws PersistenceException;
+        Comentario getByComentarioId(@Param("comentario_id") int publicacionId) throws PersistenceException;
 }

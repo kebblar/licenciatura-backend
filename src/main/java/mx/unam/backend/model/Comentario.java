@@ -20,9 +20,9 @@ package mx.unam.backend.model;
  * @since 1.0-SNAPSHOT
  */
 public class Comentario {
-    private String comentarioId;
-    private String publicacionId;
-    private String usuarioCreadorId;
+    private int comentarioId;
+    private int publicacionId;
+    private int usuarioCreadorId;
     private String comentario;
     private String fechaCreacion;
 
@@ -33,7 +33,7 @@ public class Comentario {
      *
      * @return un String.
      */
-    public String getComentarioId() {
+    public int getComentarioId() {
         return this.comentarioId;
     }
 
@@ -44,7 +44,7 @@ public class Comentario {
      * 
      * @param comentarioId
      */
-    public void setComentarioId(String comentarioId) {
+    public void setComentarioId(int comentarioId) {
         this.comentarioId = comentarioId;
     }
 
@@ -55,7 +55,7 @@ public class Comentario {
      *
      * @return un String.
      */
-    public String getPublicacionId() {
+    public int getPublicacionId() {
         return this.publicacionId;
     }
 
@@ -66,7 +66,7 @@ public class Comentario {
      * 
      * @param publicacionId
      */
-    public void setPublicacionId(String publicacionId) {
+    public void setPublicacionId(int publicacionId) {
         this.publicacionId = publicacionId;
     }
 
@@ -77,7 +77,7 @@ public class Comentario {
      *
      * @return un String.
      */
-    public String getUsuarioCreadorId() {
+    public int getUsuarioCreadorId() {
         return this.usuarioCreadorId;
     }
 
@@ -88,7 +88,7 @@ public class Comentario {
      * 
      * @param usuarioCreadorId
      */
-    public void setUsuarioCreadorId(String usuarioCreadorId) {
+    public void setUsuarioCreadorId(int usuarioCreadorId) {
         this.usuarioCreadorId = usuarioCreadorId;
     }
 
@@ -149,7 +149,7 @@ public class Comentario {
      * @param fechaCreacion    es la fecha de creación del comentario. Es de tipo
      *                         date.
      */
-    public Comentario(String comentarioId, String publicacionId, String usuarioCreadorId, String comentario,
+    public Comentario(int comentarioId, int publicacionId, int usuarioCreadorId, String comentario,
             String fechaCreacion) {
         this.comentarioId = comentarioId;
         this.publicacionId = publicacionId;

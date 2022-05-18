@@ -31,7 +31,7 @@ public class ComentarioServiceImpl implements ComentarioService {
     }
 
     @Override
-    public Comentario solicitarComentario(String comentarioId) {
+    public Comentario solicitarComentario(int comentarioId) {
         return cmt.getByComentarioId(comentarioId);
     }
 
@@ -41,7 +41,7 @@ public class ComentarioServiceImpl implements ComentarioService {
     }
 
     @Override
-    public List<Comentario> solicitaComentarios(String publicacion_id) throws ServiceException {
+    public List<Comentario> solicitaComentarios(int publicacion_id) throws ServiceException {
         return cmt.getComentarios(publicacion_id);
     }
 
@@ -51,7 +51,7 @@ public class ComentarioServiceImpl implements ComentarioService {
     }
 
     @Override
-    public void borraComentario(String cmtId) {
+    public void borraComentario(int cmtId) {
         cmt.deleteComentario(cmtId);
     }
 

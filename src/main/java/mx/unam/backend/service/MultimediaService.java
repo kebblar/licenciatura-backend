@@ -3,7 +3,7 @@
 * Paquete:     unam.mx.backend.model
 * Proyecto:    licenciatura-backend
 * Tipo:        interface
-* Nombre:      VideoService
+* Nombre:      MultimediaService
 * Autor:       Noyola Nazario Alejandro
 * Versión:     1.0-SNAPSHOT
 *
@@ -12,10 +12,11 @@
 */
 package mx.unam.backend.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import mx.unam.backend.exceptions.ServiceException;
-import mx.unam.backend.model.Video;
+import mx.unam.backend.model.Multimedia;
 
 /**
  * <p>
@@ -26,13 +27,15 @@ import mx.unam.backend.model.Video;
  * @version 1.0-SNAPSHOT
  * @since 1.0-SNAPSHOT
  */
-public interface VideoService {
+public interface MultimediaService {
 
-    Video solicitarVideo(String comentId) throws ServiceException;
+    Integer creaMultimedia(Multimedia in) throws SQLException;
 
-    Integer actualizaVideo(Video cmt);
+    Multimedia solicitarImagen(int imagenId) throws ServiceException;
 
-    List<Video> solicitaVideos(String publicacion_id) throws ServiceException;
+    Multimedia solicitarVideo(int videoId) throws ServiceException;
 
-    void borraVideo(String cmtId);
+    List<Multimedia> solicitaMultimedias(int publicacion_id) throws ServiceException;
+
+    void borraMultimedia(int cmtId);
 }

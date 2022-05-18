@@ -46,7 +46,7 @@ public class PublicacionServiceImpl implements PublicacionService {
     }
 
     @Override
-    public Publicacion solicitarPublicacion(String publicacionId) {
+    public Publicacion solicitarPublicacion(int publicacionId) {
         return cmt.getByPublicacionId(publicacionId);
     }
 
@@ -56,7 +56,7 @@ public class PublicacionServiceImpl implements PublicacionService {
     }
 
     @Override
-    public List<Publicacion> solicitaPublicacions(String publicacion_id) throws ServiceException {
+    public List<Publicacion> solicitaPublicacions(int publicacion_id) throws ServiceException {
         return cmt.getPublicaciones(publicacion_id);
     }
 
@@ -66,7 +66,7 @@ public class PublicacionServiceImpl implements PublicacionService {
     }
 
     @Override
-    public void borraPublicacion(String cmtId) {
+    public void borraPublicacion(int cmtId) {
         cmt.deletePublicacion(cmtId);
     }
 

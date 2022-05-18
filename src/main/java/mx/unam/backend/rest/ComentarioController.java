@@ -34,22 +34,22 @@ public class ComentarioController {
 	}
 
 	@GetMapping(path = "/comentario", produces = "application/json; charset=utf-8")
-	public List<Comentario> getComentarios(String publicacion_id) throws ServiceException {
+	public List<Comentario> getComentarios(int publicacion_id) throws ServiceException {
 		return cmtService.solicitaComentarios(publicacion_id);
 	}
 
-	@PostMapping(path = "/comentario", produces = "application/json; charset=utf-8")
+	@PutMapping(path = "/comentario", produces = "application/json; charset=utf-8")
 	public Integer actualizaComentario(@RequestBody Comentario p) {
 		return cmtService.actualizaComentario(p);
 	}
 
-	@PutMapping(path = "/comentario", produces = "application/json; charset=utf-8")
+	@PostMapping(path = "/comentario", produces = "application/json; charset=utf-8")
 	public Integer creaComentario(@RequestBody Comentario p) throws ServiceException, SQLException {
 		return cmtService.inserta(p);
 	}
 
 	@DeleteMapping(path = "/comentario", produces = "application/json; charset=utf-8")
-	public void borraComentario(String cmtId) {
+	public void borraComentario(int cmtId) {
 		cmtService.borraComentario(cmtId);
 	}
 

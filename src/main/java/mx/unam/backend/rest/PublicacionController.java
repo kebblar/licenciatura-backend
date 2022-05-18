@@ -34,27 +34,27 @@ public class PublicacionController {
     }
 
     @GetMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
-    public List<Publicacion> getPublicacions(String propietario_id) throws ServiceException {
+    public List<Publicacion> getPublicacions(int propietario_id) throws ServiceException {
         return cmtService.solicitaPublicacions(propietario_id);
     }
 
     @GetMapping(path = "/publicacion/publicacion_id", produces = "application/json; charset=utf-8")
-    public Publicacion getPublicacion(String publicacion_id) throws ServiceException {
+    public Publicacion getPublicacion(int publicacion_id) throws ServiceException {
         return cmtService.solicitarPublicacion(publicacion_id);
     }
 
-    @PostMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
+    @PutMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
     public Integer actualizaPublicacion(@RequestBody Publicacion p) {
         return cmtService.actualizaPublicacion(p);
     }
 
-    @PutMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
+    @PostMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
     public Integer creaPublicacion(@RequestBody Publicacion p) throws ServiceException, SQLException {
         return cmtService.inserta(p);
     }
 
     @DeleteMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
-    public void borraPublicacion(String cmtId) {
+    public void borraPublicacion(int cmtId) {
         cmtService.borraPublicacion(cmtId);
     }
 

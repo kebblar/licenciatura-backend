@@ -41,10 +41,11 @@ public interface PublicacionMapper {
         @Results(id = "PublicacionMap", value = {
                         @Result(property = "publicacionId", column = "publicacion_id"),
                         @Result(property = "usuarioId", column = "usuario_id"),
+                        @Result(property = "textoPublicacion", column = "texto_publicacion"),
                         @Result(property = "fechaCreacion", column = "fecha_creacion"),
                         @Result(property = "esPublica", column = "es_publica") })
         @Select("SELECT * FROM publicacion WHERE usuario_id = #{usuario_id};")
-        List<Publicacion> getPublicaciones(@Param("usuario_id") String publicacion_id) throws PersistenceException;
+        List<Publicacion> getPublicaciones(@Param("usuario_id") int publicacion_id) throws PersistenceException;
 
         /**
          * Inserta una publicacion en la tabla
@@ -54,10 +55,11 @@ public interface PublicacionMapper {
          * @throws java.sql.SQLException Se dispara en caso de que ocurra un error en
          *                               esta operación desde la base de datos
          */
-        @Insert("INSERT INTO publicacion VALUES(#{textoPublicacion},"
+        @Insert("INSERT INTO publicacion VALUES(#{publicacionId},"
+                        + " #{usuarioId}, "
+                        + " #{textoPublicacion}, "
                         + " #{fechaCreacion}, "
-                        + " #{esPublica}, "
-                        + " #{publicacionId})")
+                        + " #{esPublica})")
         int insertPublicacion(Publicacion pub) throws SQLException;
 
         /**
@@ -86,8 +88,8 @@ public interface PublicacionMapper {
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
-        @Delete("DELETE FROM publicacion WHERE publicacion_id = #{publicacion_id};")
-        void deletePublicacion(@Param("publicacion_id") String cmtId) throws PersistenceException;;
+        @Delete("DELETE FROM publicacion WHERE publicacion_id = #{publicacionId};")
+        void deletePublicacion(@Param("publicacion_id") int cmtId) throws PersistenceException;;
 
         /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Publicacion} '
@@ -101,6 +103,6 @@ public interface PublicacionMapper {
          *                                       de datos.
          */
         @ResultMap("PublicacionMap")
-        @Select("SELECT FROM publicacion WHERE publicacion_id = #{publicacion_id};")
-        Publicacion getByPublicacionId(@Param("publicacion_id") String publicacionId) throws PersistenceException;
+        @Select("SELECT * FROM publicacion WHERE publicacion_id = #{publicacion_id};")
+        Publicacion getByPublicacionId(@Param("publicacion_id") int publicacionId) throws PersistenceException;
 }

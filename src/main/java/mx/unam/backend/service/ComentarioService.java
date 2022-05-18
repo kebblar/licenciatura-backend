@@ -32,12 +32,12 @@ public interface ComentarioService {
      */
     Integer inserta(Comentario in) throws ServiceException, SQLException;
 
-    Comentario solicitarComentario(String comentId) throws ServiceException;
+    Comentario solicitarComentario(int comentId) throws ServiceException;
 
     Integer actualizaComentario(Comentario cmt);
 
-    List<Comentario> solicitaComentarios(String publicacion_id) throws ServiceException;
+    List<Comentario> solicitaComentarios(int publicacion_id) throws ServiceException;
 
-    void borraComentario(String cmtId);
+    void borraComentario(int cmtId);
 
 }
