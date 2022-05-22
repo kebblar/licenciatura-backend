@@ -1,7 +1,7 @@
 FROM maven:3.5-jdk-8 AS build  
 COPY src /usr/src/app/src  
 COPY pom.xml /usr/src/app
-COPY settings.xml /root/.m2
+COPY settings.xml /home/root/.m2
 USER root
 RUN mvn -f /usr/src/app/pom.xml clean package -Dmaven.test.skip
 
