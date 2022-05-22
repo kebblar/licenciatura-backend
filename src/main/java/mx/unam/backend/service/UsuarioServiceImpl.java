@@ -126,6 +126,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         String jwt = JWTUtil.getInstance().createToken(usuario.getMail(), 27, this.encryptKey);
         loginResponse.setJwt(jwt);
         loginResponse.setRoles(usuarioMapper.getRoles(validUser.getMail()));
+        loginResponse.setId(validUser.getId());
         return loginResponse;
     }
 

@@ -30,6 +30,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Login {
+    private int id;
     private String mail;
     private String jwt;
     private List<Rol> roles;
