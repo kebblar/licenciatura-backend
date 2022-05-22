@@ -30,7 +30,7 @@ jobs:
             password: ${{ secrets.GHCR_PAT }}
             
         - name: Output settings file
-          run: echo ${{ secrets.SETTINGS_MVN }} > settings.xml
+          run: sed -i 's/password_token/${{ secrets.GHCR_PAT }}/g' settings.xml 
               
 
         - name: Build image and push to GitHub Container Registry
