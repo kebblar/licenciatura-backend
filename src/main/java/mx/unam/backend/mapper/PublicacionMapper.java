@@ -88,7 +88,7 @@ public interface PublicacionMapper {
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
-        @Delete("DELETE FROM publicacion WHERE publicacion_id = #{publicacionId};")
+        @Delete("DELETE FROM publicacion WHERE publicacion_id = #{publicacion_id};")
         void deletePublicacion(@Param("publicacion_id") int cmtId) throws PersistenceException;;
 
         /**

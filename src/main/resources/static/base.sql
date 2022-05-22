@@ -1,17 +1,6 @@
 CREATE DATABASE RedSocial;
 use RedSocial;
-CREATE TABLE usuario(id SERIAL, mail VARCHAR(250), clave VARCHAR(256), 
-    creado BIGINT, activo BOOLEAN, accesoNegadoContador INT, instanteBloqueo BIGINT, 
-    instanteUltimoAcceso BIGINT, instanteUltimoCambioClave BIGINT,
-    regeneraClaveToken VARCHAR(6), regeneraClaveInstante BIGINT,
-    primary key(id));
-
-CREATE TABLE usuario(id SERIAL, 
-    titulo VARCHAR(256), 
-    propietario_mail VARCHAR(256), 
-    texto_plano VARCHAR(256), 
-    comentarios VARCHAR(256),
-    n_me_gusta BIGINT);
+CREATE TABLE usuario(id SERIAL, mail VARCHAR(250), clave VARCHAR(256), creado BIGINT, activo BOOLEAN, accesoNegadoContador INT, instanteBloqueo BIGINT, instanteUltimoAcceso BIGINT, instanteUltimoCambioClave BIGINT,regeneraClaveToken VARCHAR(6), regeneraClaveInstante BIGINT, primary key(id));
 
 CREATE TABLE rol(id INT, nombre VARCHAR(30), activo BOOL, primary key(id));
 CREATE TABLE rolUsuario(idUsuario BIGINT UNSIGNED, idRol INT, primary key(idUsuario,idRol), foreign key(idUsuario) references usuario(id), foreign key(idRol) references rol(id));
@@ -38,44 +27,46 @@ AS
     JOIN rol ON aux.idRol = rol.id WHERE activo = 1;
 
 CREATE TABLE publicacion(
-    publicacion_id VARCHAR(50) NOT NULL,
-    usuario_creador_id VARCHAR(50) NOT NULL,
+    publicacion_id SERIAL,
+    usuario_id BIGINT UNSIGNED NOT NULL UNIQUE,
     texto_publicacion VARCHAR(1000),
     fecha_creacion TIMESTAMP NOT NULL,
     es_publica BOOLEAN NOT NULL DEFAULT FALSE,
-    primary key(publicion_id)
+    primary key(publicacion_id),
+    foreign key(usuario_id) references usuario(id)
 );
 
 CREATE TABLE comentario(
-    comentario_id VARCHAR(50) NOT NULL,
-    publicacion_id VARCHAR(50) NOT NULL,
-    usuario_creador_id VARCHAR(50) NOT NULL,
+    comentario_id SERIAL,
+    publicacion_id BIGINT UNSIGNED NOT NULL UNIQUE,
+    usuario_id BIGINT UNSIGNED NOT NULL UNIQUE,
     comentario VARCHAR(1000) NOT NULL,
     fecha_creacion TIMESTAMP NOT NULL,
     primary key(comentario_id),
-    foreign key(comentario_id) references publicaion(publicacion_id)
+    foreign key(publicacion_id) references publicacion(publicacion_id),
+    foreign key(usuario_id) references usuario(id)
 );
 
-CREATE TABLE imagen(
-    imagen_id VARCHAR(50) NOT NULL,
-    publicacion_id VARCHAR(50) NOT NULL,
-    imagen BYTEA NOT NULL,
-    primary key(imagen_id),
-    foreign key(imagen_id) references publicaion(publicacion_id)
+CREATE TABLE multimedia(
+    multimedia_id SERIAL,
+    publicacion_id BIGINT UNSIGNED NOT NULL UNIQUE,
+    multimedia VARCHAR(1000) NOT NULL,
+    primary key(multimedia_id),
+    foreign key(publicacion_id) references publicacion(publicacion_id)
 );
 
-CREATE TABLE video(
-    video_id VARCHAR(50) NOT NULL,
-    publicacion_id VARCHAR(50) NOT NULL,
-    video VARCHAR NOT NULL,
-    primary key(video_id),
-    foreign key(video_id) references publicaion(publicacion_id)
-);
+-- CREATE TABLE video(
+--     video_id VARCHAR(50) NOT NULL,
+--     publicacion_id VARCHAR(50) NOT NULL,
+--     video VARCHAR(50) NOT NULL,
+--     primary key(video_id),
+--     foreign key(video_id) references publicacion(publicacion_id)
+-- );
 
-CREATE TABLE gif(
-    gif_id VARCHAR(50) NOT NULL,
-    publicacion_id VARCHAR(50) NOT NULL,
-    gif VARCHAR NOT NULL,
-    primary key(gif_id),
-    foreign key(gif_id) references publicaion(publicacion_id)
-);
+-- CREATE TABLE gif(
+--     gif_id VARCHAR(50) NOT NULL,
+--     publicacion_id VARCHAR(50) NOT NULL,
+--     gif VARCHAR(50) NOT NULL,
+--     primary key(gif_id),
+--     foreign key(gif_id) references publicacion(publicacion_id)
+-- );

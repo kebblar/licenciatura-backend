@@ -75,7 +75,7 @@ public interface ComentarioMapper {
          */
         @Update(value = "UPDATE comentario "
                         + "SET comentario = #{comentario}, "
-                        + "fecha_creacion = #{fechaCreacion}, "
+                        + "fecha_creacion = #{fechaCreacion} "
                         + "WHERE comentario_id = #{comentarioId};")
         Integer updateComentario(Comentario cmt) throws PersistenceException;
 
