@@ -68,7 +68,7 @@ jobs:
           SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
 
       - name: Bring changes
-        run: ssh staging 'cd /home/ubuntu/licenciatura || rm base.sql || wget https://raw.githubusercontent.com/kebblar/licenciatura-backend/develop/base.sql'
+        run: ssh staging 'cd /home/ubuntu/licenciatura && wget -O https://raw.githubusercontent.com/kebblar/licenciatura-backend/develop/base.sql'
         
       - name: Deploy fleet
         run: ssh staging 'cd /home/ubuntu && docker-compose down && docker-compose up -d && docker image prune -a -f'
