@@ -7,7 +7,8 @@ on:
   push:
     branches: [develop]
 jobs:
-    build-and-push-docker-image:
+        
+  build-and-push-docker-image:
       name: Build Docker image and push to repositories
       # run only when code is compiling and tests are passing
       runs-on: ubuntu-latest
@@ -43,3 +44,34 @@ jobs:
               ghcr.io/mentesniker/licenciatura:latest
             # build on feature branches, push only on develop branch
             push: ${{ github.ref == 'refs/heads/develop' }}
+            
+  deploy:
+    name: "Deploy to EC2 instance"
+    runs-on: ubuntu-latest
+    needs: build-and-push-docker-image
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ secrets.DEPLOY_SSH_USER }}
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
+
+      - name: Bring changes
+        run: ssh staging 'cd /home/ubuntu/licenciatura && wget https://raw.githubusercontent.com/kebblar/licenciatura-backend/develop/base.sql'
+        
+      - name: Deploy fleet
+        run: ssh staging 'cd /home/ubuntu && docker-compose down && docker-compose up -d && docker image prune'
+        
+      - name: Import DB
+        run: ssh staging 'cd /home/ubuntu/licenciatura && mysql -h ${{ secrets.DEPLOY_SSH_HOST }} -u root -p${{ secrets.DB_PASS }} < base.sql'
