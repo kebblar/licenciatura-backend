@@ -71,7 +71,7 @@ jobs:
         run: ssh staging 'cd /home/ubuntu/licenciatura && wget -O /home/ubuntu/licenciatura/base.sql https://raw.githubusercontent.com/kebblar/licenciatura-backend/develop/base.sql'
         
       - name: Deploy fleet
-        run: ssh staging 'cd /home/ubuntu && docker-compose down && docker-compose up -d && docker image prune -a -f'
+        run: ssh staging 'cd /home/ubuntu && docker-compose down && docker image prune -a -f &&  docker-compose up -d'
         
       - name: Import DB
-        run: ssh staging 'sleep 5 && cd /home/ubuntu/licenciatura && mysql -h ${{ secrets.DB_HOST }} -u root -p${{ secrets.DB_PASS }} < /home/ubuntu/licenciatura/base.sql'
+        run: ssh staging 'sleep 10 && cd /home/ubuntu/licenciatura && mysql -h ${{ secrets.DB_HOST }} -u root -p${{ secrets.DB_PASS }} < /home/ubuntu/licenciatura/base.sql'
