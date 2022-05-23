@@ -68,10 +68,10 @@ jobs:
           SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
 
       - name: Bring changes
-        run: ssh staging 'cd /home/ubuntu/licenciatura && rm base.sql || wget https://raw.githubusercontent.com/kebblar/licenciatura-backend/develop/base.sql'
+        run: ssh staging 'cd /home/ubuntu/licenciatura || rm base.sql || wget https://raw.githubusercontent.com/kebblar/licenciatura-backend/develop/base.sql'
         
       - name: Deploy fleet
         run: ssh staging 'cd /home/ubuntu && docker-compose down && docker-compose up -d && docker image prune -a -f'
         
       - name: Import DB
-        run: ssh staging 'sleep 5 && cd /home/ubuntu/licenciatura && mysql -h ${{ secrets.DB_HOST }} -u root -p${{ secrets.DB_PASS }} < base.sql'
+        run: ssh staging 'sleep 5 && cd /home/ubuntu/licenciatura && mysql -h ${{ secrets.DB_HOST }} -u root -p${{ secrets.DB_PASS }} < /home/ubuntu/licenciatura/base.sql'
