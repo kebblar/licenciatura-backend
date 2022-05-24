@@ -28,7 +28,7 @@ AS
 
 CREATE TABLE publicacion(
     publicacion_id SERIAL,
-    usuario_id BIGINT UNSIGNED NOT NULL UNIQUE,
+    usuario_id BIGINT UNSIGNED NOT NULL,
     texto_publicacion VARCHAR(1000),
     fecha_creacion TIMESTAMP NOT NULL,
     es_publica BOOLEAN NOT NULL DEFAULT FALSE,
@@ -39,7 +39,7 @@ CREATE TABLE publicacion(
 CREATE TABLE comentario(
     comentario_id SERIAL,
     publicacion_id BIGINT UNSIGNED NOT NULL UNIQUE,
-    usuario_id BIGINT UNSIGNED NOT NULL UNIQUE,
+    usuario_id BIGINT UNSIGNED NOT NULL,
     comentario VARCHAR(1000) NOT NULL,
     fecha_creacion TIMESTAMP NOT NULL,
     primary key(comentario_id),
@@ -49,7 +49,7 @@ CREATE TABLE comentario(
 
 CREATE TABLE multimedia(
     multimedia_id SERIAL,
-    publicacion_id BIGINT UNSIGNED NOT NULL UNIQUE,
+    publicacion_id BIGINT UNSIGNED NOT NULL,
     multimedia VARCHAR(1000) NOT NULL,
     primary key(multimedia_id),
     foreign key(publicacion_id) references publicacion(publicacion_id)
