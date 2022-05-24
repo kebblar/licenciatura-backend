@@ -31,7 +31,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Proyecto de ingenieria de software 2022-2")
+                .title("Proyecto de ingenieria de software 2022-1")
                 .version("Version 1.0")
                 .description("Servicios REST de backend publicados en formato JSON: <a href='/v2/api-docs'>https://app-url/v2/api-docs</a>")
                 .license("Apache Licence")
