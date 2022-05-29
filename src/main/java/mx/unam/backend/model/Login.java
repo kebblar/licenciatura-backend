@@ -23,6 +23,7 @@ import java.util.List;
  * @since 1.0-SNAPSHOT
  */
 public class Login {
+    private int id;
     private String mail;
     private String jwt;
     private List<Rol> roles;
@@ -98,6 +99,24 @@ public class Login {
      */
     public void setJwt(String jwt) {
         this.jwt = jwt;
+    }
+
+    /**
+     * <p>Setter para el atributo <code>id</code>.</p>
+     *
+     * @param id un int.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * <p>Getter para el atributo <code>id</code>.</p>
+     *
+     * @return un int.
+     */
+    public int getId() {
+        return this.id;
     }
 
 }
