@@ -50,9 +50,12 @@ CREATE TABLE comentario(
 CREATE TABLE multimedia(
     multimedia_id SERIAL,
     publicacion_id BIGINT UNSIGNED NOT NULL,
+    usuario_id BIGINT UNSIGNED NOT NULL,
     multimedia VARCHAR(1000) NOT NULL,
+    es_video BOOLEAN,
     primary key(multimedia_id),
-    foreign key(publicacion_id) references publicacion(publicacion_id)
+    foreign key(publicacion_id) references publicacion(publicacion_id), 
+    foreign key(usuario_id) references usuario(id)
 );
 
 -- CREATE TABLE video(

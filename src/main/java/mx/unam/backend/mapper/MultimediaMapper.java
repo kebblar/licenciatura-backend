@@ -38,7 +38,7 @@ public interface MultimediaMapper {
          *                                       de datos.
          */
         @Results(id = "MultimediaMap", value = {
-                        @Result(property = "id", column = "multimedia_id"),
+                        @Result(property = "multimediaId", column = "multimedia_id"),
                         @Result(property = "multimedia", column = "multimedia") })
         @Select("SELECT * FROM multimedia WHERE publicacion_id = #{publicacion_id};")
         List<Multimedia> getMultimediasPublicacion(@Param("publicacion_id") int publicacion_id)
@@ -57,6 +57,7 @@ public interface MultimediaMapper {
         @Results(id = "MultimediaMapUsuario", value = {
                         @Result(property = "multimediaId", column = "multimedia_id"),
                         @Result(property = "publicacionId", column = "publicacion_id"),
+                        @Result(property = "usuarioCreadorId", column = "usuario_id"),
                         @Result(property = "multimedia", column = "multimedia"),
                         @Result(property = "esVideo", column = "es_video") })
         @Select("SELECT * FROM multimedia WHERE usuario_id = #{usuario_id};")

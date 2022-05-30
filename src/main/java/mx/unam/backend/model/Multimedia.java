@@ -22,12 +22,14 @@ package mx.unam.backend.model;
 public class Multimedia {
     private int multimediaId;
     private int publicacionId;
+    private int usuarioCreadorId;
     private String multimedia;
     private boolean esVideo;
 
-    public Multimedia(int multimediaId, int publicacionId, String multimedia, boolean esVideo) {
+    public Multimedia(int multimediaId, int publicacionId, int usuarioCreadorId, String multimedia, boolean esVideo) {
         this.multimediaId = multimediaId;
         this.publicacionId = publicacionId;
+        this.usuarioCreadorId = usuarioCreadorId;
         this.multimedia = multimedia;
         this.esVideo = esVideo;
     }
@@ -46,6 +48,14 @@ public class Multimedia {
 
     public void setPublicacionId(int publicacionId) {
         this.publicacionId = publicacionId;
+    }
+
+    public int getUsuarioCreador() {
+        return this.usuarioCreadorId;
+    }
+
+    public void setUsuarioCreador(int usuarioCreadorId) {
+        this.usuarioCreadorId = usuarioCreadorId;
     }
 
     public String getMultimedia() {
