@@ -12,6 +12,8 @@
  */
 package mx.unam.backend.model;
 
+import javax.servlet.annotation.MultipartConfig;
+
 /**
  * Implementacion del POJO de la entidad de 'Multimedia'.
  *
