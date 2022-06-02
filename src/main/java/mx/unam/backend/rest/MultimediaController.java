@@ -1,10 +1,13 @@
 package mx.unam.backend.rest;
 
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.tomcat.util.http.fileupload.FileUpload;
+import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,13 +45,16 @@ public class MultimediaController {
         return cmtService.solicitaMultimedias(multimedia_id);
     }
 
-    @PostMapping(path = "/multimedia", produces = "application/json; charset=utf-8")
+    @PostMapping(path = "/multimedia", produces = "application/json; charset=utf-8", consumes = {
+            MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public void creaMultimedia(@RequestBody Multimedia p, @RequestParam("multimedia") List<MultipartFile> in)
             throws IOException, SQLException {
         for (MultipartFile m : in) {
             String ruta = StringUtils.cleanPath(m.getOriginalFilename());
+            URL url = this.getClass().getClassLoader().getResource("/static");
+            Path filepath = Paths.get(url.getPath(), ruta);
+            m.transferTo(filepath);
             p.setMultimedia(ruta);
-            // FileUploadUtil.saveFile("/", ruta, p);
             cmtService.creaMultimedia(p);
         }
     }
