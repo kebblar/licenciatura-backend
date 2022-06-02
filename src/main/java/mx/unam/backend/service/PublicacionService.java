@@ -47,6 +47,6 @@ public interface PublicacionService {
 
     List<Publicacion> solicitaPublicacions(int publicacion_id) throws ServiceException;
 
-    void borraPublicacion(int cmtId);
+    Integer borraPublicacion(int cmtId);
 
 }

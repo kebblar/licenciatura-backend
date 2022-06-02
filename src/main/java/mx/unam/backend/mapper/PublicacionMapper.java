@@ -84,12 +84,13 @@ public interface PublicacionMapper {
          * Elimina una publicacion a partir de su id
          *
          * @param cmtId el id de la publicacion a buscar.
+         * @return Entero que indica que la operación salió bien
          * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
          *                                       error en esta operación desde la base
          *                                       de datos.
          */
         @Delete("DELETE FROM publicacion WHERE publicacion_id = #{publicacion_id};")
-        void deletePublicacion(@Param("publicacion_id") int cmtId) throws PersistenceException;;
+        int deletePublicacion(@Param("publicacion_id") int cmtId) throws PersistenceException;
 
         /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Publicacion} '

@@ -66,8 +66,8 @@ public class PublicacionServiceImpl implements PublicacionService {
     }
 
     @Override
-    public void borraPublicacion(int cmtId) {
-        cmt.deletePublicacion(cmtId);
+    public Integer borraPublicacion(int cmtId) {
+        return cmt.deletePublicacion(cmtId);
     }
 
 }

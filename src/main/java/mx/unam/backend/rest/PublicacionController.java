@@ -54,8 +54,8 @@ public class PublicacionController {
     }
 
     @DeleteMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
-    public void borraPublicacion(int cmtId) {
-        cmtService.borraPublicacion(cmtId);
+    public Integer borraPublicacion(int cmtId) {
+        return cmtService.borraPublicacion(cmtId);
     }
 
 }
