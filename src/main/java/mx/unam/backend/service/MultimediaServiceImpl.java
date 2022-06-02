@@ -42,4 +42,9 @@ public class MultimediaServiceImpl implements MultimediaService {
     public Integer creaMultimedia(Multimedia in) throws SQLException {
         return img.insertMultimedia(in);
     }
+
+    @Override
+    public int actualizaMultimedia(Multimedia in) {
+        return img.updateMultimedia(in);
+    }
 }

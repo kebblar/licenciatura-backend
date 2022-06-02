@@ -5,14 +5,15 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,23 +47,27 @@ public class MultimediaController {
         return cmtService.solicitaMultimedias(multimedia_id);
     }
 
-    @PostMapping(path = "/multimedia", produces = "application/json; charset=utf-8", consumes = {
+    @GetMapping(path = "/multimedia/{id}", produces = "application/json; charset=utf-8")
+    public Multimedia getMultimediabyId(int multimedia_id) throws ServiceException {
+        return cmtService.solicitarImagen(multimedia_id);
+    }
+
+    @PostMapping(path = "/multimedia/", produces = "application/json; charset=utf-8")
+    public Integer creaMultimedia(@RequestBody Multimedia in) throws SQLException {
+        return cmtService.creaMultimedia(in);
+    }
+
+    @PutMapping(path = "/multimedia", produces = "application/json; charset=utf-8", consumes = {
             MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public void creaMultimedia(@RequestParam("lista") List<Multimedia> in1,
-            @RequestParam("multimedias") List<MultipartFile> in2)
-            throws IOException, SQLException {
-        Iterator<Multimedia> it1 = in1.iterator();
-        Iterator<MultipartFile> it2 = in2.iterator();
-        while (it1.hasNext() && it2.hasNext()) {
-            Multimedia p = it1.next();
-            MultipartFile m = it2.next();
-            String ruta = StringUtils.cleanPath(m.getOriginalFilename());
-            URL url = this.getClass().getClassLoader().getResource("/static");
-            Path filepath = Paths.get(url.getPath(), ruta);
-            m.transferTo(filepath);
-            p.setMultimedia(ruta);
-            cmtService.creaMultimedia(p);
-        }
+    public void creaMultimediaFile(@RequestParam("multimedia") MultipartFile in, @PathVariable int id)
+            throws IOException, SQLException, ServiceException {
+        String ruta = StringUtils.cleanPath(in.getOriginalFilename());
+        URL url = this.getClass().getClassLoader().getResource("/static");
+        Path filepath = Paths.get(url.getPath(), ruta);
+        in.transferTo(filepath);
+        Multimedia p = getMultimediabyId(id);
+        p.setMultimedia(ruta);
+        cmtService.actualizaMultimedia(p);
     }
 
     @DeleteMapping(path = "/multimedia", produces = "application/json; charset=utf-8")
