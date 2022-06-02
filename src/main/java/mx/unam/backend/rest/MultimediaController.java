@@ -5,6 +5,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.http.MediaType;
@@ -47,9 +48,14 @@ public class MultimediaController {
 
     @PostMapping(path = "/multimedia", produces = "application/json; charset=utf-8", consumes = {
             MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public void creaMultimedia(@RequestBody Multimedia p, @RequestParam("multimedia") List<MultipartFile> in)
+    public void creaMultimedia(@RequestParam("lista") List<Multimedia> in1,
+            @RequestParam("multimedias") List<MultipartFile> in2)
             throws IOException, SQLException {
-        for (MultipartFile m : in) {
+        Iterator<Multimedia> it1 = in1.iterator();
+        Iterator<MultipartFile> it2 = in2.iterator();
+        while (it1.hasNext() && it2.hasNext()) {
+            Multimedia p = it1.next();
+            MultipartFile m = it2.next();
             String ruta = StringUtils.cleanPath(m.getOriginalFilename());
             URL url = this.getClass().getClassLoader().getResource("/static");
             Path filepath = Paths.get(url.getPath(), ruta);
