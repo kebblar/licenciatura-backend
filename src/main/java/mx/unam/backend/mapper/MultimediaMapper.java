@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.stereotype.Repository;
 
@@ -77,6 +78,22 @@ public interface MultimediaMapper {
                         + " #{multimedia}, "
                         + " #{esVideo})")
         int insertMultimedia(Multimedia cmt) throws SQLException;
+
+        /**
+         * Actualiza un objeto de tipo '{@link mx.unam.backend.model.Multimedia} ' con
+         * base en la informacion dada por el objeto de tipo 'multimedia'.
+         *
+         * @param m objeto de tipo '{@link mx.unam.backend.model.Multimedia} ' a ser
+         *          actualizado.
+         * @return el numero de registros actualizados.
+         * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
+         *                                       error en esta operación desde la base
+         *                                       de datos.
+         */
+        @Update(value = "UPDATE multimedia "
+                        + "SET multimedia = #{multimedia}, "
+                        + "WHERE multiemdia_id = #{multimediaId};")
+        Integer updateMultimedia(Multimedia m) throws PersistenceException;
 
         /**
          * Elimina una multimedia a aprtir de su id

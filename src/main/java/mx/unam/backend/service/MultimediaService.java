@@ -38,4 +38,6 @@ public interface MultimediaService {
     List<Multimedia> solicitaMultimedias(int publicacion_id) throws ServiceException;
 
     void borraMultimedia(int cmtId);
+
+    int actualizaMultimedia(Multimedia in);
 }
