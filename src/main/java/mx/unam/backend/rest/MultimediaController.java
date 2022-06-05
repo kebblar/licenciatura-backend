@@ -57,19 +57,6 @@ public class MultimediaController {
         return cmtService.creaMultimedia(in);
     }
 
-    @PutMapping(path = "/multimedia", produces = "application/json; charset=utf-8", consumes = {
-            MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public void creaMultimediaFile(@RequestParam("multimedia") MultipartFile in, @PathVariable int id)
-            throws IOException, SQLException, ServiceException {
-        String ruta = StringUtils.cleanPath(in.getOriginalFilename());
-        URL url = this.getClass().getClassLoader().getResource("/static");
-        Path filepath = Paths.get(url.getPath(), ruta);
-        in.transferTo(filepath);
-        Multimedia p = getMultimediabyId(id);
-        p.setMultimedia(ruta);
-        cmtService.actualizaMultimedia(p);
-    }
-
     @DeleteMapping(path = "/multimedia", produces = "application/json; charset=utf-8")
     public void borraMultimedia(int cmtId) {
         cmtService.borraMultimedia(cmtId);
