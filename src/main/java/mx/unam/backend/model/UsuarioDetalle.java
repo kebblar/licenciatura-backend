@@ -26,9 +26,9 @@ import java.util.Objects;
 /**
  * Implementacion del POJO de la entidad de 'UsuarioDetalle'.
  *
- * @author  luz
+ * @author luz
  * @version 1.0-SNAPSHOT
- * @since   1.0-SNAPSHOT
+ * @since 1.0-SNAPSHOT
  */
 public class UsuarioDetalle {
 
@@ -52,11 +52,11 @@ public class UsuarioDetalle {
     /**
      * Constructor basado en los atributos de la clase.
      *
-     * @param id a int.
-     * @param nombre a {@link java.lang.String} object.
+     * @param id              a int.
+     * @param nombre          a {@link java.lang.String} object.
      * @param segundoApellido a {@link java.lang.String} object.
-     * @param primerApellido a {@link java.lang.String} object.
-     * @param nickName a {@link java.lang.String} object.
+     * @param primerApellido  a {@link java.lang.String} object.
+     * @param nickName        a {@link java.lang.String} object.
      * @param fechaNacimiento a {@link java.util.Date} object.
      * @param telefonoCelular a {@link java.lang.String} object.
      */
@@ -82,7 +82,9 @@ public class UsuarioDetalle {
      * Getter y Setter.
      */
     /**
-     * <p>Getter for the field <code>id</code>.</p>
+     * <p>
+     * Getter for the field <code>id</code>.
+     * </p>
      *
      * @return a int.
      */
@@ -91,7 +93,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Setter for the field <code>id</code>.</p>
+     * <p>
+     * Setter for the field <code>id</code>.
+     * </p>
      *
      * @param id a int.
      */
@@ -100,7 +104,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Getter for the field <code>nombre</code>.</p>
+     * <p>
+     * Getter for the field <code>nombre</code>.
+     * </p>
      *
      * @return a {@link java.lang.String} object.
      */
@@ -109,7 +115,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Setter for the field <code>nombre</code>.</p>
+     * <p>
+     * Setter for the field <code>nombre</code>.
+     * </p>
      *
      * @param nombre a {@link java.lang.String} object.
      */
@@ -118,7 +126,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Getter for the field <code>segundoApellido</code>.</p>
+     * <p>
+     * Getter for the field <code>segundoApellido</code>.
+     * </p>
      *
      * @return a {@link java.lang.String} object.
      */
@@ -127,7 +137,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Setter for the field <code>segundoApellido</code>.</p>
+     * <p>
+     * Setter for the field <code>segundoApellido</code>.
+     * </p>
      *
      * @param segundoApellido a {@link java.lang.String} object.
      */
@@ -136,7 +148,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Getter for the field <code>primerApellido</code>.</p>
+     * <p>
+     * Getter for the field <code>primerApellido</code>.
+     * </p>
      *
      * @return a {@link java.lang.String} object.
      */
@@ -145,7 +159,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Setter for the field <code>primerApellido</code>.</p>
+     * <p>
+     * Setter for the field <code>primerApellido</code>.
+     * </p>
      *
      * @param primerApellido a {@link java.lang.String} object.
      */
@@ -154,7 +170,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Getter for the field <code>fechaNacimiento</code>.</p>
+     * <p>
+     * Getter for the field <code>fechaNacimiento</code>.
+     * </p>
      *
      * @return a {@link java.util.Date} object.
      */
@@ -163,7 +181,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Setter for the field <code>fechaNacimiento</code>.</p>
+     * <p>
+     * Setter for the field <code>fechaNacimiento</code>.
+     * </p>
      *
      * @param fechaNacimiento a {@link java.util.Date} object.
      */
@@ -172,7 +192,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Getter for the field <code>nickName</code>.</p>
+     * <p>
+     * Getter for the field <code>nickName</code>.
+     * </p>
      *
      * @return a {@link java.lang.String} object.
      */
@@ -181,7 +203,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Setter for the field <code>nickName</code>.</p>
+     * <p>
+     * Setter for the field <code>nickName</code>.
+     * </p>
      *
      * @param nickName a {@link java.lang.String} object.
      */
@@ -190,7 +214,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Getter for the field <code>telefonoCelular</code>.</p>
+     * <p>
+     * Getter for the field <code>telefonoCelular</code>.
+     * </p>
      *
      * @return a {@link java.lang.String} object.
      */
@@ -199,7 +225,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>Setter for the field <code>telefonoCelular</code>.</p>
+     * <p>
+     * Setter for the field <code>telefonoCelular</code>.
+     * </p>
      *
      * @param telefonoCelular a {@link java.lang.String} object.
      */
@@ -208,7 +236,9 @@ public class UsuarioDetalle {
     }
 
     /**
-     * <p>getHash.</p>
+     * <p>
+     * getHash.
+     * </p>
      *
      * @return a long.
      */
@@ -242,12 +272,15 @@ public class UsuarioDetalle {
     /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UsuarioDetalle)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof UsuarioDetalle))
+            return false;
         UsuarioDetalle that = (UsuarioDetalle) o;
-        return id == that.id && Objects.equals(nombre, that.nombre) && Objects.equals(segundoApellido, that.segundoApellido)
-                && Objects.equals(primerApellido, that.primerApellido) && Objects.equals(fechaNacimiento, that.fechaNacimiento)
+        return id == that.id && Objects.equals(nombre, that.nombre)
+                && Objects.equals(segundoApellido, that.segundoApellido)
+                && Objects.equals(primerApellido, that.primerApellido)
+                && Objects.equals(fechaNacimiento, that.fechaNacimiento)
                 && Objects.equals(nickName, that.nickName) && Objects.equals(telefonoCelular, that.telefonoCelular);
     }
 }
-

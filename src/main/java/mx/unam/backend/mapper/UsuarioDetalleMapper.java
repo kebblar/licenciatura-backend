@@ -83,8 +83,7 @@ public interface UsuarioDetalleMapper {
             @Result(property = "nickName", column = "nickName"),
             @Result(property = "fechaNacimiento", column = "fechaNacimiento"),
             @Result(property = "telefonoCelular", column = "telefonoCelular") })
-    @ResultMap("PublicacionMap")
-    @Select("SELECT * FROM usuarioDetalle WHERE usuario_id = #{usuario_id};")
+    @Select("SELECT * FROM usuarioDetalle WHERE idUsuario = #{usuarioId};")
     UsuarioDetalle getByUsuarioId(@Param("usuarioId") int usuarioId) throws PersistenceException;
 
 }
