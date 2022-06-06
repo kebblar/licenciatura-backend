@@ -38,7 +38,7 @@ CREATE TABLE publicacion(
 
 CREATE TABLE comentario(
     comentario_id SERIAL,
-    publicacion_id BIGINT UNSIGNED NOT NULL UNIQUE,
+    publicacion_id BIGINT UNSIGNED NOT NULL,
     usuario_id BIGINT UNSIGNED NOT NULL,
     comentario VARCHAR(1000) NOT NULL,
     fecha_creacion TIMESTAMP NOT NULL,
