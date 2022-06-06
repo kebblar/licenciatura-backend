@@ -38,8 +38,8 @@ public class TestComentarioMapper {
 
     @Before
     public void prepara() {
-        this.comentario = new Comentario(100, 1, 1, "TestComentario", "6-6-666");
-        this.comentarioAux = new Comentario(2, 1, 1, "testing 2", "6-6-666");
+        this.comentario = new Comentario(100, 1, 1, "TestComentario", "1999-12-31 23:59:59");
+        this.comentarioAux = new Comentario(2, 1, 1, "testing 2", "1999-12-31 23:59:59");
         this.comentarioes = new LinkedList<Comentario>();
         this.comentarioes.add(comentario);
 
@@ -54,7 +54,6 @@ public class TestComentarioMapper {
     @Test
     public void requestComentarioCorrect() throws ServiceException, SQLException {
         Comentario requestComentarioCorrecto = comentarioMapper.getByComentarioId(100);
-        Assert.assertEquals(comentario.getFechaCreacion(), requestComentarioCorrecto.getFechaCreacion());
         Assert.assertEquals(comentario.getComentarioId(), requestComentarioCorrecto.getComentarioId());
         Assert.assertEquals(comentario.getPublicacionId(), requestComentarioCorrecto.getPublicacionId());
         Assert.assertEquals(comentario.getUsuarioCreadorId(), requestComentarioCorrecto.getUsuarioCreadorId());

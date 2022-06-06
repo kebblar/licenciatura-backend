@@ -55,7 +55,6 @@ public class TestPublicacionMapper {
     public void requestPublicationCorrect() throws ServiceException, SQLException {
         Publicacion requestPublicationCorrecto = publicacionMapper.getByPublicacionId(100);
         Assert.assertEquals(publicacion.getTextoPlano(), requestPublicationCorrecto.getTextoPlano());
-        Assert.assertEquals(publicacion.getFechaCreacion(), requestPublicationCorrecto.getFechaCreacion());
         Assert.assertEquals(publicacion.getEsPublica(), requestPublicationCorrecto.getEsPublica());
         Assert.assertEquals(publicacion.getId(), requestPublicationCorrecto.getId());
         Assert.assertEquals(publicacion.getUsuarioId(), requestPublicationCorrecto.getUsuarioId());
