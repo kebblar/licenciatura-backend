@@ -53,7 +53,7 @@ public class PublicacionController {
         return cmtService.inserta(p);
     }
 
-    @DeleteMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
+    @DeleteMapping(path = "/publicacion/publicacion_id", produces = "application/json; charset=utf-8")
     public Integer borraPublicacion(Integer publicacion_id) {
         return cmtService.borraPublicacion(publicacion_id);
     }

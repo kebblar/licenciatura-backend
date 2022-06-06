@@ -102,6 +102,6 @@ public interface ComentarioMapper {
          *                                       de datos.
          */
         @ResultMap("ComentarioMap")
-        @Select("SELECT FROM comentario WHERE comentario_id = #{comentario_id};")
+        @Select("SELECT * FROM comentario WHERE comentario_id = #{comentario_id};")
         Comentario getByComentarioId(@Param("comentario_id") int publicacionId) throws PersistenceException;
 }

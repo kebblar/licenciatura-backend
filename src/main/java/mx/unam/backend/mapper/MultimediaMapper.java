@@ -117,7 +117,7 @@ public interface MultimediaMapper {
          *                                       de datos.
          */
         @ResultMap("MultimediaMap")
-        @Select("SELECT FROM multimedia WHERE multimedia_id = #{multimedia_id} and es_video = false;")
+        @Select("SELECT * FROM multimedia WHERE multimedia_id = #{multimedia_id} and es_video = false;")
         Multimedia getByImagenId(@Param("multimedia_id") int multimediaId) throws PersistenceException;
 
         /**
@@ -131,6 +131,6 @@ public interface MultimediaMapper {
          *                                       de datos.
          */
         @ResultMap("MultimediaMap")
-        @Select("SELECT FROM multimedia WHERE multimedia_id = #{multimedia_id} and es_video = true;")
+        @Select("SELECT * FROM multimedia WHERE multimedia_id = #{multimedia_id} and es_video = true;")
         Multimedia getByVideoId(@Param("multimedia_id") int multimediaId) throws PersistenceException;
 }

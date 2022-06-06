@@ -38,11 +38,11 @@ public class MultimediaController {
     }
 
     @GetMapping(path = "/multimedia/{id}", produces = "application/json; charset=utf-8")
-    public Multimedia getMultimediabyId(int multimedia_id) throws ServiceException {
+    public Multimedia getMultimediabyId(Integer multimedia_id) throws ServiceException {
         return cmtService.solicitarImagen(multimedia_id);
     }
 
-    @PostMapping(path = "/multimedia/", produces = "application/json; charset=utf-8")
+    @PostMapping(path = "/multimedia", produces = "application/json; charset=utf-8")
     public Integer creaMultimedia(@RequestBody Multimedia in) throws SQLException {
         return cmtService.creaMultimedia(in);
     }
