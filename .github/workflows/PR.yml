@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: 1.11
       - name: Maven Package
-        run: sed -i 's/password_token/${{ secrets.GHCR_PAT }}/g' settings.xml && mvn --settings settings.xml test
+        run: sed -i 's/password_token/${{ secrets.GHCR_PAT }}/g' settings.xml && mvn --settings settings.xml -DMAIL=someValue -DPASSWORD=someValue -DKEY_PASSWORD=someValue test
 
   build:
     name: Build
