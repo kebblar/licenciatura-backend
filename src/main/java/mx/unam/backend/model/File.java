@@ -3,10 +3,20 @@ package mx.unam.backend.model;
 public class File {
     private String nombre;
     private String url;
+    private String ruta;
 
-    public File(String nombre, String url) {
+    public String getRuta() {
+        return this.ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+
+    public File(String nombre, String url, String ruta) {
         this.nombre = nombre;
         this.url = url;
+        this.ruta = ruta;
     }
 
     public String getNombre() {

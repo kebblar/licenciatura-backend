@@ -1,6 +1,8 @@
 package mx.unam.backend.rest;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +33,9 @@ public class FileServiceController {
     @Autowired
     private FileService fileService;
 
+    private final Path rutaAbs = Paths.get("Documentos", "licenciatura-backend", "src", "main", "resources", "static",
+            "imagenes");
+
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         // String fileName = fileStorageService.storeFile(file);
@@ -47,9 +52,6 @@ public class FileServiceController {
 
     @PostMapping("/uploadMultipleFiles")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-        System.out.println("***********************************");
-        System.out.println("Si llegamos al CONTROLLER");
-        System.out.println("***********************************");
         return Arrays.asList(files)
                 .stream()
                 .map(file -> {
@@ -74,13 +76,14 @@ public class FileServiceController {
     @GetMapping("/archivos")
     public ResponseEntity<List<File>> obtenArchivos() throws IOException {
         List<File> archivos = fileService.loadAll().map(path -> {
-            String ruta = path.getFileName().toString();
+            String ruta = rutaAbs.toString() + "/" + path.getFileName().toString();
+            String nombre = "/" + path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FileServiceController.class,
                             "obtenArchivo",
                             path.getFileName().toString())
                     .build().toString();
-            return new File(ruta, url);
+            return new File(nombre, url, ruta);
         }).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(archivos);
     }
