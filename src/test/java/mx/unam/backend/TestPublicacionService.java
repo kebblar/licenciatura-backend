@@ -35,12 +35,13 @@ public class TestPublicacionService {
     private PublicacionService publicacionService;
 
     private Publicacion publicacion;
+    private Publicacion publicacionAux;
     private List<Publicacion> publicaciones;
 
     @Before
     public void prepara() {
         this.publicacion = new Publicacion(1, 1, "27-12-12", "testing", true);
-        this.publicacion = new Publicacion(2, 1, "29-10-10", "testing 2", true);
+        this.publicacionAux = new Publicacion(2, 1, "29-10-10", "testing 2", true);
         this.publicaciones = new LinkedList<Publicacion>();
         this.publicaciones.add(publicacion);
         this.publicacionService = new PublicacionServiceImpl(publicacionMapper);
