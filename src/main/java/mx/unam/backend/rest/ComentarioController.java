@@ -25,10 +25,16 @@ import mx.unam.backend.service.ComentarioService;
 
 @RestController
 @RequestMapping(value = "/feed")
+
 public class ComentarioController {
-
+/**
+ * Constructor que realiza el setting de los servicios que seran
+ * utilizados en este controlador.
+ *
+ * @param usuarioService Servicios de AccessService
+ */
 	private ComentarioService cmtService;
-
+	
 	public ComentarioController(ComentarioService comentario) {
 		this.cmtService = comentario;
 	}
