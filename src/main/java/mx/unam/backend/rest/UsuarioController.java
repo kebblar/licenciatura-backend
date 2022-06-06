@@ -52,7 +52,7 @@ import mx.unam.backend.service.UsuarioService;
  * @since 1.0-SNAPSHOT
  */
 @RestController
-@RequestMapping(value = "/usuario")
+@RequestMapping(value = "/api/usuario")
 public class UsuarioController {
     private final UsuarioService usuarioService;
 

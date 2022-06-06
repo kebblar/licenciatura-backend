@@ -24,13 +24,19 @@ package mx.unam.backend.model;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * <p>Preregistro class.</p>
  *
  * @author garellano
  * @version $Id: $Id
  */
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Preregistro {
     
     private int id;
@@ -43,7 +49,7 @@ public class Preregistro {
     @ApiModelProperty(example = "Hola1234#")
     private String claveHash = "";
 
-    @ApiModelProperty(example = "5543562126")
+    @ApiModelProperty(example = "'5543562126'")
     private String telefono;
 
     private Date fechaNacimiento;

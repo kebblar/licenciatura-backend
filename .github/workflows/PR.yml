@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: 1.11
       - name: Maven Package
-        run: mvn test
+        run: sed -i 's/password_token/${{ secrets.GHCR_PAT }}/g' settings.xml && mvn --settings settings.xml -DMAIL=someValue -DPASSWORD=someValue -DKEY_PASSWORD=someValue test
 
   build:
     name: Build
@@ -45,4 +45,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=kebblar_licenciatura-backend
+        run: sed -i 's/password_token/${{ secrets.GHCR_PAT }}/g' settings.xml && mvn --settings settings.xml -DMAIL=someValue -DPASSWORD=someValue -DKEY_PASSWORD=someValue -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=kebblar_licenciatura-backend

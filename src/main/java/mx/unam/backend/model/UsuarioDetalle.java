@@ -21,7 +21,9 @@
 package mx.unam.backend.model;
 
 import java.util.Date;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Implementacion del POJO de la entidad de 'UsuarioDetalle'.
@@ -30,6 +32,9 @@ import java.util.Objects;
  * @version 1.0-SNAPSHOT
  * @since 1.0-SNAPSHOT
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioDetalle {
 
     /*
