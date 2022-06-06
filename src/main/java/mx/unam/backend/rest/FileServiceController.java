@@ -76,12 +76,13 @@ public class FileServiceController {
     public ResponseEntity<List<File>> obtenArchivos() throws IOException {
         List<File> archivos = fileService.loadAll().map(path -> {
             String ruta = rutaAbs.toString() + path.getFileName().toString();
+            String nombre = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FileServiceController.class,
                             "obtenArchivo",
                             path.getFileName().toString())
                     .build().toString();
-            return new File(ruta, url);
+            return new File(nombre, url, ruta);
         }).collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.OK).body(archivos);
     }
