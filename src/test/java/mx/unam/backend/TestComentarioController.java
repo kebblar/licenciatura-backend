@@ -43,7 +43,7 @@ public class TestComentarioController extends AbstractTest {
    @Test
    public void updateComentario() throws Exception {
       String uri = "/feed/comentario";
-      Comentario comentario = new Comentario(0, 1, 1, "UPDATE_TEST", "6-6-66");
+      Comentario comentario = new Comentario(0, 1, 1, "UPDATE_TEST", "1999-12-31 23:59:59");
       String inputJson = super.mapToJson(comentario);
       MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(uri)
         .param("p", inputJson)

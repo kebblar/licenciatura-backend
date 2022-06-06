@@ -43,7 +43,7 @@ public class TestPublicacionController extends AbstractTest {
    @Test
    public void updatePublicacion() throws Exception {
       String uri = "/feed/publicacion";
-      Publicacion publicacion = new Publicacion(0, 1, "6-6-666", "UPDATE_TEST", false);
+      Publicacion publicacion = new Publicacion(0, 1, "1999-12-31 23:59:59", "UPDATE_TEST", false);
       String inputJson = super.mapToJson(publicacion);
       MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(uri)
         .param("p", inputJson)
