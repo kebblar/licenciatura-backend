@@ -33,7 +33,8 @@ public class FileServiceController {
     @Autowired
     private FileService fileService;
 
-    private final Path rutaAbs = Paths.get("src", "main", "resources", "static", "imagenes");
+    private final Path rutaAbs = Paths.get("Documentos", "licenciatura-backend", "src", "main", "resources", "static",
+            "imagenes");
 
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
@@ -76,7 +77,7 @@ public class FileServiceController {
     public ResponseEntity<List<File>> obtenArchivos() throws IOException {
         List<File> archivos = fileService.loadAll().map(path -> {
             String ruta = rutaAbs.toString() + "/" + path.getFileName().toString();
-            String nombre = path.getFileName().toString();
+            String nombre = "/" + path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FileServiceController.class,
                             "obtenArchivo",
