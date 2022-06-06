@@ -31,21 +31,6 @@ public class FileServiceController {
     @Autowired
     private FileService fileService;
 
-    /*
-     * @PostMapping("/upload")
-     * public ResponseEntity<String> subeArchivos(@RequestParam("multimedia")
-     * List<MultipartFile> in) {
-     * try {
-     * fileService.save(in);
-     * } catch (IOException ioe) {
-     * return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
-     * body("Ocurrió un error al subir el archivo");
-     * }
-     * return ResponseEntity.status(HttpStatus.OK).
-     * body("Se cargaron los archivos correctamente");
-     * }
-     */
-
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         // String fileName = fileStorageService.storeFile(file);
