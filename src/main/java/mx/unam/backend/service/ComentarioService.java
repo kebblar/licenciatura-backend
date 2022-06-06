@@ -38,6 +38,6 @@ public interface ComentarioService {
 
     List<Comentario> solicitaComentarios(int publicacion_id) throws ServiceException;
 
-    void borraComentario(int cmtId);
+    Integer borraComentario(int cmtId);
 
 }

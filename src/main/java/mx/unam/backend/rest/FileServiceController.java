@@ -1,6 +1,7 @@
 package mx.unam.backend.rest;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import mx.unam.backend.model.File;
 import mx.unam.backend.service.FileService;
+import mx.unam.backend.utils.UploadFileResponse;
 
 @RestController
 @RequestMapping("/files")
@@ -28,14 +31,51 @@ public class FileServiceController {
     @Autowired
     private FileService fileService;
 
-    @PostMapping("/upload")
-    public ResponseEntity<String> subeArchivos(@RequestParam("files") List<MultipartFile> in) {
-        try {
-            fileService.save(in);
-        } catch (IOException ioe) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al subir el archivo");
-        }
-        return ResponseEntity.status(HttpStatus.OK).body("Se cargaron los archivos correctamente");
+    /*
+     * @PostMapping("/upload")
+     * public ResponseEntity<String> subeArchivos(@RequestParam("multimedia")
+     * List<MultipartFile> in) {
+     * try {
+     * fileService.save(in);
+     * } catch (IOException ioe) {
+     * return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+     * body("Ocurrió un error al subir el archivo");
+     * }
+     * return ResponseEntity.status(HttpStatus.OK).
+     * body("Se cargaron los archivos correctamente");
+     * }
+     */
+
+    @PostMapping("/uploadFile")
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        // String fileName = fileStorageService.storeFile(file);
+        String fileName = file.getName();
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName)
+                .toUriString();
+        fileService.save(file);
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
+    }
+
+    @PostMapping("/uploadMultipleFiles")
+    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+        System.out.println("***********************************");
+        System.out.println("Si llegamos al CONTROLLER");
+        System.out.println("***********************************");
+        return Arrays.asList(files)
+                .stream()
+                .map(file -> {
+                    try {
+                        return uploadFile(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                })
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{ruta:.+}")

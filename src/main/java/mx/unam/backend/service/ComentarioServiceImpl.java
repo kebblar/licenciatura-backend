@@ -51,8 +51,8 @@ public class ComentarioServiceImpl implements ComentarioService {
     }
 
     @Override
-    public void borraComentario(int cmtId) {
-        cmt.deleteComentario(cmtId);
+    public Integer borraComentario(int cmtId) {
+        return cmt.deleteComentario(cmtId);
     }
 
 }

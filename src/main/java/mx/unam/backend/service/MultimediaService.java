@@ -31,13 +31,13 @@ public interface MultimediaService {
 
     Integer creaMultimedia(Multimedia in) throws SQLException;
 
-    Multimedia solicitarImagen(int imagenId) throws ServiceException;
+    Multimedia solicitarImagen(Integer imagenId) throws ServiceException;
 
-    Multimedia solicitarVideo(int videoId) throws ServiceException;
+    Multimedia solicitarVideo(Integer videoId) throws ServiceException;
 
-    List<Multimedia> solicitaMultimedias(int publicacion_id) throws ServiceException;
+    List<Multimedia> solicitaMultimedias(Integer publicacion_id) throws ServiceException;
 
-    void borraMultimedia(int cmtId);
+    Integer borraMultimedia(Integer cmtId);
 
-    int actualizaMultimedia(Multimedia in);
+    Integer actualizaMultimedia(Multimedia in);
 }

@@ -17,7 +17,6 @@ import org.mockito.Mock;
 
 import mx.unam.backend.model.Publicacion;
 import mx.unam.backend.service.PublicacionService;
-import mx.unam.backend.model.UsuarioDetalle;
 import mx.unam.backend.service.PublicacionServiceImpl;
 import mx.unam.backend.mapper.PublicacionMapper;
 
@@ -31,68 +30,67 @@ public class TestPublicacionService {
 
     @Mock
     private PublicacionMapper publicacionMapper;
-    
-   @Autowired
-   private PublicacionService publicacionService;
 
-   private Publicacion publicacion;
-   private Publicacion publicacionAux;
-   private List<Publicacion> publicaciones;
+    @Autowired
+    private PublicacionService publicacionService;
 
-   @Before
-   public void prepara(){
-    this.publicacion = new Publicacion(1, 1, "27-12-12","testing", true);
-    this.publicacion = new Publicacion(2, 1, "29-10-10","testing 2", true);
-    this.publicaciones = new LinkedList<Publicacion>();
-    this.publicaciones.add(publicacion);
-    this.publicacionService = new PublicacionServiceImpl(publicacionMapper);
-    
-}
+    private Publicacion publicacion;
+    private List<Publicacion> publicaciones;
 
-   @Test
-   public void insertCorrect() throws ServiceException, SQLException{
-    try {
-        Mockito.when(publicacionService.inserta(publicacion)).thenReturn(1);
-        int insertaCorrecto = publicacionService.inserta(publicacion);
-        Assert.assertEquals(1, insertaCorrecto);    
-    } catch (ControllerException e) {
+    @Before
+    public void prepara() {
+        this.publicacion = new Publicacion(1, 1, "27-12-12", "testing", true);
+        this.publicacion = new Publicacion(2, 1, "29-10-10", "testing 2", true);
+        this.publicaciones = new LinkedList<Publicacion>();
+        this.publicaciones.add(publicacion);
+        this.publicacionService = new PublicacionServiceImpl(publicacionMapper);
+
+    }
+
+    @Test
+    public void insertCorrect() throws ServiceException, SQLException {
+        try {
+            Mockito.when(publicacionService.inserta(publicacion)).thenReturn(1);
+            int insertaCorrecto = publicacionService.inserta(publicacion);
+            Assert.assertEquals(1, insertaCorrecto);
+        } catch (ControllerException e) {
             Assert.assertFalse(true);
         }
-   }
+    }
 
-   @Test
-   public void requestPublicationCorrect() throws ServiceException, SQLException{
-    try {
-        Mockito.when(publicacionMapper.getByPublicacionId(0)).thenReturn(publicacion);
-        Publicacion requestPublicationCorrecto = publicacionService.solicitarPublicacion(0);
-        Assert.assertEquals(publicacion, requestPublicationCorrecto);    
-    } catch (ControllerException e) {
+    @Test
+    public void requestPublicationCorrect() throws ServiceException, SQLException {
+        try {
+            Mockito.when(publicacionMapper.getByPublicacionId(0)).thenReturn(publicacion);
+            Publicacion requestPublicationCorrecto = publicacionService.solicitarPublicacion(0);
+            Assert.assertEquals(publicacion, requestPublicationCorrecto);
+        } catch (ControllerException e) {
             Assert.assertFalse(true);
         }
-   }
+    }
 
-   @Test
-   public void requestPublicationsCorrect() throws ServiceException, SQLException{
-    try {
-        Mockito.when(publicacionMapper.getPublicaciones(0)).thenReturn(publicaciones);
-        List<Publicacion> requestPublicationsCorrecto = publicacionService.solicitaPublicacions(0);
-        Assert.assertEquals(publicaciones, requestPublicationsCorrecto);    
-    } catch (ControllerException e) {
+    @Test
+    public void requestPublicationsCorrect() throws ServiceException, SQLException {
+        try {
+            Mockito.when(publicacionMapper.getPublicaciones(0)).thenReturn(publicaciones);
+            List<Publicacion> requestPublicationsCorrecto = publicacionService.solicitaPublicacions(0);
+            Assert.assertEquals(publicaciones, requestPublicationsCorrecto);
+        } catch (ControllerException e) {
             Assert.assertFalse(true);
         }
-   }
+    }
 
-   @Test
-   public void updatePublicationCorrect() {
-    Mockito.when(publicacionMapper.updatePublicacion(publicacion)).thenReturn(1);
-    int updatePublicationCorrecto = publicacionService.actualizaPublicacion(publicacion);
-    Assert.assertEquals(1, updatePublicationCorrecto);
-   }
+    @Test
+    public void updatePublicationCorrect() {
+        Mockito.when(publicacionMapper.updatePublicacion(publicacion)).thenReturn(1);
+        int updatePublicationCorrecto = publicacionService.actualizaPublicacion(publicacion);
+        Assert.assertEquals(1, updatePublicationCorrecto);
+    }
 
-   @Test
-   public void deletePublicationCorrect() throws ServiceException, SQLException{
-    Mockito.when(publicacionMapper.deletePublicacion(0)).thenReturn(1);
-    int deletePublicationCorrecto = publicacionService.borraPublicacion(0);
-    Assert.assertEquals(1, deletePublicationCorrecto);
-   }
+    @Test
+    public void deletePublicationCorrect() throws ServiceException, SQLException {
+        Mockito.when(publicacionMapper.deletePublicacion(0)).thenReturn(1);
+        int deletePublicationCorrecto = publicacionService.borraPublicacion(0);
+        Assert.assertEquals(1, deletePublicationCorrecto);
+    }
 }

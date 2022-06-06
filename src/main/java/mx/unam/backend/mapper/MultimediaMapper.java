@@ -77,7 +77,7 @@ public interface MultimediaMapper {
                         + " #{usuarioCreadorId}, "
                         + " #{multimedia}, "
                         + " #{esVideo})")
-        int insertMultimedia(Multimedia cmt) throws SQLException;
+        Integer insertMultimedia(Multimedia cmt) throws SQLException;
 
         /**
          * Actualiza un objeto de tipo '{@link mx.unam.backend.model.Multimedia} ' con
@@ -104,7 +104,7 @@ public interface MultimediaMapper {
          *                                       de datos.
          */
         @Delete("DELETE FROM multimedia WHERE multimedia_id = #{multimedia_id};")
-        void deleteMultimedia(@Param("multimedia_id") int cmtId) throws PersistenceException;
+        Integer deleteMultimedia(@Param("multimedia_id") int cmtId) throws PersistenceException;
 
         /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Multimedia} '

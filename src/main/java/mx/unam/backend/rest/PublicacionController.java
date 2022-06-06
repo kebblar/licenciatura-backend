@@ -34,12 +34,12 @@ public class PublicacionController {
     }
 
     @GetMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
-    public List<Publicacion> getPublicacions(int propietario_id) throws ServiceException {
+    public List<Publicacion> getPublicacions(Integer propietario_id) throws ServiceException {
         return cmtService.solicitaPublicacions(propietario_id);
     }
 
     @GetMapping(path = "/publicacion/publicacion_id", produces = "application/json; charset=utf-8")
-    public Publicacion getPublicacion(int publicacion_id) throws ServiceException {
+    public Publicacion getPublicacion(Integer publicacion_id) throws ServiceException {
         return cmtService.solicitarPublicacion(publicacion_id);
     }
 
@@ -54,8 +54,8 @@ public class PublicacionController {
     }
 
     @DeleteMapping(path = "/publicacion", produces = "application/json; charset=utf-8")
-    public Integer borraPublicacion(int cmtId) {
-        return cmtService.borraPublicacion(cmtId);
+    public Integer borraPublicacion(Integer publicacion_id) {
+        return cmtService.borraPublicacion(publicacion_id);
     }
 
 }

@@ -19,23 +19,23 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     @Override
-    public Multimedia solicitarImagen(int imagenId) {
+    public Multimedia solicitarImagen(Integer imagenId) {
         return img.getByImagenId(imagenId);
     }
 
     @Override
-    public Multimedia solicitarVideo(int videoId) {
+    public Multimedia solicitarVideo(Integer videoId) {
         return img.getByVideoId(videoId);
     }
 
     @Override
-    public List<Multimedia> solicitaMultimedias(int publicacion_id) throws ServiceException {
+    public List<Multimedia> solicitaMultimedias(Integer publicacion_id) throws ServiceException {
         return img.getMultimediasPublicacion(publicacion_id);
     }
 
     @Override
-    public void borraMultimedia(int cmtId) {
-        img.deleteMultimedia(cmtId);
+    public Integer borraMultimedia(Integer cmtId) {
+        return img.deleteMultimedia(cmtId);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     @Override
-    public int actualizaMultimedia(Multimedia in) {
+    public Integer actualizaMultimedia(Multimedia in) {
         return img.updateMultimedia(in);
     }
 }

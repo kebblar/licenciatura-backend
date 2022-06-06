@@ -34,7 +34,7 @@ public class ComentarioController {
 	}
 
 	@GetMapping(path = "/comentario", produces = "application/json; charset=utf-8")
-	public List<Comentario> getComentarios(int publicacion_id) throws ServiceException {
+	public List<Comentario> getComentarios(Integer publicacion_id) throws ServiceException {
 		return cmtService.solicitaComentarios(publicacion_id);
 	}
 
@@ -49,8 +49,8 @@ public class ComentarioController {
 	}
 
 	@DeleteMapping(path = "/comentario", produces = "application/json; charset=utf-8")
-	public void borraComentario(int cmtId) {
-		cmtService.borraComentario(cmtId);
+	public Integer borraComentario(Integer cmtId) {
+		return cmtService.borraComentario(cmtId);
 	}
 
 }
