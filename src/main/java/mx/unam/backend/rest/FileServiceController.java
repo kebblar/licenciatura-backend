@@ -75,7 +75,7 @@ public class FileServiceController {
     @GetMapping("/archivos")
     public ResponseEntity<List<File>> obtenArchivos() throws IOException {
         List<File> archivos = fileService.loadAll().map(path -> {
-            String ruta = rutaAbs.toString() + path.getFileName().toString();
+            String ruta = rutaAbs.toString() + "/" + path.getFileName().toString();
             String nombre = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FileServiceController.class,
