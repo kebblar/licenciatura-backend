@@ -58,54 +58,107 @@ public class Preregistro {
 
     private String primerApellido;
 
+    /**
+     * <p>Getter para el atributo <code>Id</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public int getId() {
         return this.id;
     }
-
+    /**
+     * <p>Setter para el atributo <code>Id</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setId(int id) {
         this.id = id;
     }
-
+    /**
+     * <p>Getter para el atributo <code>nick</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public String getNick() {
         return this.nick;
     }
-
+    /**
+     * <p>Setter para el atributo <code>nick</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setNick(String nick) {
         this.nick = nick;
     }
-
+     /**
+     * <p>Getter para el atributo <code>correo</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public String getCorreo() {
         return this.correo;
     }
-
+    /**
+     * <p>Setter para el atributo <code>correo</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-
+/**
+     * <p>Getter para el atributo <code>claveHash</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public String getClaveHash() {
         return this.claveHash;
     }
-
+    /**
+     * <p>Setter para el atributo <code>claveHash</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setClaveHash(String claveHash) {
         this.claveHash = claveHash;
     }
-
+    /**
+     * <p>Getter para el atributo <code>telefono</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public String getTelefono() {
         return this.telefono;
     }
-
+    /**
+     * <p>Setter para el atributo <code>telefono</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
+    /**
+     * <p>Getter para el atributo <code>fechaNacimiento</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public Date getFechaNacimiento() {
         return this.fechaNacimiento;
     }
-
+    /**
+     * <p>Setter para el atributo <code>fechaNacimiento</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-
+     /**
+     * <p>Getter para el atributo <code>randomSring</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public String getRandomString() {
         return this.randomString;
     }
@@ -113,40 +166,84 @@ public class Preregistro {
     public void setRandomString(String randomString) {
         this.randomString = randomString;
     }
-
+    /**
+     * <p>Setter para el atributo <code>RandomString</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public long getInstanteRegistro() {
         return this.instanteRegistro;
     }
-
+    /**
+     * <p>Getter para el atributo <code>instanteRegistro</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setInstanteRegistro(long instanteRegistro) {
         this.instanteRegistro = instanteRegistro;
     }
-
+    /**
+     * <p>Setter para el atributo <code>instanteRegistro</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public String getNombre() {
         return this.nombre;
     }
-
+    /**
+     * <p>Setter para el atributo <code>nombre</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    /**
+     * <p>Getter para el atributo <code>segundoApellido</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public String getSegundoApellido() {
         return this.segundoApellido;
     }
-
+    /**
+     * <p>Setter para el atributo <codesegundoApellido</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setSegundoApellido(String segundoApellido) {
         this.segundoApellido = segundoApellido;
     }
-
+    /**
+     * <p>Getter para el atributo <code>primerApellido</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public String getPrimerApellido() {
         return this.primerApellido;
     }
-
+     /**
+     * <p>Setter para el atributo <code>primerApellido</code>.</p>
+     *
+     * @return un objeto de tipo {@link java.lang.String}.
+     */
     public void setPrimerApellido(String primerApellido) {
         this.primerApellido = primerApellido;
     }
-
-
+    /**	
+     * Crea un preregistro con el parametros (int id,String, nick, etc)
+     * @param int id
+     * @param String nick
+     * @param String correo
+     * @param String claveHash
+     * @param String telefono
+     * @param Date fechaNacimiento
+     * @param String randomString
+     * @param long instanteRegistro 
+     * @param String nombre 
+     * @param String segundoApellido
+     * @param String primerApellido
+     */	
     public Preregistro(int id, String nick, String correo, String claveHash, String telefono, Date fechaNacimiento, String randomString, long instanteRegistro, String nombre, String segundoApellido, String primerApellido) {
         this.id = id;
         this.nick = nick;
@@ -160,6 +257,5 @@ public class Preregistro {
         this.segundoApellido = segundoApellido;
         this.primerApellido = primerApellido;
     }
-
 
 }
