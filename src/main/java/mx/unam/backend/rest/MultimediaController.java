@@ -23,7 +23,7 @@ import mx.unam.backend.service.MultimediaService;
  */
 
 @RestController
-@RequestMapping(value = "/feed")
+@RequestMapping(value = "api/feed")
 public class MultimediaController {
 
     private MultimediaService cmtService;

@@ -27,7 +27,7 @@ import mx.unam.backend.service.FileService;
 import mx.unam.backend.utils.UploadFileResponse;
 
 @RestController
-@RequestMapping("/files")
+@RequestMapping("api/files")
 public class FileServiceController {
 
     @Autowired
@@ -76,7 +76,7 @@ public class FileServiceController {
     @GetMapping("/archivos")
     public ResponseEntity<List<File>> obtenArchivos() throws IOException {
         List<File> archivos = fileService.loadAll().map(path -> {
-            String ruta = rutaAbs.toString() + "/" + path.getFileName().toString();
+            String ruta = "http://localhost:8080/imagenes/" + path.getFileName().toString();//rutaAbs.toString() + "/" + path.getFileName().toString();
             String nombre = "/" + path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FileServiceController.class,

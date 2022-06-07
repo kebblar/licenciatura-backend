@@ -24,7 +24,7 @@ import mx.unam.backend.service.ComentarioService;
  */
 
 @RestController
-@RequestMapping(value = "/feed")
+@RequestMapping(value = "api/feed")
 public class ComentarioController {
 
 	private ComentarioService cmtService;

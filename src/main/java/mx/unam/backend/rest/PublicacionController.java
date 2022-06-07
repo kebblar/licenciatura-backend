@@ -24,7 +24,7 @@ import mx.unam.backend.service.PublicacionService;
  */
 
 @RestController
-@RequestMapping(value = "/feed")
+@RequestMapping(value = "api/feed")
 public class PublicacionController {
 
     private PublicacionService cmtService;
