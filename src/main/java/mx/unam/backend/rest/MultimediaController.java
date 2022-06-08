@@ -33,7 +33,7 @@ public class MultimediaController {
     }
 
     @GetMapping(path = "/multimedia", produces = "application/json; charset=utf-8")
-    public List<Multimedia> getMultimedias(int multimedia_id) throws ServiceException {
+    public List<Multimedia> getMultimedias(Integer multimedia_id) throws ServiceException {
         return cmtService.solicitaMultimedias(multimedia_id);
     }
 
