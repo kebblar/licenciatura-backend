@@ -53,4 +53,9 @@ public class ComentarioController {
 		return cmtService.borraComentario(cmtId);
 	}
 
+	@DeleteMapping(path = "/comentarios", produces = "application/json; charset=utf-8")
+	public Integer borraTodoComentario(Integer publicacion_id) {
+		return cmtService.borraTodoComentario(publicacion_id);
+	}
+
 }

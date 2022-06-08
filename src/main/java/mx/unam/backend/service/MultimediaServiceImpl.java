@@ -47,4 +47,9 @@ public class MultimediaServiceImpl implements MultimediaService {
     public Integer actualizaMultimedia(Multimedia in) {
         return img.updateMultimedia(in);
     }
+
+    @Override
+    public Integer borraTodaMultimedia(Integer publicacion_id) {
+        return img.deleteAllMultimedia(publicacion_id);
+    }
 }

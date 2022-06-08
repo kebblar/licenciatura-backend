@@ -52,4 +52,9 @@ public class MultimediaController {
         return cmtService.borraMultimedia(cmtId);
     }
 
+    @DeleteMapping(path = "/multimedias", produces = "application/json; charset=utf-8")
+    public Integer borraTodaMultimedia(int publicacion_id) {
+        return cmtService.borraTodaMultimedia(publicacion_id);
+    }
+
 }

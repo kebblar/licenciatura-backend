@@ -92,6 +92,17 @@ public interface ComentarioMapper {
         Integer deleteComentario(@Param("comentario_id") int cmtId) throws PersistenceException;
 
         /**
+         * Elimina todos los comentarios de una publicación
+         *
+         * @param cmtId el id del comentario a eliminar
+         * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
+         *                                       error en esta operación desde la base
+         *                                       de datos.
+         */
+        @Delete("DELETE FROM comentario WHERE publicacion_id = #{publicacion_id};")
+        Integer deleteAllComentarios(@Param("publicacion_id") int cmtId) throws PersistenceException;
+
+        /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Comentario} '
          * contenido en la base de datos usando su id.
          *

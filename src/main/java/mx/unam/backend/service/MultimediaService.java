@@ -39,5 +39,7 @@ public interface MultimediaService {
 
     Integer borraMultimedia(Integer cmtId);
 
+    Integer borraTodaMultimedia(Integer publicacion_id);
+
     Integer actualizaMultimedia(Multimedia in);
 }

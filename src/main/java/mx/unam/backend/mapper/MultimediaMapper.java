@@ -107,6 +107,17 @@ public interface MultimediaMapper {
         Integer deleteMultimedia(@Param("multimedia_id") int cmtId) throws PersistenceException;
 
         /**
+         * Elimina toda la multimedia de una publicación
+         *
+         * @param cmtId el id de la multimedia a eliminar
+         * @throws java.sql.PersistenceException Se dispara en caso de que se dispare un
+         *                                       error en esta operación desde la base
+         *                                       de datos.
+         */
+        @Delete("DELETE FROM multimedia WHERE publicacion_id = #{publicacion_id};")
+        Integer deleteAllMultimedia(@Param("publicacion_id") int cmtId) throws PersistenceException;
+
+        /**
          * Busca un objeto de tipo '{@link mx.unam.backend.model.Multimedia} '
          * contenido en la base de datos usando su id.
          *

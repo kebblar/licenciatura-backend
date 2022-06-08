@@ -40,4 +40,6 @@ public interface ComentarioService {
 
     Integer borraComentario(int cmtId);
 
+    Integer borraTodoComentario(int cmtId);
+
 }

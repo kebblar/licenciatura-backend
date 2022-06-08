@@ -55,4 +55,9 @@ public class ComentarioServiceImpl implements ComentarioService {
         return cmt.deleteComentario(cmtId);
     }
 
+    @Override
+    public Integer borraTodoComentario(int cmtId) {
+        return cmt.deleteAllComentarios(cmtId);
+    }
+
 }
