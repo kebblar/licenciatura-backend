@@ -28,9 +28,9 @@ import lombok.NoArgsConstructor;
 /**
  * Implementacion del POJO de la entidad de 'UsuarioDetalle'.
  *
- * @author  luz
+ * @author luz
  * @version 1.0-SNAPSHOT
- * @since   1.0-SNAPSHOT
+ * @since 1.0-SNAPSHOT
  */
 @Data
 @NoArgsConstructor
@@ -49,4 +49,3 @@ public class UsuarioDetalle {
     private String telefonoCelular;
 
 }
-

@@ -19,15 +19,16 @@ import mx.unam.backend.model.Login;
 import mx.unam.backend.model.Preregistro;
 import mx.unam.backend.model.RecuperacionTokenRequest;
 import mx.unam.backend.model.Usuario;
-
+import mx.unam.backend.model.UsuarioDetalle;
 
 /**
- * <p>Definición de la interfaz de servicios para 'Login'.
+ * <p>
+ * Definición de la interfaz de servicios para 'Login'.
  *
- * @author  mentesniker, garellano
- * @see     mx.unam.backend.model.Usuario
+ * @author mentesniker, garellano
+ * @see mx.unam.backend.model.Usuario
  * @version 1.0-SNAPSHOT
- * @since   1.0-SNAPSHOT
+ * @since 1.0-SNAPSHOT
  */
 public interface UsuarioService {
 
@@ -38,10 +39,13 @@ public interface UsuarioService {
      * Si las credenciales son inválidas, dispara una excepción acorde
      * a el grado de violación de ingreso.
      * Se requiere que el método siga las siguientes reglas:
-     *     - No admite usuario ni clave vacios
-     *     - Si el usuario no existe, sólo pide que intente de nuevo
-     *     - Si el usuaro existe y la clave es errónea, le indicará que le quedan menos intentos
-     *     - Si el usuario está bloqueado (con o sin clave correcta) le indicará que debe esperar cierto tiempo
+     * - No admite usuario ni clave vacios
+     * - Si el usuario no existe, sólo pide que intente de nuevo
+     * - Si el usuaro existe y la clave es errónea, le indicará que le quedan menos
+     * intentos
+     * - Si el usuario está bloqueado (con o sin clave correcta) le indicará que
+     * debe esperar cierto tiempo
+     * 
      * @param usuario objeto de tipo {@link CredencialesRequest}
      * @return Objeto {@link Login}
      * @throws ControllerException
@@ -61,14 +65,25 @@ public interface UsuarioService {
     Usuario solicitaRegeneracionClave(String correo) throws ServiceException;
 
     /**
+     * Solicita un usario
+     * el metodo regresa una instancia de {@link Usuariodetalle}
+     *
+     * @param usuarioId La id del usuario solicitado
+     * @return objeto de la clase {@link UsuarioDetalle}
+     * @throws ServiceException if any
+     */
+    UsuarioDetalle solicitarUsuario(int usuarioId) throws ServiceException;
+
+    /**
      * Confirma la regeneración de una nueva clave a un usuario.
      * El metodo realiza una verificacion de la nueva clave que tiene que
      * cumplir con las siguientes reglas:
-     *     - No admite clave con espacios
-     *     - No admite claves con solo minusculas
-     *     - No admite claves con solo mayusuculas
-     *     - No admite claves sin caracteres especiales
-     *     - No admite claves con menos de 8 y mas de 16 caracteres
+     * - No admite clave con espacios
+     * - No admite claves con solo minusculas
+     * - No admite claves con solo mayusuculas
+     * - No admite claves sin caracteres especiales
+     * - No admite claves con menos de 8 y mas de 16 caracteres
+     * 
      * @param tokenRequest objeto de la clase {@link RecuperacionTokenRequest}
      *
      * @return Usuario con clave actualizada
@@ -85,12 +100,12 @@ public interface UsuarioService {
      */
     Preregistro preRegistro(Preregistro preRegistroRequest) throws ServiceException;
 
-
-     /**
+    /**
      * Confirma el registro de un usuario al sistema
      *
      * @param token Cadena con la clave de confirmación del registro
-     * @return entero con el id del usuario recién confirmado (debe ser mayor a cero)
+     * @return entero con el id del usuario recién confirmado (debe ser mayor a
+     *         cero)
      * @throws BusinessException
      */
     Usuario confirmaPreregistro(String token) throws ServiceException;

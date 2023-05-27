@@ -36,4 +36,22 @@ public class Login {
     private List<Rol> roles;
 
 
+    /**
+     * <p>Setter para el atributo <code>id</code>.</p>
+     *
+     * @param id un int.
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * <p>Getter para el atributo <code>id</code>.</p>
+     *
+     * @return un int.
+     */
+    public int getId() {
+        return this.id;
+    }
+
 }

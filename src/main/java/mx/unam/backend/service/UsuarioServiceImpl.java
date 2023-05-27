@@ -43,18 +43,21 @@ import mx.unam.backend.utils.MailSenderService;
 import mx.unam.backend.utils.StringUtils;
 
 /**
- * <p>Implementación de la interfaz {@link mx.unam.backend.service.UsuarioService}.
+ * <p>
+ * Implementación de la interfaz {@link mx.unam.backend.service.UsuarioService}.
  *
- * <p>Todos los métodos de esta clase disparan {@link mx.unam.backend.exceptions.ServiceException}
+ * <p>
+ * Todos los métodos de esta clase disparan
+ * {@link mx.unam.backend.exceptions.ServiceException}
  *
- * @author  garellano, mentesniker
- * @see     unam.mx.backend.domain.Usuario
- * @see     mx.unam.backend.service.UsuarioService
+ * @author garellano, mentesniker
+ * @see unam.mx.backend.domain.Usuario
+ * @see mx.unam.backend.service.UsuarioService
  * @version 1.0-SNAPSHOT
- * @since   1.0-SNAPSHOT
+ * @since 1.0-SNAPSHOT
  */
 @Service
-public class UsuarioServiceImpl implements UsuarioService{
+public class UsuarioServiceImpl implements UsuarioService {
 
     private UsuarioMapper usuarioMapper;
     private UsuarioDetalleMapper usuarioDetalleMapper;
@@ -63,10 +66,9 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Value("${jwt.encryptor.password}")
     private String encryptKey;
     private static final int RANDOM_STRING_LEN = 6;
-    
 
     public UsuarioServiceImpl(UsuarioMapper usuarioMapper, MailSenderService mailSenderService,
-     RegistroMapper registroMapper, UsuarioDetalleMapper usuarioDetalleMapper) {
+            RegistroMapper registroMapper, UsuarioDetalleMapper usuarioDetalleMapper) {
         this.usuarioMapper = usuarioMapper;
         this.mailSenderService = mailSenderService;
         this.registroMapper = registroMapper;
@@ -78,44 +80,49 @@ public class UsuarioServiceImpl implements UsuarioService{
     public Login login(CredencialesRequest usuario) throws ControllerException {
 
         int maximoNumeroIntentosConcedidos = 5; // 5 intentos
-        long delta = 1000*60*5L; // 5 minutos
+        long delta = 1000 * 60 * 5L; // 5 minutos
         long instanteActual = System.currentTimeMillis();
-        //Usuario no existente
-        if(usuario.getMail()==null) throw new CustomException(EnumMessage.BAD_CREDENTIALS);
+        // Usuario no existente
+        if (usuario.getMail() == null)
+            throw new CustomException(EnumMessage.BAD_CREDENTIALS);
 
         Usuario validUser = usuarioMapper.getByMail(usuario.getMail());
 
-        if(validUser==null) throw new CustomException(EnumMessage.BAD_CREDENTIALS);
+        if (validUser == null)
+            throw new CustomException(EnumMessage.BAD_CREDENTIALS);
 
-        if(!validUser.isActivo()) throw new CustomException(EnumMessage.DISABLED_USER);
+        if (!validUser.isActivo())
+            throw new CustomException(EnumMessage.DISABLED_USER);
 
-        //Usuario bloqueado
+        // Usuario bloqueado
         long instanteDeBloqueo = validUser.getInstanteBloqueo();
         long diff = instanteActual - instanteDeBloqueo;
         long restante = delta - diff;
-        if(instanteDeBloqueo>0 && restante>0) {
-            long totalSegundos = restante/1000;
-            long totalMinutos = totalSegundos/60;
-            throw new CustomException(EnumMessage.WAIT_LOGIN, totalMinutos, totalSegundos%60);
+        if (instanteDeBloqueo > 0 && restante > 0) {
+            long totalSegundos = restante / 1000;
+            long totalMinutos = totalSegundos / 60;
+            throw new CustomException(EnumMessage.WAIT_LOGIN, totalMinutos, totalSegundos % 60);
         }
-        
-        //Clave incorrecta
+
+        // Clave incorrecta
         String passwordHasheado = DigestEncoder.digest(usuario.getClave(), usuario.getMail());
-        if(!passwordHasheado.equals(validUser.getClave())){
-            int numeroDeIntentosFallidos = validUser.getAccesoNegadoContador()+1;
+        if (!passwordHasheado.equals(validUser.getClave())) {
+            int numeroDeIntentosFallidos = validUser.getAccesoNegadoContador() + 1;
             validUser.setAccesoNegadoContador(numeroDeIntentosFallidos);
             usuarioMapper.update(validUser);
 
-            if(numeroDeIntentosFallidos >= maximoNumeroIntentosConcedidos) {
-                validUser.setInstanteBloqueo(instanteActual); 
+            if (numeroDeIntentosFallidos >= maximoNumeroIntentosConcedidos) {
+                validUser.setInstanteBloqueo(instanteActual);
                 throw new CustomException(EnumMessage.MAX_FAILED_LOGIN_EXCEPTION, maximoNumeroIntentosConcedidos);
             }
 
-            throw new CustomException(EnumMessage.BAD_CREDENTIALS, numeroDeIntentosFallidos, maximoNumeroIntentosConcedidos);
+            throw new CustomException(EnumMessage.BAD_CREDENTIALS, numeroDeIntentosFallidos,
+                    maximoNumeroIntentosConcedidos);
 
         }
 
-        // Resetea todoas las banderas de advertencia y bloqueo. Luego, actualiza y retorna el usuario:
+        // Resetea todoas las banderas de advertencia y bloqueo. Luego, actualiza y
+        // retorna el usuario:
         validUser.setAccesoNegadoContador(0);
         validUser.setInstanteBloqueo(0);
         validUser.setInstanteUltimoAcceso(instanteActual);
@@ -135,7 +142,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     public Usuario solicitaRegeneracionClave(String correo) throws ServiceException {
         String token = StringUtils.getRandomString(6);
         Usuario usuario = usuarioMapper.getByMail(correo);
-        if(usuario!=null){
+        if (usuario != null) {
             usuario.setRegeneraClaveInstante(System.currentTimeMillis());
             usuario.setRegeneraClaveToken(token);
             usuarioMapper.update(usuario);
@@ -149,12 +156,14 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public Usuario confirmaRegeneraClave(RecuperacionTokenRequest tokenRequest) throws ServiceException {
         validate(tokenRequest.getClaveNueva());
-        long unaHora = 1000*60*60L;
+        long unaHora = 1000 * 60 * 60L;
         Usuario usuario = usuarioMapper.getByToken(tokenRequest.getToken());
-        if(usuario==null) throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
-        if(!tokenRequest.getToken().equals(usuario.getRegeneraClaveToken())) throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
-        long remaining = System.currentTimeMillis()-usuario.getRegeneraClaveInstante();
-        if(remaining<unaHora) {
+        if (usuario == null)
+            throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
+        if (!tokenRequest.getToken().equals(usuario.getRegeneraClaveToken()))
+            throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
+        long remaining = System.currentTimeMillis() - usuario.getRegeneraClaveInstante();
+        if (remaining < unaHora) {
             String claveHash = DigestEncoder.digest(tokenRequest.getClaveNueva(), usuario.getMail());
             usuario.setClave(claveHash);
             usuario.setRegeneraClaveToken(tokenRequest.getToken());
@@ -171,35 +180,34 @@ public class UsuarioServiceImpl implements UsuarioService{
         try {
             return preRegistroHelper(preRegistroRequest);
         } catch (SQLException e) {
-            throw new ServiceException("Clave con error", "error al registrar al usuario", 2001, "intentelo de nuevo", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ServiceException("Clave con error", "error al registrar al usuario", 2001, "intentelo de nuevo",
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    @Transactional(
-            propagation = Propagation.REQUIRED,
-            isolation = Isolation.DEFAULT,
-            timeout = 36000,
-            rollbackFor = TransactionException.class)
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = TransactionException.class)
     public Usuario confirmaPreregistro(String token) throws ServiceException {
         // El token sirve sólo 10 minutes:
-        long delta = 1000*60*10L;
+        long delta = 1000 * 60 * 10L;
 
         // Obtén la túpla asociada al token de confirmación
         Preregistro preregistro = null;
         try {
             preregistro = this.registroMapper.getByRandomString(token);
         } catch (SQLException e1) {
-            throw new ServiceException("Clave con error", "error al buscar un usuario con el token", 2000, "intentelo de nuevo", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ServiceException("Clave con error", "error al buscar un usuario con el token", 2000,
+                    "intentelo de nuevo", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         // Si no hay un registro asociado a tal token, notifica el error:
-        if(preregistro==null) throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
+        if (preregistro == null)
+            throw new CustomException(EnumMessage.TOKEN_NOT_EXIST);
 
         // Si ya expiró el token, notifica el error:
-        long age = System.currentTimeMillis()-preregistro.getInstanteRegistro();
-        if(age>delta) { // token expirado
+        long age = System.currentTimeMillis() - preregistro.getInstanteRegistro();
+        if (age > delta) { // token expirado
             throw new CustomException(EnumMessage.TOKEN_EXPIRED);
         }
 
@@ -215,27 +223,27 @@ public class UsuarioServiceImpl implements UsuarioService{
     private Usuario doTransaction(Preregistro preregistro, String randomString) throws SQLException {
         // Crea un usuario e insertalo en la base:
         Usuario usuario = new Usuario(
-            0, //id (que va a ser autogenerado)
-            preregistro.getCorreo(),       // correo
-            preregistro.getClaveHash(),    // clave
-            System.currentTimeMillis(), // creado
-            true, // activo
-            0,  // accesoNegadoContador
-            0,  // instanteBloqueo
-            0,  // instanteUltimoAcceso
-            System.currentTimeMillis(),  // instanteUltimoCambioClave
-            "", // regeneraClaveToken
-            0   // regeneraClaveTokenInstante
+                0, // id (que va a ser autogenerado)
+                preregistro.getCorreo(), // correo
+                preregistro.getClaveHash(), // clave
+                System.currentTimeMillis(), // creado
+                true, // activo
+                0, // accesoNegadoContador
+                0, // instanteBloqueo
+                0, // instanteUltimoAcceso
+                System.currentTimeMillis(), // instanteUltimoCambioClave
+                "", // regeneraClaveToken
+                0 // regeneraClaveTokenInstante
         );
         usuarioMapper.insert(usuario);
-
 
         // Obtén el id autogenerado del usuario recién creado:
         int idUsuario = usuario.getId();
 
-
-        // Crea un objeto 'usuarioDetalles' (con el ID autogenerado) e insértalo en la DB:
+        // Crea un objeto 'usuarioDetalles' (con el ID autogenerado) e insértalo en la
+        // DB:
         UsuarioDetalle usuarioDetalle = new UsuarioDetalle(
+
             idUsuario,
             preregistro.getNombre(),     // nombre
             preregistro.getSegundoApellido(),     // apellidoMaterno
@@ -255,7 +263,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         return usuario;
     }
 
-    private Preregistro preRegistroHelper(Preregistro preRegistroRequest) throws CustomException, SQLException{
+    private Preregistro preRegistroHelper(Preregistro preRegistroRequest) throws CustomException, SQLException {
         // Quitale los caracteres raros al teléfono.
         String nuevoCel = StringUtils.limpia(preRegistroRequest.getTelefono());
         preRegistroRequest.setTelefono(nuevoCel);
@@ -268,12 +276,14 @@ public class UsuarioServiceImpl implements UsuarioService{
         Usuario usuario = this.usuarioMapper.getByMail(preRegistroRequest.getCorreo());
 
         // Si el usuario ya está en la tabla 'usuario', avisa error:
-        if(usuario!=null) throw new CustomException(EnumMessage.USER_ALREADY_EXISTS, "el usuario ya esta registrado");
+        if (usuario != null)
+            throw new CustomException(EnumMessage.USER_ALREADY_EXISTS, "el usuario ya esta registrado");
 
         // Busca el registro por mail en la tabla de 'registro':
         Preregistro registro = this.registroMapper.getByMail(preRegistroRequest.getCorreo());
 
-        // Genera una cadena aleatoria de caracteres y crea un objeto de tipo 'PreRegistro':
+        // Genera una cadena aleatoria de caracteres y crea un objeto de tipo
+        // 'PreRegistro':
         String randomString = StringUtils.getRandomString(RANDOM_STRING_LEN);
 
         // Calcula el Hash de la clave con un salt del correo:
@@ -285,7 +295,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         preRegistroRequest.setClaveHash(claveHasheada);
 
         // Si el usuario NO está en la tabla de 'registro', insertar info:
-        if(registro==null) {
+        if (registro == null) {
             this.registroMapper.insertRegistro(preRegistroRequest);
         } else { // Si el usuario SI está: actualizar info:
             this.registroMapper.update(preRegistroRequest);
@@ -305,35 +315,40 @@ public class UsuarioServiceImpl implements UsuarioService{
         this.mailSenderService.sendHtmlMail(correo, titulo, body);
     }
 
-    private void validate(String clave) throws CustomException{
-        //8 and 16 characters
-        if(clave.length()< 8 || clave.length() > 16){
-            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Introducir una clave de 8 hasta 16 caracteres.");
+    private void validate(String clave) throws CustomException {
+        // 8 and 16 characters
+        if (clave.length() < 8 || clave.length() > 16) {
+            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR,
+                    "Introducir una clave de 8 hasta 16 caracteres.");
         }
-        //Rule 2: No whitespace allowed
-        if(clave.contains(" ")){
+        // Rule 2: No whitespace allowed
+        if (clave.contains(" ")) {
             throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Remover espacios en blanco.");
         }
-        //Rule 3: At least one Upper-case character
-        if(!clave.matches("^(?=.*[A-Z]).+$")){
+        // Rule 3: At least one Upper-case character
+        if (!clave.matches("^(?=.*[A-Z]).+$")) {
             throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Agregar una mayuscula a la clave.");
         }
-        //Rule 4: At least one Lower-case character
-        if(!clave.matches("^(?=.*[a-z]).+$")){
+        // Rule 4: At least one Lower-case character
+        if (!clave.matches("^(?=.*[a-z]).+$")) {
             throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Agregar una minuscula a la clave.");
         }
-        //Rule 5: At least one digit
-        if(!clave.matches("^(?=.*\\d).+$")){
+        // Rule 5: At least one digit
+        if (!clave.matches("^(?=.*\\d).+$")) {
             throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Agregar un numero a la clave.");
         }
-        Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+        Pattern special = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
         Matcher hasSpecial = special.matcher(clave);
-        //Rule 5: At least one special character
-        if(!hasSpecial.find()){
-            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR, "Agregar un caracter especial a la clave.");
+        // Rule 5: At least one special character
+        if (!hasSpecial.find()) {
+            throw new CustomException(EnumMessage.STRENGTH_PASSWORD_VALIDATOR,
+                    "Agregar un caracter especial a la clave.");
         }
     }
 
+    @Override
+    public UsuarioDetalle solicitarUsuario(int usuarioId) throws ServiceException {
+        return usuarioDetalleMapper.getByUsuarioId(usuarioId);
+    }
 
-    
 }

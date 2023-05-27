@@ -64,5 +64,4 @@ public class Preregistro {
 
     private String primerApellido;
 
-
 }

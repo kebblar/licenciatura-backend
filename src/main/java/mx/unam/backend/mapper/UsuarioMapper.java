@@ -101,7 +101,7 @@ public interface UsuarioMapper {
      */
     @Results(id="UsuarioRolesMap", value = {
         @Result(property = "id",   column = "id"),
-        @Result(property = "nombre",   column = "nombre"),
+        @Result(property = "nombre",   column = "nombre-pater"),
         @Result(property = "activo",   column = "activo")
     })
     @Select("SELECT id,nombre,activo FROM mailRoles WHERE mail = #{mail};")
